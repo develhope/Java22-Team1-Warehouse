@@ -25,23 +25,40 @@ public class Magazzino {
     }
   }
 
-  public ClasseDispositivi getPerModello(String modello) {
-    String modelloLowerCase = modello.toLowerCase();
-
-    for(int i = 0; i < dispositivi.size(); i++) {
-      if(modelloLowerCase.equals(dispositivi.get(i).getModel())) {
-        return dispositivi.get(i);
-      }
-    }
-    return null;
-  }
-
   public ArrayList<ClasseDispositivi> getPerDispositivo(String input) {
     String inputLowerCase = input.toLowerCase();
      ArrayList<ClasseDispositivi> dispositiviCompatibili = new ArrayList<>();
 
     for(int i = 0; i < dispositivi.size(); i++) {
       String deviceLowerCase = dispositivi.get(i).getDevice().toLowerCase();
+
+      if(inputLowerCase.equals(deviceLowerCase)) {
+        dispositiviCompatibili.add(dispositivi.get(i));
+      }
+    }
+    return dispositiviCompatibili;
+  }
+
+  public ArrayList<ClasseDispositivi> getPerModello(String input) {
+    String inputLowerCase = input.toLowerCase();
+    ArrayList<ClasseDispositivi> dispositiviCompatibili = new ArrayList<>();
+
+    for(int i = 0; i < dispositivi.size(); i++) {
+      String deviceLowerCase = dispositivi.get(i).getModel().toLowerCase();
+
+      if(inputLowerCase.equals(deviceLowerCase)) {
+        dispositiviCompatibili.add(dispositivi.get(i));
+      }
+    }
+    return dispositiviCompatibili;
+  }
+
+  public ArrayList<ClasseDispositivi> getPerBrand(String input) {
+    String inputLowerCase = input.toLowerCase();
+    ArrayList<ClasseDispositivi> dispositiviCompatibili = new ArrayList<>();
+
+    for(int i = 0; i < dispositivi.size(); i++) {
+      String deviceLowerCase = dispositivi.get(i).getBrand().toLowerCase();
 
       if(inputLowerCase.equals(deviceLowerCase)) {
         dispositiviCompatibili.add(dispositivi.get(i));
