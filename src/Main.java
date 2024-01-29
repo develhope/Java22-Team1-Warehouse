@@ -36,30 +36,49 @@ public class Main {
         ArrayList<ClasseDispositivi> chosen1 = magazzino.getPerDispositivo(inputString);
         ArrayList<ClasseDispositivi> chosen2 = magazzino.getPerModello(inputString);
         ArrayList<ClasseDispositivi> chosen3 =  magazzino.getPerBrand(inputString);
+        ArrayList<ClasseDispositivi> range =  magazzino.getRangeSell(0,500);
+        ArrayList<ClasseDispositivi> range2 =  magazzino.getRangeBuy(0,500);
+
 
         magazzino.stampa();
 
-        if (chosen1.isEmpty()) {
+//        if (chosen1.isEmpty()) {
+//            System.out.println("Nessun dispositivo trovato.");
+//        } else {
+//            System.out.println("Dispositivi trovati:");
+//            for (ClasseDispositivi dispositivo : chosen1) {
+//                System.out.println(dispositivo);
+//            }
+//        }
+//        if (chosen2.isEmpty()) {
+//            System.out.println("Nessun dispositivo trovato.");
+//        } else {
+//            System.out.println("Dispositivi trovati:");
+//            for (ClasseDispositivi dispositivo : chosen2) {
+//                System.out.println(dispositivo);
+//            }
+//        }
+//        if (chosen3.isEmpty()) {
+//            System.out.println("Nessun dispositivo trovato.");
+//        } else {
+//            System.out.println("Dispositivi trovati:");
+//            for (ClasseDispositivi dispositivo : chosen3) {
+//                System.out.println(dispositivo);
+//            }
+//        }
+        if (range.isEmpty()) {
             System.out.println("Nessun dispositivo trovato.");
         } else {
             System.out.println("Dispositivi trovati:");
-            for (ClasseDispositivi dispositivo : chosen1) {
+            for (ClasseDispositivi dispositivo : range) {
                 System.out.println(dispositivo);
             }
         }
-        if (chosen2.isEmpty()) {
+        if (range2.isEmpty()) {
             System.out.println("Nessun dispositivo trovato.");
         } else {
             System.out.println("Dispositivi trovati:");
-            for (ClasseDispositivi dispositivo : chosen2) {
-                System.out.println(dispositivo);
-            }
-        }
-        if (chosen3.isEmpty()) {
-            System.out.println("Nessun dispositivo trovato.");
-        } else {
-            System.out.println("Dispositivi trovati:");
-            for (ClasseDispositivi dispositivo : chosen3) {
+            for (ClasseDispositivi dispositivo : range2) {
                 System.out.println(dispositivo);
             }
         }
