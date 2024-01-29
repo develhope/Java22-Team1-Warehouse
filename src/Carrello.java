@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+import Dispositi.ClasseDispositivi;
 
 public class Carrello {
     private ArrayList<ClasseDispositivi> dispositivi = new ArrayList<>();

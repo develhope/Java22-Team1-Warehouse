@@ -1,5 +1,9 @@
+import Dispositi.Smartphone;
+import Dispositi.Notebook;
+import Dispositi.Tablet;
 import java.util.ArrayList;
 import java.util.Scanner;
+import Dispositi.ClasseDispositivi;
 
 public class Main {
     public static void main(String[] args) {
@@ -7,11 +11,11 @@ public class Main {
         Carrello carrello = new Carrello();
         Scanner sc = new Scanner(System.in);
 
-        Notebook notebook = new Notebook(magazzino, "Notebook","Samsung","Galaxy book3","Tua zia",15.6,512,1999);
+        Notebook notebook = new Notebook(500, "Notebook","Samsung","Galaxy book3","Tua zia",15.6,512,1999);
 
-        Smartphone smartphone = new Smartphone(magazzino,"Tablet","Samsung","Patata","Cocco bello cocco fresco",14.7,700,499);
+        Smartphone smartphone = new Smartphone(500,"Tablet","Samsung","Patata","Cocco bello cocco fresco",14.7,700,499);
 
-        Tablet tablet = new Tablet(magazzino,"Tablet","Samsung","Patata","Bello acquisto",12.9,400,299);
+        Tablet tablet = new Tablet(500,"Tablet","Samsung","Patata","Bello acquisto",12.9,400,299);
 
         magazzino.stampa();
 
