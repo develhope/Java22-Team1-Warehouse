@@ -112,7 +112,7 @@ public class Magazzino {
         double average = 0;
 
         for (int i = 0; i < dispositivi.size(); i++) {
-            if (dispositivi.get(i).getDevice() == device) {
+            if (dispositivi.get(i).getDevice().equalsIgnoreCase(device)) {
                 devices.add(dispositivi.get(i));
             }
         }

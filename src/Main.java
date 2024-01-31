@@ -19,7 +19,11 @@ public class Main {
 
         Notebook notebook1 = new Notebook(1449, "Notebook","Samsung","Galaxy Book3","Gaming computer",15.6,1000,5000);
 
+        Notebook notebook2 = new Notebook(1449, "Notebook","Samsung","Galaxy Book3","Gaming computer",15.6,1000,6000);
+
+
         magazzino.aggiungi(notebook1);
+        magazzino.aggiungi(notebook2);
         magazzino.aggiungi(notebook);
         magazzino.aggiungi(tablet);
         magazzino.aggiungi(smartphone);
