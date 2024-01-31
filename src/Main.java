@@ -17,6 +17,9 @@ public class Main {
 
         Tablet tablet = new Tablet(549,"Tablet","Samsung","Galaxy Tab S8","grigio siderale",11,128,349);
 
+        Notebook notebook1 = new Notebook(1449, "Notebook","Samsung","Galaxy Book3","Gaming computer",15.6,1000,5000);
+
+        magazzino.aggiungi(notebook1);
         magazzino.aggiungi(notebook);
         magazzino.aggiungi(tablet);
         magazzino.aggiungi(smartphone);
@@ -41,6 +44,8 @@ public class Main {
 
 
         magazzino.stampa();
+        System.out.println(magazzino.getAverageDevicePrice("Notebook"));
+
 
 //        if (chosen1.isEmpty()) {
 //            System.out.println("Nessun dispositivo trovato.");
@@ -66,22 +71,22 @@ public class Main {
 //                System.out.println(dispositivo);
 //            }
 //        }
-        if (range.isEmpty()) {
-            System.out.println("Nessun dispositivo trovato.");
-        } else {
-            System.out.println("Dispositivi trovati:");
-            for (ClasseDispositivi dispositivo : range) {
-                System.out.println(dispositivo);
-            }
-        }
-        if (range2.isEmpty()) {
-            System.out.println("Nessun dispositivo trovato.");
-        } else {
-            System.out.println("Dispositivi trovati:");
-            for (ClasseDispositivi dispositivo : range2) {
-                System.out.println(dispositivo);
-            }
-        }
+//        if (range.isEmpty()) {
+//            System.out.println("Nessun dispositivo trovato.");
+//        } else {
+//            System.out.println("Dispositivi trovati:");
+//            for (ClasseDispositivi dispositivo : range) {
+//                System.out.println(dispositivo);
+//            }
+//        }
+//        if (range2.isEmpty()) {
+//            System.out.println("Nessun dispositivo trovato.");
+//        } else {
+//            System.out.println("Dispositivi trovati:");
+//            for (ClasseDispositivi dispositivo : range2) {
+//                System.out.println(dispositivo);
+//            }
+//        }
     }
 
 }

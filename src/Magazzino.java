@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import Dispositi.ClasseDispositivi;
 
@@ -92,6 +93,7 @@ public class Magazzino {
             return null;
         }
     }
+
     public ArrayList<ClasseDispositivi> getRangeBuy(int valLow, int valHigh) {
 
         ArrayList<ClasseDispositivi> dispositiviCompatibili = new ArrayList<>();
@@ -104,4 +106,20 @@ public class Magazzino {
         }
         return dispositiviCompatibili;
     }
+
+    public double getAverageDevicePrice(String device) {
+        ArrayList<ClasseDispositivi> devices = new ArrayList<>();
+        double average = 0;
+
+        for (int i = 0; i < dispositivi.size(); i++) {
+            if (dispositivi.get(i).getDevice() == device) {
+                devices.add(dispositivi.get(i));
+            }
+        }
+        for (int i = 0; i < devices.size(); i++) {
+            average += devices.get(i).getPurchase();
+        }
+        return average / devices.size();
+    }
 }
+
