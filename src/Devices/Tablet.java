@@ -1,5 +1,5 @@
-package Dispositi;
-public class Tablet extends ClasseDispositivi{
+package Devices;
+public class Tablet extends DeviceClasses{
 
     public Tablet(double sale,
                   String device,

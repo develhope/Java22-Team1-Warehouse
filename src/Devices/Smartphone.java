@@ -1,6 +1,6 @@
-package Dispositi;
+package Devices;
 
-public class Smartphone extends ClasseDispositivi {
+public class Smartphone extends DeviceClasses {
     public Smartphone(double sale,
                       String device,
                       String brand,
