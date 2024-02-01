@@ -24,37 +24,37 @@ public class Main {
         magazzino.aggiungi(tablet);
         magazzino.aggiungi(smartphone);
 
-        System.out.println("Cerca per:");
-        System.out.println("1: Modello");
-        System.out.println("2: Tipo dispositivo");
-        System.out.println("3: Descrizione");
-        System.out.println("4: Prezzo vendita");
-        System.out.println("5: Prezzo acquisto ");
-        System.out.println("Cerca per:");
-
-
-        String inputString = sc.nextLine().toLowerCase();
+//        System.out.println("Cerca per:");
+//        System.out.println("1: Modello");
+//        System.out.println("2: Tipo dispositivo");
+//        System.out.println("3: Descrizione");
+//        System.out.println("4: Prezzo vendita");
+//        System.out.println("5: Prezzo acquisto ");
+//        System.out.println("Cerca per:");
+//
+//
+        String inputString = sc.nextLine();
         System.out.println(inputString);
-
-        ArrayList<ClasseDispositivi> chosen1 = magazzino.getPerDispositivo(inputString);
-        ArrayList<ClasseDispositivi> chosen2 = magazzino.getPerModello(inputString);
-        ArrayList<ClasseDispositivi> chosen3 =  magazzino.getPerBrand(inputString);
-        ArrayList<ClasseDispositivi> range =  magazzino.getRangeSell(0,500);
-        ArrayList<ClasseDispositivi> range2 =  magazzino.getRangeBuy(0,500);
+//
+        ArrayList<ClasseDispositivi> chosen1 = magazzino.getCompatibili(inputString,"modello" );
+//        ArrayList<ClasseDispositivi> chosen2 = magazzino.getPerModello(inputString);
+//        ArrayList<ClasseDispositivi> chosen3 =  magazzino.getPerBrand(inputString);
+//        ArrayList<ClasseDispositivi> range =  magazzino.getRangeSell(0,500);
+//        ArrayList<ClasseDispositivi> range2 =  magazzino.getRangeBuy(0,500);
 
 
         magazzino.stampa();
-        System.out.println(magazzino.getAverageDevicePrice("Notebook"));
+        System.out.println(magazzino.getAverageDevicePrice("smartphone"));
 
 
-//        if (chosen1.isEmpty()) {
-//            System.out.println("Nessun dispositivo trovato.");
-//        } else {
-//            System.out.println("Dispositivi trovati:");
-//            for (ClasseDispositivi dispositivo : chosen1) {
-//                System.out.println(dispositivo);
-//            }
-//        }
+        if (chosen1.isEmpty()) {
+            System.out.println("Nessun dispositivo trovato.");
+        } else {
+            System.out.println("Dispositivi trovati:");
+            for (ClasseDispositivi dispositivo : chosen1) {
+                System.out.println(dispositivo);
+            }
+        }
 //        if (chosen2.isEmpty()) {
 //            System.out.println("Nessun dispositivo trovato.");
 //        } else {

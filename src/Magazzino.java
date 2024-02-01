@@ -10,8 +10,6 @@ public class Magazzino {
         this.dispositivi = new ArrayList<>();
     }
 
-    ;
-
     public void aggiungi(ClasseDispositivi dispositivo) {
         dispositivi.add(dispositivo);
     }
@@ -30,60 +28,31 @@ public class Magazzino {
         }
     }
 
-    public ArrayList<ClasseDispositivi> getPerDispositivo(String input) {
+    public ArrayList<ClasseDispositivi> getCompatibili(String input, String tipoRicerca) {
         String inputLowerCase = input.toLowerCase();
         ArrayList<ClasseDispositivi> dispositiviCompatibili = new ArrayList<>();
 
         for (int i = 0; i < dispositivi.size(); i++) {
-            String deviceLowerCase = dispositivi.get(i).getDevice().toLowerCase();
+            String researchLoweCase = "";
 
-            if (inputLowerCase.equals(deviceLowerCase)) {
+            switch (tipoRicerca) {
+                case "device":
+                    researchLoweCase = dispositivi.get(i).getDevice().toLowerCase();
+                    break;
+                case "modello":
+                    researchLoweCase = dispositivi.get(i).getModel().toLowerCase();
+                    break;
+                case "brand":
+                    researchLoweCase = dispositivi.get(i).getBrand().toLowerCase();
+            }
+
+            if (inputLowerCase.equals(researchLoweCase)) {
                 dispositiviCompatibili.add(dispositivi.get(i));
             }
         }
         return dispositiviCompatibili;
     }
 
-    public ArrayList<ClasseDispositivi> getPerModello(String input) {
-        String inputLowerCase = input.toLowerCase();
-        ArrayList<ClasseDispositivi> dispositiviCompatibili = new ArrayList<>();
-
-        for (int i = 0; i < dispositivi.size(); i++) {
-            String deviceLowerCase = dispositivi.get(i).getModel().toLowerCase();
-
-            if (inputLowerCase.equals(deviceLowerCase)) {
-                dispositiviCompatibili.add(dispositivi.get(i));
-            }
-        }
-        return dispositiviCompatibili;
-    }
-
-    public ArrayList<ClasseDispositivi> getPerBrand(String input) {
-        String inputLowerCase = input.toLowerCase();
-        ArrayList<ClasseDispositivi> dispositiviCompatibili = new ArrayList<>();
-
-        for (int i = 0; i < dispositivi.size(); i++) {
-            String deviceLowerCase = dispositivi.get(i).getBrand().toLowerCase();
-
-            if (inputLowerCase.equals(deviceLowerCase)) {
-                dispositiviCompatibili.add(dispositivi.get(i));
-            }
-        }
-        return dispositiviCompatibili;
-    }
-
-    public ArrayList<ClasseDispositivi> getRangeSell(int valLow, int valHigh) {
-
-        ArrayList<ClasseDispositivi> dispositiviCompatibili = new ArrayList<>();
-
-        for (int i = 0; i < dispositivi.size(); i++) {
-
-            if (dispositivi.get(i).getSale() <= valHigh && dispositivi.get(i).getSale() >= valLow) {
-                dispositiviCompatibili.add(dispositivi.get(i));
-            }
-        }
-        return dispositiviCompatibili;
-    }
 
     public ClasseDispositivi getIndiceDispositivo(int indice) {
         if (indice >= 0 && indice < dispositivi.size()) {
@@ -108,18 +77,17 @@ public class Magazzino {
     }
 
     public double getAverageDevicePrice(String device) {
-        ArrayList<ClasseDispositivi> devices = new ArrayList<>();
         double average = 0;
+        int counter = 0;
+        String deviceLowerCase = device.trim().toLowerCase();
 
         for (int i = 0; i < dispositivi.size(); i++) {
-            if (dispositivi.get(i).getDevice() == device) {
-                devices.add(dispositivi.get(i));
+            if (dispositivi.get(i).getDevice().toLowerCase().equals(deviceLowerCase)) {
+                average += dispositivi.get(i).getPurchase();
+                counter++;
             }
         }
-        for (int i = 0; i < devices.size(); i++) {
-            average += devices.get(i).getPurchase();
-        }
-        return average / devices.size();
+        return average / counter;
     }
 }
 
