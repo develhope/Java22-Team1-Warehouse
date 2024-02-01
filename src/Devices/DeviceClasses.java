@@ -10,6 +10,7 @@ public class DeviceClasses {
     private double purchase;
     private double sale;
 
+    private long id;
     public DeviceClasses(double sale,
                              String device,
                              String brand,
@@ -26,6 +27,14 @@ public class DeviceClasses {
         this.storage = storage;
         this.purchase = purchase;
         this.sale = sale;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setDevice(String device) {

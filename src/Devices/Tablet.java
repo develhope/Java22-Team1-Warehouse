@@ -11,13 +11,13 @@ public class Tablet extends DeviceClasses{
                   double purchase) {
         super(sale, device, brand, model, description, display, storage, purchase);
     }
-    private double id;
+    private long id;
 
-    public double getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(double id) {
+    public void setId(long id) {
         this.id = id;
     }
 }
