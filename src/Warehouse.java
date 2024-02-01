@@ -17,7 +17,7 @@ public class Warehouse {
         if (index >= 0 && index < devices.size()) {
             devices.remove(index);
         } else {
-            System.out.println("Index not valid");
+            System.out.println("Indice non valido");
         }
     }
 
@@ -53,9 +53,9 @@ public class Warehouse {
     }
 
 
-    public DeviceClasses getDeviceIndex(int indice) {
-        if (indice >= 0 && indice < devices.size()) {
-            return devices.get(indice);
+    public DeviceClasses getDeviceByIndex(int i) {
+        if (i >= 0 && i < devices.size()) {
+            return devices.get(i);
         } else {
             System.out.println("Indice non valido");
             return null;

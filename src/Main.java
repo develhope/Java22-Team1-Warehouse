@@ -24,6 +24,17 @@ public class Main {
         warehouse.addDevice(tablet);
         warehouse.addDevice(smartphone);
 
+        warehouse.printAllDevices();
+
+        cart.addDevice(warehouse.getDeviceByIndex(0));
+        warehouse.removeDevice(0);
+        cart.addDevice(warehouse.getDeviceByIndex(1));
+        warehouse.removeDevice(1);
+        cart.addDevice(warehouse.getDeviceByIndex(2));
+        warehouse.removeDevice(2);
+
+        cart.printAllDevices();
+
     }
 
 }
