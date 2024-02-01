@@ -1,6 +1,6 @@
-package Dispositi;
+package Devices;
 
-public class ClasseDispositivi {
+public class DeviceClasses {
     private String device;
     private String brand;
     private String model;
@@ -10,7 +10,7 @@ public class ClasseDispositivi {
     private double purchase;
     private double sale;
 
-    public ClasseDispositivi(double sale,
+    public DeviceClasses(double sale,
                              String device,
                              String brand,
                              String model,
@@ -94,7 +94,7 @@ public class ClasseDispositivi {
 
     @Override
     public String toString() {
-        return "ClasseDispositivi{" +
+        return "DeviceClasses{" +
                 "device='" + device + '\'' +
                 ", brand='" + brand + '\'' +
                 ", model='" + model + '\'' +

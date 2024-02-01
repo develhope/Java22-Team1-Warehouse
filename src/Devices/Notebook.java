@@ -1,6 +1,6 @@
-package Dispositi;
+package Devices;
 
-public class Notebook extends ClasseDispositivi{
+public class Notebook extends Devices.DeviceClasses {
     public Notebook(double sale,
                     String device,
                     String brand,
