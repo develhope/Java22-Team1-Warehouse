@@ -48,6 +48,8 @@ public class Cart {
         }
     }
 
+    public
+
     // Svuota cart
     public void emptyList() {
         devices.clear();

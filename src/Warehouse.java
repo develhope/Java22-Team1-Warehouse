@@ -32,20 +32,20 @@ public class Warehouse {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (int i = 0; i < devices.size(); i++) {
-            String researchLoweCase = "";
+            String researchLowerCase = "";
 
             switch (researchType) {
                 case "device":
-                    researchLoweCase = devices.get(i).getDevice().toLowerCase();
+                    researchLowerCase = devices.get(i).getDevice().toLowerCase();
                     break;
-                case "modello":
-                    researchLoweCase = devices.get(i).getModel().toLowerCase();
+                case "model":
+                    researchLowerCase = devices.get(i).getModel().toLowerCase();
                     break;
                 case "brand":
-                    researchLoweCase = devices.get(i).getBrand().toLowerCase();
+                    researchLowerCase = devices.get(i).getBrand().toLowerCase();
             }
 
-            if (inputLowerCase.equals(researchLoweCase)) {
+            if (inputLowerCase.equals(researchLowerCase)) {
                 devicesCompatibili.add(devices.get(i));
             }
         }
