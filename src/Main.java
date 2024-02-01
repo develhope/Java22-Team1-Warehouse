@@ -18,11 +18,11 @@ public class Main {
         Notebook notebook = new Notebook(1449, "Notebook", "Samsung", "Galaxy Book3", "Gaming computer", 15.6, 1000, 899);
         notebook.setId(rand.nextLong(1000000000));
         Smartphone smartphone = new Smartphone(159, "Smartphone", "Samsung", "A14", "nero", 6.6, 128, 49);
-
+        smartphone.setId(rand.nextLong(1000000000));
         Tablet tablet = new Tablet(549, "Tablet", "Samsung", "Galaxy Tab S8", "grigio siderale", 11, 128, 349);
-
-        Notebook notebook1 = new Notebook(1449, "Notebook", "Samsung", "Galaxy Book3", "Gaming computer", 15.6, 1000, 5000);
-
+        tablet.setId(rand.nextInt(1000000000));
+        Notebook notebook1 = new Notebook(1449, "Notebook", "Huawei", "Pippo", "molto bello", 25.0, 7000, 5000);
+        notebook1.setId(rand.nextLong(1000000000));
 
 
         warehouse.addDevice(notebook1);
@@ -30,29 +30,23 @@ public class Main {
         warehouse.addDevice(tablet);
         warehouse.addDevice(smartphone);
 
-//        warehouse.printAllDevices();
-//
-//        cart.addDevice(warehouse.getDeviceByIndex(0));
-//        warehouse.removeDevice(0);
-//        cart.addDevice(warehouse.getDeviceByIndex(1));
-//        warehouse.removeDevice(1);
-//        cart.addDevice(warehouse.getDeviceByIndex(2));
-//        warehouse.removeDevice(2);
-//
-//        cart.printAllDevices();
+
+        System.out.println("magazzino prima: ");
+        warehouse.printAllDevices();
+
+        addToCartRemoveFromWarehouse(warehouse, cart, notebook.getId());
+
+        System.out.println("carrello aggiornato: ");
+        cart.printAllDevices();
+
+        System.out.println("magazzino dopo: ");
+        warehouse.printAllDevices();
 
 
-
-
-
-
-
-
-
-//      ArrayList<DeviceClasses> conte = warehouse.getCompatibles("notebook", "device");
-//        for (DeviceClasses devices : conte) {
-//            System.out.println(devices);
-//        }
     }
 
+    public static void addToCartRemoveFromWarehouse(Warehouse warehouse, Cart cart, long id) {
+        cart.updatedCart(warehouse.getDeviceById(id));
+        warehouse.removeDeviceById(id);
+    }
 }

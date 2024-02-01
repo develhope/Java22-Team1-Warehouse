@@ -86,5 +86,23 @@ public class Warehouse {
         }
         return average / counter;
     }
-}
 
+    // ottenere il dispositivo tramite id
+    public DeviceClasses getDeviceById(long id) {
+        for (int i = 0; i < devices.size(); i++) {
+            if (devices.get(i).getId() == id) {
+                return devices.get(i);
+            }
+        }
+        return null;
+    }
+
+    // rimuovere il dispositivo tramite id
+    public void removeDeviceById(long id) {
+        for (int i = 0; i < devices.size(); i++) {
+            if (devices.get(i).getId() == id) {
+                devices.remove(i);
+            }
+        }
+    }
+}
