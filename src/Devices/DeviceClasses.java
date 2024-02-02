@@ -101,6 +101,7 @@ public class DeviceClasses {
         return sale;
     }
 
+
     @Override
     public String toString() {
         return "DeviceClasses{" +
@@ -112,7 +113,7 @@ public class DeviceClasses {
                 ", storage=" + storage +
                 ", purchase=" + purchase +
                 ", sale=" + sale +
+                ", id=" + id +
                 '}';
     }
-
 }

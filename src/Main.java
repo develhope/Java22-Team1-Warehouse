@@ -9,10 +9,11 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Warehouse warehouse = new Warehouse();
         Cart cart = new Cart();
         Scanner sc = new Scanner(System.in);
+
 
         Notebook notebook = new Notebook(1500, "Notebook", "Samsung", "Galaxy Book3", "Gaming computer", 15.6, 1000, 899);
         setIdAddDeviceInWarehouse(warehouse, notebook);
@@ -23,27 +24,97 @@ public class Main {
         Notebook notebook1 = new Notebook(1449, "Notebook", "Huawei", "Pippo", "molto bello", 25.0, 7000, 5000);
         setIdAddDeviceInWarehouse(warehouse, notebook1);
 
+        boolean operator = false;
+        boolean user = false;
 
-            System.out.println("magazzino");
-            warehouse.printAllDevices();
-            System.out.println("primo aggiornamento carrello");
-            fromWarehouseToCart(warehouse, cart, notebook.getId());
+        System.out.println("1) Digitare 1 per profilo utente:");
+        System.out.println("2) Digitare 2 per profilo operatore:");
+        int scelta = sc.nextInt();
 
-            System.out.println("Magazzino");
-            warehouse.printAllDevices();
+        switch (scelta) {
+            case 1:
+                userMenu(cart, warehouse);
+                break;
+            case 2:
 
-            System.out.println("Secondo aggiornamento carrello");
+                break;
+        }
+    }
 
-            fromWarehouseToCart(warehouse, cart, smartphone.getId());
+    public static void userMenu(Cart cart, Warehouse warehouse) throws Exception {
+        Scanner sc = new Scanner(System.in);
+        int sceltaUser;
+        do {
+            System.out.println("Scegli l operazione da effettuare:");
+            System.out.println("1) Visualizza tutti prodotti");
+            System.out.println("2) Ricerca per tipo dispositivo:");
+            System.out.println("3) Ricerca per produttore:");
+            System.out.println("4) Ricerca per modello:");
+            System.out.println("5) Ricerca per prezzo di vendita:");
+            System.out.println("6) Ricerca per range di prezzo:");
+            System.out.println("7) Aggiungi al carrello:");
+            System.out.println("8) Rimuovi dal carrello:");
+            System.out.println("9) Calcolare il totale:");
+            System.out.println("10) Visualizza carrello:");
+            System.out.println("11) Acquista:");
+            System.out.println("0) Fine:");
+            sceltaUser = sc.nextInt();
+            switch (sceltaUser) {
+                case 1:
+                    warehouse.printAllDevices();
+                    break;
+                case 2:
+                    System.out.println("Inserisci il nome del tipo di dispositivo:");
+                    String sceltaDisp = sc.next();
+                    System.out.println(warehouse.getCompatibles(sceltaDisp, "device"));
 
-            System.out.println("togliamo smartphone da carrello");
-            fromCartToWarehouse(warehouse, cart, smartphone.getId());
+                    break;
+                case 3:
+                    String sceltaBrand = sc.next();
+                    warehouse.getCompatibles(sceltaBrand, "brand");
+                    break;
+                case 4:
+                    String sceltaModel = sc.next();
+                    warehouse.getCompatibles(sceltaModel, "model");
+                    break;
+                case 5:
+                    int sceltaForPrice = sc.nextInt();
+                    warehouse.getBySellPrice(sceltaForPrice);
+                    break;
+                case 6:
+                    System.out.println("Inserisci il prezzo minimo:");
+                    int sceltaForPriceRange = sc.nextInt();
+                    System.out.println("Inserisci il prezzo massimo:");
+                    int sceltaForPriceRange2 = sc.nextInt();
 
+                    warehouse.getRangeSale(sceltaForPriceRange, sceltaForPriceRange2);
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    cart.getFinalPrice();
+                    break;
+                case 10:
+                    cart.printAllDevices();
+                    break;
+                case 11:
+                    System.out.println("1) Sei un privato ");
+                    System.out.println("2) Hai una partita iva");
+                    boolean partitaIva = false;
+                    int sceltaUtente = sc.nextInt();
+                    if (sceltaUtente == 1) {
+                        partitaIva = true;
+                    }
+                    finalizzaVendita(cart, partitaIva);
+                    break;
+                case 0:
+                    break;
 
+            }
 
-
-
-
+        } while (sceltaUser != 0);
     }
 
     public static void setIdAddDeviceInWarehouse(Warehouse warehouse, DeviceClasses device) {
@@ -63,10 +134,10 @@ public class Main {
         cart.removeDeviceById(id);
         cart.printAllDevices();
     }
-
-    public static String finalizzaVendita(Cart cart , boolean iva) {
+ // Patata
+    public static String finalizzaVendita(Cart cart, boolean iva) {
         double finalPrice;
-        if(iva) {
+        if (iva) {
             finalPrice = cart.getFinalPrice() * 1.22;
         } else {
             finalPrice = cart.getFinalPrice();
