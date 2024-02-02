@@ -14,7 +14,7 @@ public class Main {
         Cart cart = new Cart();
         Scanner sc = new Scanner(System.in);
 
-        Notebook notebook = new Notebook(1449, "Notebook", "Samsung", "Galaxy Book3", "Gaming computer", 15.6, 1000, 899);
+        Notebook notebook = new Notebook(1500, "Notebook", "Samsung", "Galaxy Book3", "Gaming computer", 15.6, 1000, 899);
         setIdAddDeviceInWarehouse(warehouse, notebook);
         Smartphone smartphone = new Smartphone(159, "Smartphone", "Samsung", "A14", "nero", 6.6, 128, 49);
         setIdAddDeviceInWarehouse(warehouse, smartphone);
@@ -24,25 +24,25 @@ public class Main {
         setIdAddDeviceInWarehouse(warehouse, notebook1);
 
 
-        System.out.println("Magazzino prima mettere in cart: ");
-        warehouse.printAllDevices();
+            System.out.println("magazzino");
+            warehouse.printAllDevices();
+            System.out.println("primo aggiornamento carrello");
+            fromWarehouseToCart(warehouse, cart, notebook.getId());
 
-        switchFromCartToWarehouse(warehouse, cart, notebook.getId());
-        switchFromCartToWarehouse(warehouse, cart, smartphone.getId());
+            System.out.println("Magazzino");
+            warehouse.printAllDevices();
 
-        System.out.println("carrello aggiornato: ");
-        cart.printAllDevices();
+            System.out.println("Secondo aggiornamento carrello");
 
-        System.out.println("magazzino dopo averli messi in cart: ");
-        warehouse.printAllDevices();
+            fromWarehouseToCart(warehouse, cart, smartphone.getId());
 
-        switchFromWarehouseToCart(warehouse, cart, notebook.getId());
+            System.out.println("togliamo smartphone da carrello");
+            fromCartToWarehouse(warehouse, cart, smartphone.getId());
 
-        System.out.println("magazzino dopo aver rimosso 1 dal carrello: ");
-        warehouse.printAllDevices();
 
-        System.out.println("Carrello dopo aver rimosso 1");
-        cart.printAllDevices();
+
+
+
 
     }
 
@@ -52,13 +52,26 @@ public class Main {
         warehouse.addDevice(device);
     }
 
-    public static void switchFromCartToWarehouse(Warehouse warehouse, Cart cart, long id) {
+    public static void fromWarehouseToCart(Warehouse warehouse, Cart cart, long id) {
         cart.addDevice(warehouse.getDeviceById(id));
         warehouse.removeDeviceById(id);
+        cart.printAllDevices();
     }
 
-    public static void switchFromWarehouseToCart(Warehouse warehouse, Cart cart, long id) {
+    public static void fromCartToWarehouse(Warehouse warehouse, Cart cart, long id) {
         warehouse.addDevice(cart.getDeviceById(id));
         cart.removeDeviceById(id);
+        cart.printAllDevices();
+    }
+
+    public static String finalizzaVendita(Cart cart , boolean iva) {
+        double finalPrice;
+        if(iva) {
+            finalPrice = cart.getFinalPrice() * 1.22;
+        } else {
+            finalPrice = cart.getFinalPrice();
+        }
+        cart.emptyList();
+        return "Questo è il tuo prezzo finale: " + finalPrice;
     }
 }

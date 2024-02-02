@@ -65,7 +65,7 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
-    public ArrayList<DeviceClasses> getRangeBuy(int valLow, int valHigh) {
+    public ArrayList<DeviceClasses> getRangePurchase(int valLow, int valHigh) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (int i = 0; i < devices.size(); i++) {
@@ -74,6 +74,47 @@ public class Warehouse {
             }
         }
         return devicesCompatibili;
+    }
+
+    public ArrayList<DeviceClasses> getRangeSale(int valLow, int valHigh) {
+        ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
+
+        for (int i = 0; i < devices.size(); i++) {
+            if (devices.get(i).getSale() <= valHigh && devices.get(i).getSale() >= valLow) {
+                devicesCompatibili.add(devices.get(i));
+            }
+        }
+        return devicesCompatibili;
+    }
+
+    public ArrayList<DeviceClasses> getBySellPrice(int range) throws Exception {
+        ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
+
+        for (int i = 0; i < devices.size(); i++) {
+            if (devices.get(i).getSale() == range) {
+                devicesCompatibili.add(devices.get(i));
+            }
+        }
+        if (devicesCompatibili.size() == 0) {
+            throw new Exception("Sei fuori range");
+        } else {
+            return devicesCompatibili;
+        }
+    }
+
+    public ArrayList<DeviceClasses> getByPurchasePrice(int range) throws Exception {
+        ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
+
+        for (int i = 0; i < devices.size(); i++) {
+            if (devices.get(i).getPurchase() == range) {
+                devicesCompatibili.add(devices.get(i));
+            }
+        }
+        if (devicesCompatibili.size() == 0) {
+            throw new Exception("Sei fuori range");
+        } else {
+            return devicesCompatibili;
+        }
     }
 
     public double getAverageDevicePrice(String device) {

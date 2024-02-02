@@ -46,7 +46,7 @@ public class Cart {
     public double getFinalPrice() {
         double prezzoFinale = 0;
         for (DeviceClasses dispositivo : devices) {
-            prezzoFinale += dispositivo.getPurchase();
+            prezzoFinale += dispositivo.getSale();
         }
         return prezzoFinale;
     }
@@ -55,5 +55,6 @@ public class Cart {
     public void emptyList() {
         devices.clear();
     }
+
 
 }
