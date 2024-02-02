@@ -134,7 +134,7 @@ public class Main {
         cart.removeDeviceById(id);
         cart.printAllDevices();
     }
-
+ // Patata
     public static String finalizzaVendita(Cart cart, boolean iva) {
         double finalPrice;
         if (iva) {
