@@ -35,6 +35,7 @@ public class Main {
         warehouse.printAllDevices();
 
         addToCartRemoveFromWarehouse(warehouse, cart, notebook.getId());
+        addToCartRemoveFromWarehouse(warehouse,cart, smartphone.getId());
 
         System.out.println("carrello aggiornato: ");
         cart.printAllDevices();
@@ -45,6 +46,7 @@ public class Main {
         addToWarehouseRemoveFromCart(warehouse, cart, notebook.getId());
         System.out.println("magazzino dopo carrello aggiornato: ");
         warehouse.printAllDevices();
+        System.out.println("Carrello dopo");
         cart.printAllDevices();
 
     }
