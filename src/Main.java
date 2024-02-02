@@ -42,11 +42,21 @@ public class Main {
         System.out.println("magazzino dopo: ");
         warehouse.printAllDevices();
 
+        addToWarehouseRemoveFromCart(warehouse, cart, notebook.getId());
+        System.out.println("magazzino dopo carrello aggiornato: ");
+        warehouse.printAllDevices();
+        cart.printAllDevices();
 
     }
 
     public static void addToCartRemoveFromWarehouse(Warehouse warehouse, Cart cart, long id) {
-        cart.updatedCart(warehouse.getDeviceById(id));
+        DeviceClasses device = warehouse.getDeviceById(id);
+        cart.updatedCart(device);
         warehouse.removeDeviceById(id);
+    }
+    public static void addToWarehouseRemoveFromCart(Warehouse warehouse, Cart cart, long id) {
+        DeviceClasses device = cart.getDeviceById(id);
+        cart.removeDeviceById(id);
+        warehouse.updatedToWarehouse(device);
     }
 }

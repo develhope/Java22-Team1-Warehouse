@@ -102,7 +102,14 @@ public class Warehouse {
         for (int i = 0; i < devices.size(); i++) {
             if (devices.get(i).getId() == id) {
                 devices.remove(i);
+                break;
             }
         }
     }
+    //Aggiorna il magazzino
+    public ArrayList<DeviceClasses> updatedToWarehouse(DeviceClasses classe) {
+        addDevice(classe);
+        return devices;
+    }
+
 }

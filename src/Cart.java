@@ -59,4 +59,22 @@ public class Cart {
         addDevice(classe);
         return devices;
     }
+    // Rimuove dal carrello tramite ID
+    public void removeDeviceById(long id) {
+        for (int i = 0; i < devices.size(); i++) {
+            if (devices.get(i).getId() == id) {
+                devices.remove(i);
+                break;
+            }
+        }
+    }
+    //Ottieni prodotto da ID
+    public DeviceClasses getDeviceById(long id) {
+        for (int i = 0; i < devices.size(); i++) {
+            if (devices.get(i).getId() == id) {
+                return devices.get(i);
+            }
+        }
+        return null;
+    }
 }
