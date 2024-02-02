@@ -13,11 +13,24 @@ public class Warehouse {
         devices.add(device);
     }
 
-    public void removeDevice(int index) {
-        if (index >= 0 && index < devices.size()) {
-            devices.remove(index);
-        } else {
-            System.out.println("Indice non valido");
+    // ottenere il dispositivo tramite id
+    public DeviceClasses getDeviceById(long id) {
+        for (int i = 0; i < devices.size(); i++) {
+            if (devices.get(i).getId() == id) {
+                return devices.get(i);
+
+            }
+        }
+        return null;
+    }
+
+    // rimuovere il dispositivo tramite id
+    public void removeDeviceById(long id) {
+        for (int i = 0; i < devices.size(); i++) {
+            if (devices.get(i).getId() == id) {
+                devices.remove(i);
+                break;
+            }
         }
     }
 
@@ -52,16 +65,6 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
-
-    public DeviceClasses getDeviceByIndex(int i) {
-        if (i >= 0 && i < devices.size()) {
-            return devices.get(i);
-        } else {
-            System.out.println("Indice non valido");
-            return null;
-        }
-    }
-
     public ArrayList<DeviceClasses> getRangeBuy(int valLow, int valHigh) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
@@ -74,42 +77,18 @@ public class Warehouse {
     }
 
     public double getAverageDevicePrice(String device) {
-        double average = 0;
+        double sum = 0;
         int counter = 0;
         String deviceLowerCase = device.trim().toLowerCase();
 
         for (int i = 0; i < devices.size(); i++) {
             if (devices.get(i).getDevice().toLowerCase().equals(deviceLowerCase)) {
-                average += devices.get(i).getPurchase();
+                sum += devices.get(i).getPurchase();
                 counter++;
             }
         }
-        return average / counter;
+        return sum / counter;
     }
 
-    // ottenere il dispositivo tramite id
-    public DeviceClasses getDeviceById(long id) {
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getId() == id) {
-                return devices.get(i);
-            }
-        }
-        return null;
-    }
-
-    // rimuovere il dispositivo tramite id
-    public void removeDeviceById(long id) {
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getId() == id) {
-                devices.remove(i);
-                break;
-            }
-        }
-    }
-    //Aggiorna il magazzino
-    public ArrayList<DeviceClasses> updatedToWarehouse(DeviceClasses classe) {
-        addDevice(classe);
-        return devices;
-    }
 
 }
