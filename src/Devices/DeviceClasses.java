@@ -11,14 +11,15 @@ public class DeviceClasses {
     private double sale;
 
     private long id;
+
     public DeviceClasses(double sale,
-                             String device,
-                             String brand,
-                             String model,
-                             String description,
-                             double display,
-                             double storage,
-                             double purchase) {
+                         String device,
+                         String brand,
+                         String model,
+                         String description,
+                         double display,
+                         double storage,
+                         double purchase) {
         this.device = device;
         this.brand = brand;
         this.model = model;
@@ -104,7 +105,7 @@ public class DeviceClasses {
 
     @Override
     public String toString() {
-        return "DeviceClasses{" +
+        return " " +
                 "device='" + device + '\'' +
                 ", brand='" + brand + '\'' +
                 ", model='" + model + '\'' +
@@ -113,7 +114,6 @@ public class DeviceClasses {
                 ", storage=" + storage +
                 ", purchase=" + purchase +
                 ", sale=" + sale +
-                ", id=" + id +
-                '}';
+                ", id=";
     }
 }

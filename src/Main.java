@@ -27,6 +27,8 @@ public class Main {
         boolean operator = false;
         boolean user = false;
 
+        System.out.println(notebook.getId());
+
         System.out.println("1) Digitare 1 per profilo utente:");
         System.out.println("2) Digitare 2 per profilo operatore:");
         int scelta = sc.nextInt();
@@ -70,16 +72,19 @@ public class Main {
 
                     break;
                 case 3:
+                    System.out.println("Inserisci il nome del brand del dispositivo:");
                     String sceltaBrand = sc.next();
-                    warehouse.getCompatibles(sceltaBrand, "brand");
+                    System.out.println(warehouse.getCompatibles(sceltaBrand, "brand"));
                     break;
                 case 4:
+                    System.out.println("Inserisci il nome del modello del dispositivo:");
                     String sceltaModel = sc.next();
-                    warehouse.getCompatibles(sceltaModel, "model");
+                    System.out.println(warehouse.getCompatibles(sceltaModel, "model"));
                     break;
                 case 5:
+                    System.out.println("Inserisci il prezzo:");
                     int sceltaForPrice = sc.nextInt();
-                    warehouse.getBySellPrice(sceltaForPrice);
+                    System.out.println(warehouse.getBySellPrice(sceltaForPrice));
                     break;
                 case 6:
                     System.out.println("Inserisci il prezzo minimo:");
@@ -90,13 +95,21 @@ public class Main {
                     warehouse.getRangeSale(sceltaForPriceRange, sceltaForPriceRange2);
                     break;
                 case 7:
+                    System.out.println("Digita un id per aggiungere al carrello:");
+                    long sceltaId = sc.nextLong();
+                    fromWarehouseToCart(warehouse, cart, sceltaId);
                     break;
                 case 8:
+                    System.out.println("Digita un id per rimuovere dal carrello :");
+                    long sceltaId2 = sc.nextLong();
+                    fromCartToWarehouse(warehouse, cart, sceltaId2);
                     break;
                 case 9:
-                    cart.getFinalPrice();
+                    System.out.println("Il prezzo finale del carrello è:");
+                    System.out.println(cart.getFinalPrice());
                     break;
                 case 10:
+                    System.out.println("Questo è il carrello: ");
                     cart.printAllDevices();
                     break;
                 case 11:
@@ -119,8 +132,8 @@ public class Main {
 
     public static void setIdAddDeviceInWarehouse(Warehouse warehouse, DeviceClasses device) {
         Random rand = new Random();
-        device.setId(rand.nextLong(999999999));
         warehouse.addDevice(device);
+        device.setId(rand.nextLong(999999999));
     }
 
     public static void fromWarehouseToCart(Warehouse warehouse, Cart cart, long id) {
@@ -134,7 +147,7 @@ public class Main {
         cart.removeDeviceById(id);
         cart.printAllDevices();
     }
- // Patata
+
     public static String finalizzaVendita(Cart cart, boolean iva) {
         double finalPrice;
         if (iva) {

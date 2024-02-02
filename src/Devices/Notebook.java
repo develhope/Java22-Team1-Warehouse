@@ -11,6 +11,7 @@ public class Notebook extends Devices.DeviceClasses {
                     double purchase) {
         super(sale, device, brand, model, description, display, storage, purchase);
     }
+
     private long id;
 
     public long getId() {
@@ -21,4 +22,3 @@ public class Notebook extends Devices.DeviceClasses {
         this.id = id;
     }
 }
-
