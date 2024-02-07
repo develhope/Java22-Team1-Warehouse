@@ -48,7 +48,7 @@ public class Main {
     }
     public static void userMenu(Cart cart, Warehouse warehouse) throws Exception {
         Scanner sc = new Scanner(System.in);
-        int sceltaUser;
+        String sceltaUser;
         do {
             System.out.println("Scegli l operazione da effettuare:");
             System.out.println("1) Visualizza tutti prodotti");
@@ -63,33 +63,33 @@ public class Main {
             System.out.println("10) Visualizza carrello:");
             System.out.println("11) Acquista:");
             System.out.println("0) Fine:");
-            sceltaUser = sc.nextInt();
+            sceltaUser = sc.next();
             switch (sceltaUser) {
-                case 1:
+                case "1":
                     warehouse.printAllDevices();
                     break;
-                case 2:
+                case "2":
                     System.out.println("Inserisci il nome del tipo di dispositivo:");
                     String sceltaDisp = sc.next();
                     System.out.println(warehouse.getCompatibles(sceltaDisp, "device"));
 
                     break;
-                case 3:
+                case "3":
                     System.out.println("Inserisci il nome del brand del dispositivo:");
                     String sceltaBrand = sc.next();
                     System.out.println(warehouse.getCompatibles(sceltaBrand, "brand"));
                     break;
-                case 4:
+                case "4":
                     System.out.println("Inserisci il nome del modello del dispositivo:");
                     String sceltaModel = sc.next();
                     System.out.println(warehouse.getCompatibles(sceltaModel, "model"));
                     break;
-                case 5:
+                case "5":
                     System.out.println("Inserisci il prezzo:");
                     int sceltaForPrice = sc.nextInt();
                     System.out.println(warehouse.getBySellPrice(sceltaForPrice));
                     break;
-                case 6:
+                case "6":
                     System.out.println("Inserisci il prezzo minimo:");
                     int sceltaForPriceRange = sc.nextInt();
                     System.out.println("Inserisci il prezzo massimo:");
@@ -97,25 +97,25 @@ public class Main {
 
                     warehouse.getRangeSale(sceltaForPriceRange, sceltaForPriceRange2);
                     break;
-                case 7:
+                case "7":
                     System.out.println("Digita un id per aggiungere al carrello:");
                     long sceltaId = sc.nextLong();
                     fromWarehouseToCart(warehouse, cart, sceltaId);
                     break;
-                case 8:
+                case "8":
                     System.out.println("Digita un id per rimuovere dal carrello :");
                     long sceltaId2 = sc.nextLong();
                     fromCartToWarehouse(warehouse, cart, sceltaId2);
                     break;
-                case 9:
+                case "9":
                     System.out.println("Il prezzo finale del carrello è:");
                     System.out.println(cart.getFinalPrice());
                     break;
-                case 10:
+                case "10":
                     System.out.println("Questo è il carrello: ");
                     cart.printAllDevices();
                     break;
-                case 11:
+                case "11":
                     System.out.println("1) Sei un privato ");
                     System.out.println("2) Hai una partita iva");
                     boolean partitaIva = false;
@@ -125,12 +125,13 @@ public class Main {
                     }
                     finalizzaVendita(cart, partitaIva);
                     break;
-                case 0:
+                case "0":
                     break;
-
+                default:
+                    System.out.println("Carattere non valido");
             }
 
-        } while (sceltaUser != 0);
+        } while (!sceltaUser.equals("0"));
     }
 
     public static void setIdAddDeviceInWarehouse(Warehouse warehouse, DeviceClasses device) {
