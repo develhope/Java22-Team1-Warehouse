@@ -3,10 +3,7 @@ import Devices.Smartphone;
 import Devices.Notebook;
 import Devices.Tablet;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.Random;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -29,22 +26,22 @@ public class Main {
         System.out.println(notebook.getId());
         System.out.println("1) Digitare 1 per profilo utente:");
         System.out.println("2) Digitare 2 per profilo operatore:");
-        int scelta = sc.nextInt();
+        String scelta = sc.next();
 
-        while(scelta!=1 && scelta!=2) {
+        while(!Objects.equals(scelta, "1") && !Objects.equals(scelta, "2")) {
 
-            if (scelta != 1 && scelta != 2) {
+            if (!scelta.equals("1")  && !scelta.equals("2") ) {
                 System.out.println("Scelta non disponiblie");
                 System.out.println("1) Digitare 1 per profilo utente:");
                 System.out.println("2) Digitare 2 per profilo operatore:");
             }
-            scelta = sc.nextInt();
+            scelta = sc.next();
         }
         switch (scelta) {
-            case 1:
+            case "1":
                 userMenu(cart, warehouse);
                 break;
-            case 2:
+            case "2":
 
                 break;
         }
