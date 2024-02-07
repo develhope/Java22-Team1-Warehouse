@@ -108,15 +108,15 @@ public class DeviceClasses {
     @Override
     public String toString() {
         return
-                "Device: " + device + '\'' +
-                        ", Brand: " + brand + '\'' +
-                        ", Model: " + model + '\'' +
-                        ", Description: " + description + '\'' +
+                "Device: " + device +
+                        ", Brand: " + brand +
+                        ", Model: " + model +
+                        ", Description: " + description +
                         ", Display: " + display +
                         ", Storage: " + storage +
                         ", Surchaseç " + purchase +
                         ", Sale: " + sale +
-                        ", Id:" + id;
+                        ", Id: " + id + "\n";
     }
 
     @Override

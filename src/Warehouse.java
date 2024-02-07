@@ -34,9 +34,19 @@ public class Warehouse {
         }
     }
 
+    // Controlla se l'id esiste
+    public boolean containsDeviceById(long id) {
+        for (DeviceClasses device : devices) {
+            if (device.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void printAllDevices() {
         for (int i = 0; i < devices.size(); i++) {
-            System.out.println(i + " : " + devices.get(i));
+            System.out.print(devices.get(i));
         }
     }
 
@@ -62,6 +72,10 @@ public class Warehouse {
                 devicesCompatibili.add(devices.get(i));
             }
         }
+        if (devicesCompatibili.isEmpty()) {
+            System.out.println("Nessun dispositivo compatibile trovato.");
+        }
+
         return devicesCompatibili;
     }
 
@@ -73,6 +87,10 @@ public class Warehouse {
                 devicesCompatibili.add(devices.get(i));
             }
         }
+        if (devicesCompatibili.isEmpty()) {
+            System.out.println("Nessun dispositivo in questo range trovato.");
+        }
+
         return devicesCompatibili;
     }
 
@@ -84,10 +102,14 @@ public class Warehouse {
                 devicesCompatibili.add(devices.get(i));
             }
         }
+        if (devicesCompatibili.isEmpty()) {
+            System.out.println("Nessun dispositivo compatibile trovato.");
+        }
+
         return devicesCompatibili;
     }
 
-    public ArrayList<DeviceClasses> getBySellPrice(int range) throws Exception {
+    public ArrayList<DeviceClasses> getBySellPrice(int range) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (int i = 0; i < devices.size(); i++) {
@@ -95,14 +117,15 @@ public class Warehouse {
                 devicesCompatibili.add(devices.get(i));
             }
         }
-        if (devicesCompatibili.size() == 0) {
-            throw new Exception("Sei fuori range");
+        if (devicesCompatibili.isEmpty()) {
+            System.out.println("Nessun dispositivo con questo prezzo trovato.");
+            return devicesCompatibili;
         } else {
             return devicesCompatibili;
         }
     }
 
-    public ArrayList<DeviceClasses> getByPurchasePrice(int range) throws Exception {
+    public ArrayList<DeviceClasses> getByPurchasePrice(int range)  {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (int i = 0; i < devices.size(); i++) {
@@ -110,11 +133,10 @@ public class Warehouse {
                 devicesCompatibili.add(devices.get(i));
             }
         }
-        if (devicesCompatibili.size() == 0) {
-            throw new Exception("Sei fuori range");
-        } else {
-            return devicesCompatibili;
+        if (devicesCompatibili.isEmpty()) {
+            System.out.println("Nessun dispositivo con questo prezzo trovato.");
         }
+        return devicesCompatibili;
     }
 
     public double getAverageDevicePrice(String device) {

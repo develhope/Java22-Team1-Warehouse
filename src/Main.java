@@ -6,7 +6,7 @@ import Devices.Tablet;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Warehouse warehouse = new Warehouse();
         Cart cart = new Cart();
         Scanner sc = new Scanner(System.in);
@@ -21,9 +21,7 @@ public class Main {
         Notebook notebook1 = new Notebook(1449, "Notebook", "Huawei", "Pippo", "molto bello", 25.0, 7000, 5000);
         setIdAddDeviceInWarehouse(warehouse, notebook1);
 
-        boolean operator = false;
-        boolean user = false;
-        System.out.println(notebook.getId());
+
         System.out.println("1) Digitare 1 per profilo utente:");
         System.out.println("2) Digitare 2 per profilo operatore:");
         String scelta = sc.next();
@@ -47,7 +45,7 @@ public class Main {
         }
     }
 
-    public static void userMenu(Cart cart, Warehouse warehouse) throws Exception {
+    public static void userMenu(Cart cart, Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
         String sceltaUser;
         do {
@@ -100,13 +98,31 @@ public class Main {
                     break;
                 case "7":
                     System.out.println("Digita un id per aggiungere al carrello:");
-                    long sceltaId = sc.nextLong();
-                    fromWarehouseToCart(warehouse, cart, sceltaId);
+                    if (sc.hasNextLong()) {
+                        long sceltaId = sc.nextLong();
+                        if (!warehouse.containsDeviceById(sceltaId)) {
+                            System.out.println("Non è stato trovato alcun dispositivo con questo ID");
+                            break;
+                        }
+                        fromWarehouseToCart(warehouse, cart, sceltaId);
+                    } else {
+                        System.out.println("Input non valido. Devi digitare un numero intero per l'ID.");
+                        sc.next();
+                    }
                     break;
                 case "8":
-                    System.out.println("Digita un id per rimuovere dal carrello :");
-                    long sceltaId2 = sc.nextLong();
-                    fromCartToWarehouse(warehouse, cart, sceltaId2);
+                    System.out.println("Digita un id per aggiungere al carrello:");
+                    if (sc.hasNextLong()) {
+                        long sceltaId2 = sc.nextLong();
+                        if (!cart.containsDeviceById(sceltaId2)) {
+                            System.out.println("Non è stato trovato alcun dispositivo con questo ID");
+                            break;
+                        }
+                        fromCartToWarehouse(warehouse, cart, sceltaId2);
+                    } else {
+                        System.out.println("Input non valido. Devi digitare un numero intero per l'ID.");
+                        sc.next();
+                    }
                     break;
                 case "9":
                     System.out.println("Il prezzo finale del carrello è:");
@@ -116,19 +132,19 @@ public class Main {
                     cart.printAllDevices();
                     break;
                 case "11":
-                    System.out.println("1) Sei un privato ");
-                    System.out.println("2) Hai una partita iva");
-                    boolean partitaIva = false;
-                    int sceltaUtente = sc.nextInt();
-                    if (sceltaUtente == 1) {
-                        partitaIva = true;
+                    if (cart.isEmpty()) {
+                        System.out.println("Il carrello è ancora vuoto.");
+                        break;
                     }
+
+                    boolean partitaIva = getIvaUtente(new Scanner(System.in));
+
                     System.out.println(finalizzaVendita(cart, partitaIva));
                     break;
                 case "0":
                     break;
                 default:
-                    System.out.println("Carattere non valido");
+                    System.out.println("Scelta non valida");
             }
 
         } while (!sceltaUser.equals("0"));
@@ -161,5 +177,25 @@ public class Main {
         }
         cart.emptyList();
         return "Questo è il tuo prezzo finale: " + finalPrice;
+    }
+
+    public static boolean getIvaUtente(Scanner sc) {
+        while (true) {
+            System.out.println("1) Sei un privato ");
+            System.out.println("2) Hai una partita iva");
+            if (sc.hasNextInt()) {
+                int sceltaUtente = sc.nextInt();
+                if (sceltaUtente == 1) {
+                    return true;
+                } else if (sceltaUtente == 2) {
+                    return false;
+                } else {
+                    System.out.println("Scelta non valida, riprova.");
+                }
+            } else {
+                System.out.println("Scelta non valida, riprova.");
+                sc.next();
+            }
+        }
     }
 }

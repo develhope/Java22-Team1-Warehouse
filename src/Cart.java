@@ -34,7 +34,24 @@ public class Cart {
         return null;
     }
 
+    // Controlla se l'id esiste
+    public boolean containsDeviceById(long id) {
+        for (DeviceClasses device : devices) {
+            if (device.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    // Controlla se cart e' vuoto
+    public boolean isEmpty() {
+        if(devices.isEmpty()) {
+            return true;
+        }
+            return false;
+
+    }
     // Stampare elementi nel cart
     public void printAllDevices() {
         if (devices.isEmpty()) {
@@ -42,7 +59,7 @@ public class Cart {
         } else {
             System.out.println("Questo è il carrello:");
             for (int i = 0; i < devices.size(); i++) {
-                System.out.println(i + " : " + devices.get(i));
+                System.out.print(devices.get(i));
             }
         }
     }
