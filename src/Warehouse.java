@@ -36,7 +36,7 @@ public class Warehouse {
 
     public void printAllDevices() {
         for (int i = 0; i < devices.size(); i++) {
-            System.out.println(i + " : " + devices.get(i) + " " + devices.get(i).getId());
+            System.out.println(i + " : " + devices.get(i));
         }
     }
 

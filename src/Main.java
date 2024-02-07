@@ -28,9 +28,9 @@ public class Main {
         System.out.println("2) Digitare 2 per profilo operatore:");
         String scelta = sc.next();
 
-        while(!Objects.equals(scelta, "1") && !Objects.equals(scelta, "2")) {
+        while (!Objects.equals(scelta, "1") && !Objects.equals(scelta, "2")) {
 
-            if (!scelta.equals("1")  && !scelta.equals("2") ) {
+            if (!scelta.equals("1") && !scelta.equals("2")) {
                 System.out.println("Scelta non disponiblie");
                 System.out.println("1) Digitare 1 per profilo utente:");
                 System.out.println("2) Digitare 2 per profilo operatore:");
@@ -46,6 +46,7 @@ public class Main {
                 break;
         }
     }
+
     public static void userMenu(Cart cart, Warehouse warehouse) throws Exception {
         Scanner sc = new Scanner(System.in);
         String sceltaUser;
@@ -112,7 +113,6 @@ public class Main {
                     System.out.println(cart.getFinalPrice());
                     break;
                 case "10":
-                    System.out.println("Questo è il carrello: ");
                     cart.printAllDevices();
                     break;
                 case "11":
@@ -123,7 +123,7 @@ public class Main {
                     if (sceltaUtente == 1) {
                         partitaIva = true;
                     }
-                    finalizzaVendita(cart, partitaIva);
+                    System.out.println(finalizzaVendita(cart, partitaIva));
                     break;
                 case "0":
                     break;

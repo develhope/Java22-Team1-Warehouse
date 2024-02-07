@@ -37,8 +37,13 @@ public class Cart {
 
     // Stampare elementi nel cart
     public void printAllDevices() {
-        for (int i = 0; i < devices.size(); i++) {
-            System.out.println(i + " : " + devices.get(i));
+        if (devices.isEmpty()) {
+            System.out.println("Il carrello è vuoto!");
+        } else {
+            System.out.println("Questo è il carrello:");
+            for (int i = 0; i < devices.size(); i++) {
+                System.out.println(i + " : " + devices.get(i));
+            }
         }
     }
 
