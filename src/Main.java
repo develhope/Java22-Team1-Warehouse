@@ -15,7 +15,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
 
-        Notebook notebook = new Notebook(1500, "Notebook", "Samsung", "Galaxy Book3", "Gaming computer", 15.6, 1000, 899);
+        Notebook notebook = new Notebook(1500, "Notabook", "Samsung", "Galaxy Book3", "Gaming computer", 15.6, 1000, 899);
         setIdAddDeviceInWarehouse(warehouse, notebook);
         Smartphone smartphone = new Smartphone(159, "Smartphone", "Samsung", "A14", "nero", 6.6, 128, 49);
         setIdAddDeviceInWarehouse(warehouse, smartphone);
@@ -26,13 +26,20 @@ public class Main {
 
         boolean operator = false;
         boolean user = false;
-
         System.out.println(notebook.getId());
-
         System.out.println("1) Digitare 1 per profilo utente:");
         System.out.println("2) Digitare 2 per profilo operatore:");
         int scelta = sc.nextInt();
 
+        while(scelta!=1 && scelta!=2) {
+
+            if (scelta != 1 && scelta != 2) {
+                System.out.println("Scelta non disponiblie");
+                System.out.println("1) Digitare 1 per profilo utente:");
+                System.out.println("2) Digitare 2 per profilo operatore:");
+            }
+            scelta = sc.nextInt();
+        }
         switch (scelta) {
             case 1:
                 userMenu(cart, warehouse);
@@ -42,7 +49,6 @@ public class Main {
                 break;
         }
     }
-
     public static void userMenu(Cart cart, Warehouse warehouse) throws Exception {
         Scanner sc = new Scanner(System.in);
         int sceltaUser;

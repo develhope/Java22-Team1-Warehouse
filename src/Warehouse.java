@@ -58,7 +58,7 @@ public class Warehouse {
                     researchLowerCase = devices.get(i).getBrand().toLowerCase();
             }
 
-            if (inputLowerCase.equals(researchLowerCase)) {
+            if (researchLowerCase.contains(inputLowerCase)) {
                 devicesCompatibili.add(devices.get(i));
             }
         }

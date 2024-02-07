@@ -106,14 +106,14 @@ public class DeviceClasses {
     @Override
     public String toString() {
         return " " +
-                "device='" + device + '\'' +
-                ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", description='" + description + '\'' +
-                ", display=" + display +
+                "Device='" + device + '\'' +
+                ", Brand='" + brand + '\'' +
+                ", Model='" + model + '\'' +
+                ", Description='" + description + '\'' +
+                ", Display=" + display +
                 ", storage=" + storage +
                 ", purchase=" + purchase +
                 ", sale=" + sale +
-                ", id=";
+                ", id="+"\n";
     }
 }
