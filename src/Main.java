@@ -70,23 +70,42 @@ public class Main {
                 case "2":
                     System.out.println("Inserisci il nome del tipo di dispositivo:");
                     String sceltaDisp = sc.next();
-                    System.out.println(warehouse.getCompatibles(sceltaDisp, "device"));
-
+                    ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
+                    if (devicesCompatibili.isEmpty()) {
+                        System.out.println("Nessun dispositivo compatibile trovato.");
+                    } else {
+                        System.out.println(devicesCompatibili);
+                    }
                     break;
                 case "3":
                     System.out.println("Inserisci il nome del brand del dispositivo:");
                     String sceltaBrand = sc.next();
-                    System.out.println(warehouse.getCompatibles(sceltaBrand, "brand"));
+                    ArrayList<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
+                    if (brandCompatibili.isEmpty()) {
+                        System.out.println("Nessun dispositivo compatibile trovato.");
+                    } else {
+                        System.out.println(brandCompatibili);
+                    }
                     break;
                 case "4":
                     System.out.println("Inserisci il nome del modello del dispositivo:");
                     String sceltaModel = sc.next();
-                    System.out.println(warehouse.getCompatibles(sceltaModel, "model"));
+                    ArrayList<DeviceClasses> modelCompatibili = warehouse.getCompatibles(sceltaModel, "model");
+                    if (modelCompatibili.isEmpty()) {
+                        System.out.println("Nessun dispositivo compatibile trovato.");
+                    } else {
+                        System.out.println(modelCompatibili);
+                    }
                     break;
                 case "5":
                     System.out.println("Inserisci il prezzo:");
                     int sceltaForPrice = sc.nextInt();
-                    System.out.println(warehouse.getBySellPrice(sceltaForPrice));
+                    ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(sceltaForPrice);
+                    if (priceCompatibili.isEmpty()) {
+                        System.out.println("Nessun dispositivo compatibile trovato.");
+                    } else {
+                        System.out.println(priceCompatibili);
+                    }
                     break;
                 case "6":
                     System.out.println("Inserisci il prezzo minimo:");
@@ -94,7 +113,12 @@ public class Main {
                     System.out.println("Inserisci il prezzo massimo:");
                     int sceltaForPriceRange2 = sc.nextInt();
 
-                    warehouse.getRangeSale(sceltaForPriceRange, sceltaForPriceRange2);
+                    ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(sceltaForPriceRange, sceltaForPriceRange2);
+                    if(rangeCompatibili.isEmpty()) {
+                        System.out.println("Nessun dispositivo in range trovato");
+                    } else {
+                        System.out.println(rangeCompatibili);
+                    }
                     break;
                 case "7":
                     System.out.println("Digita un id per aggiungere al carrello:");
@@ -105,13 +129,14 @@ public class Main {
                             break;
                         }
                         fromWarehouseToCart(warehouse, cart, sceltaId);
-                    } else {
+                    }
+                    else {
                         System.out.println("Input non valido. Devi digitare un numero intero per l'ID.");
                         sc.next();
                     }
                     break;
                 case "8":
-                    System.out.println("Digita un id per aggiungere al carrello:");
+                    System.out.println("Digita un id per rimuovere al carrello:");
                     if (sc.hasNextLong()) {
                         long sceltaId2 = sc.nextLong();
                         if (!cart.containsDeviceById(sceltaId2)) {
@@ -119,7 +144,8 @@ public class Main {
                             break;
                         }
                         fromCartToWarehouse(warehouse, cart, sceltaId2);
-                    } else {
+                    }
+                    else {
                         System.out.println("Input non valido. Devi digitare un numero intero per l'ID.");
                         sc.next();
                     }
