@@ -114,7 +114,7 @@ public class DeviceClasses {
                         ", Description: " + description +
                         ", Display: " + display +
                         ", Storage: " + storage +
-                        ", Surchaseç " + purchase +
+                        ", Purchase " + purchase +
                         ", Sale: " + sale +
                         ", Id: " + id + "\n";
     }

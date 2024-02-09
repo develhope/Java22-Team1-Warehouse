@@ -10,6 +10,7 @@ public class Main {
         Warehouse warehouse = new Warehouse();
         Cart cart = new Cart();
         Utente utente = new Utente();
+        Operatore operator = new Operatore();
         Scanner sc = new Scanner(System.in);
 
         Notebook notebook = new Notebook(1500, "Notabook", "Samsung", "Galaxy Book3", "Gaming computer", 15.6, 1000, 899);
@@ -40,7 +41,7 @@ public class Main {
                 utente.userMenu(cart, warehouse);
                 break;
             case "2":
-
+                operator.operatorMenu(warehouse);
                 break;
         }
     }
