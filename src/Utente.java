@@ -24,12 +24,22 @@ public class Utente {
             System.out.println("11) Acquista:");
             System.out.println("0) Fine:");
             sceltaUser = sc.next();
+
             try {
                 switch (sceltaUser) {
+
                     case "1":
+                        if(warehouse.isEmpty()) {
+                            System.out.println("Il magazzino e' vuoto!");
+                            continue;
+                        }
                         warehouse.printAllDevices();
                         break;
                     case "2":
+                        if(warehouse.isEmpty()) {
+                            System.out.println("Il magazzino e' vuoto!");
+                            continue;
+                        }
                         System.out.println("Inserisci il nome del tipo di dispositivo:");
                         String sceltaDisp = sc.next();
                         ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
@@ -40,6 +50,10 @@ public class Utente {
                         }
                         break;
                     case "3":
+                        if(warehouse.isEmpty()) {
+                            System.out.println("Il magazzino e' vuoto!");
+                            continue;
+                        }
                         System.out.println("Inserisci il nome del brand del dispositivo:");
                         String sceltaBrand = sc.next();
                         ArrayList<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
@@ -50,6 +64,10 @@ public class Utente {
                         }
                         break;
                     case "4":
+                        if(warehouse.isEmpty()) {
+                            System.out.println("Il magazzino e' vuoto!");
+                            continue;
+                        }
                         System.out.println("Inserisci il nome del modello del dispositivo:");
                         String sceltaModel = sc.next();
                         ArrayList<DeviceClasses> modelCompatibili = warehouse.getCompatibles(sceltaModel, "model");
@@ -60,6 +78,10 @@ public class Utente {
                         }
                         break;
                     case "5":
+                        if(warehouse.isEmpty()) {
+                            System.out.println("Il magazzino e' vuoto!");
+                            continue;
+                        }
                         System.out.println("Inserisci il prezzo:");
                         int sceltaForPrice = sc.nextInt();
                         ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(sceltaForPrice);
@@ -70,6 +92,10 @@ public class Utente {
                         }
                         break;
                     case "6":
+                        if(warehouse.isEmpty()) {
+                            System.out.println("Il magazzino e' vuoto!");
+                            continue;
+                        }
                         System.out.println("Inserisci il prezzo minimo:");
                         int sceltaForPriceRange = sc.nextInt();
                         System.out.println("Inserisci il prezzo massimo:");
@@ -83,6 +109,10 @@ public class Utente {
                         }
                         break;
                     case "7":
+                        if(warehouse.isEmpty()) {
+                            System.out.println("Il magazzino e' vuoto!");
+                            continue;
+                        }
                         System.out.println("Digita un id per aggiungere al carrello:");
                             long sceltaId = sc.nextLong();
                             if (!warehouse.containsDeviceById(sceltaId)) {
@@ -105,6 +135,10 @@ public class Utente {
                             fromCartToWarehouse(warehouse, cart, sceltaId2);
                         break;
                     case "9":
+                        if (cart.isEmpty()) {
+                            System.out.println("Il carrello è vuoto");
+                            break;
+                        }
                         System.out.println("Il prezzo finale del carrello è:");
                         System.out.println(cart.getFinalPrice());
                         break;
@@ -184,4 +218,6 @@ public class Utente {
             }
         }
     }
+
+
 }

@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-
 import Devices.DeviceClasses;
-
 public class Cart {
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
 
@@ -50,7 +48,6 @@ public class Cart {
             return true;
         }
             return false;
-
     }
     // Stampare elementi nel cart
     public void printAllDevices() {
@@ -77,6 +74,4 @@ public class Cart {
     public void emptyList() {
         devices.clear();
     }
-
-
 }
