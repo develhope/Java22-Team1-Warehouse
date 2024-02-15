@@ -84,31 +84,25 @@ public class Utente {
                         break;
                     case "7":
                         System.out.println("Digita un id per aggiungere al carrello:");
-                        if (sc.hasNextLong()) {
                             long sceltaId = sc.nextLong();
                             if (!warehouse.containsDeviceById(sceltaId)) {
                                 System.out.println("Non è stato trovato alcun dispositivo con questo ID");
                                 break;
                             }
                             fromWarehouseToCart(warehouse, cart, sceltaId);
-                        } else {
-                            System.out.println("Input non valido. Devi digitare un numero intero per l'ID.");
-                            sc.next();
-                        }
                         break;
                     case "8":
+                        if (cart.isEmpty()) {
+                            System.out.println("Il carrello è vuoto");
+                            break;
+                        }
                         System.out.println("Digita un id per rimuovere al carrello:");
-                        if (sc.hasNextLong()) {
                             long sceltaId2 = sc.nextLong();
                             if (!cart.containsDeviceById(sceltaId2)) {
                                 System.out.println("Non è stato trovato alcun dispositivo con questo ID");
                                 break;
                             }
                             fromCartToWarehouse(warehouse, cart, sceltaId2);
-                        } else {
-                            System.out.println("Input non valido. Devi digitare un numero intero per l'ID.");
-                            sc.next();
-                        }
                         break;
                     case "9":
                         System.out.println("Il prezzo finale del carrello è:");

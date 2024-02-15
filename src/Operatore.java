@@ -1,3 +1,4 @@
+//
 import Devices.DeviceClasses;
 
 import java.util.ArrayList;
@@ -16,9 +17,10 @@ public class Operatore {
             System.out.println("3) Ricerca per produttore:");
             System.out.println("4) Ricerca per modello:");
             System.out.println("5) Ricerca per prezzo di vendita:");
-            System.out.println("6) Ricerca per range di prezzo:");
-            System.out.println("7) Aggiungi al magazzino:");
-            System.out.println("8) Rimuovi dal magazzino:");
+            System.out.println("6) Ricerca per prezzo di acquisto:");
+            System.out.println("7) Ricerca per range di prezzo:");
+            System.out.println("8) Aggiungi al magazzino:");
+            System.out.println("9) Rimuovi dal magazzino:");
             System.out.println("0) Fine:");
             sceltaUser = sc.next();
             try {
@@ -58,7 +60,7 @@ public class Operatore {
                         break;
                     case "5":
                         System.out.println("Inserisci il prezzo:");
-                        Integer sceltaForPrice = sc.nextInt();
+                        int sceltaForPrice = sc.nextInt();
                         ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(sceltaForPrice);
                         if (priceCompatibili.isEmpty()) {
                             System.out.println("Nessun dispositivo compatibile trovato.");
@@ -67,6 +69,17 @@ public class Operatore {
                         }
                         break;
                     case "6":
+                        System.out.println("Inserisci il prezzo:");
+                        int sceltaForBuy = sc.nextInt();
+                        ArrayList<DeviceClasses> priceBuyCompatibili = warehouse.getByPurchasePrice(sceltaForBuy);
+                        if (priceBuyCompatibili.isEmpty()) {
+                            System.out.println("Nessun dispositivo compatibile trovato.");
+                        } else {
+                            System.out.println(priceBuyCompatibili);
+                        }
+                        break;
+
+                        case "7":
                         System.out.println("Inserisci il prezzo minimo:");
                         int sceltaForPriceRange = sc.nextInt();
                         System.out.println("Inserisci il prezzo massimo:");
@@ -79,24 +92,18 @@ public class Operatore {
                             System.out.println(rangeCompatibili);
                         }
                         break;
-                    case "7":
+                    case "8":
                         System.out.println("Digita un id per aggiungere al magazzino:");
                         DeviceClasses newDevice = addNewDevice();
                         setIdAddDeviceInWarehouse(warehouse, newDevice);
                         break;
-                    case "8":
+                    case "9":
                         System.out.println("Digita un id per rimuovere al magazzino:");
-                        if (sc.hasNextLong()) {
                             long sceltaId2 = sc.nextLong();
                             if (!warehouse.containsDeviceById(sceltaId2)) {
                                 System.out.println("Non è stato trovato alcun dispositivo con questo ID");
                                 break;
                             }
-
-                        } else {
-                            System.out.println("Input non valido. Devi digitare un numero intero per l'ID.");
-                            sc.next();
-                        }
                         break;
                     case "0":
                         break;
