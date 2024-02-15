@@ -1,6 +1,14 @@
 import java.util.ArrayList;
+
 import Devices.DeviceClasses;
+
+//
+// NON SI COPIA!
+// NON SI COPIA!
+// NON SI COPIA!
+//
 public class Cart {
+
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
 
     public Cart() {
@@ -44,11 +52,12 @@ public class Cart {
 
     // Controlla se cart e' vuoto
     public boolean isEmpty() {
-        if(devices.isEmpty()) {
+        if (devices.isEmpty()) {
             return true;
         }
-            return false;
+        return false;
     }
+
     // Stampare elementi nel cart
     public void printAllDevices() {
         if (devices.isEmpty()) {

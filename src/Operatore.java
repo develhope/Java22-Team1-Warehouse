@@ -1,10 +1,15 @@
-//
 import Devices.DeviceClasses;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
+
+//
+// NON SI COPIA!
+// NON SI COPIA!
+// NON SI COPIA!
+//
 
 public class Operatore {
     public void operatorMenu(Warehouse warehouse) {
@@ -26,14 +31,14 @@ public class Operatore {
             try {
                 switch (sceltaUser) {
                     case "1":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
                         warehouse.printAllDevices();
                         break;
                     case "2":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
@@ -47,7 +52,7 @@ public class Operatore {
                         }
                         break;
                     case "3":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
@@ -61,7 +66,7 @@ public class Operatore {
                         }
                         break;
                     case "4":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
@@ -75,7 +80,7 @@ public class Operatore {
                         }
                         break;
                     case "5":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
@@ -89,7 +94,7 @@ public class Operatore {
                         }
                         break;
                     case "6":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
@@ -103,11 +108,11 @@ public class Operatore {
                         }
                         break;
 
-                        case "7":
-                            if(warehouse.isEmpty()) {
-                                System.out.println("Il magazzino e' vuoto!");
-                                continue;
-                            }
+                    case "7":
+                        if (warehouse.isEmpty()) {
+                            System.out.println("Il magazzino e' vuoto!");
+                            continue;
+                        }
                         System.out.println("Inserisci il prezzo minimo:");
                         int sceltaForPriceRange = sc.nextInt();
                         System.out.println("Inserisci il prezzo massimo:");
@@ -126,17 +131,17 @@ public class Operatore {
                         setIdAddDeviceInWarehouse(warehouse, newDevice);
                         break;
                     case "9":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
                         System.out.println("Digita un id per rimuovere al magazzino:");
-                            long sceltaId2 = sc.nextLong();
-                            if (!warehouse.containsDeviceById(sceltaId2)) {
-                                System.out.println("Non è stato trovato alcun dispositivo con questo ID");
-                                break;
-                            }
-                            warehouse.removeDeviceById(sceltaId2);
+                        long sceltaId2 = sc.nextLong();
+                        if (!warehouse.containsDeviceById(sceltaId2)) {
+                            System.out.println("Non è stato trovato alcun dispositivo con questo ID");
+                            break;
+                        }
+                        warehouse.removeDeviceById(sceltaId2);
                         break;
                     case "0":
                         break;

@@ -5,6 +5,12 @@ import java.util.InputMismatchException;
 import java.util.Objects;
 import java.util.Scanner;
 
+//
+// NON SI COPIA!
+// NON SI COPIA!
+// NON SI COPIA!
+//
+
 public class Utente {
     public void userMenu(Cart cart, Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
@@ -29,14 +35,14 @@ public class Utente {
                 switch (sceltaUser) {
 
                     case "1":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
                         warehouse.printAllDevices();
                         break;
                     case "2":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
@@ -50,7 +56,7 @@ public class Utente {
                         }
                         break;
                     case "3":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
@@ -64,7 +70,7 @@ public class Utente {
                         }
                         break;
                     case "4":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
@@ -78,7 +84,7 @@ public class Utente {
                         }
                         break;
                     case "5":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
@@ -92,7 +98,7 @@ public class Utente {
                         }
                         break;
                     case "6":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
@@ -109,17 +115,17 @@ public class Utente {
                         }
                         break;
                     case "7":
-                        if(warehouse.isEmpty()) {
+                        if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
                             continue;
                         }
                         System.out.println("Digita un id per aggiungere al carrello:");
-                            long sceltaId = sc.nextLong();
-                            if (!warehouse.containsDeviceById(sceltaId)) {
-                                System.out.println("Non è stato trovato alcun dispositivo con questo ID");
-                                break;
-                            }
-                            fromWarehouseToCart(warehouse, cart, sceltaId);
+                        long sceltaId = sc.nextLong();
+                        if (!warehouse.containsDeviceById(sceltaId)) {
+                            System.out.println("Non è stato trovato alcun dispositivo con questo ID");
+                            break;
+                        }
+                        fromWarehouseToCart(warehouse, cart, sceltaId);
                         break;
                     case "8":
                         if (cart.isEmpty()) {
@@ -127,12 +133,12 @@ public class Utente {
                             break;
                         }
                         System.out.println("Digita un id per rimuovere al carrello:");
-                            long sceltaId2 = sc.nextLong();
-                            if (!cart.containsDeviceById(sceltaId2)) {
-                                System.out.println("Non è stato trovato alcun dispositivo con questo ID");
-                                break;
-                            }
-                            fromCartToWarehouse(warehouse, cart, sceltaId2);
+                        long sceltaId2 = sc.nextLong();
+                        if (!cart.containsDeviceById(sceltaId2)) {
+                            System.out.println("Non è stato trovato alcun dispositivo con questo ID");
+                            break;
+                        }
+                        fromCartToWarehouse(warehouse, cart, sceltaId2);
                         break;
                     case "9":
                         if (cart.isEmpty()) {

@@ -1,5 +1,12 @@
 import Devices.DeviceClasses;
+
 import java.util.ArrayList;
+
+//
+// NON SI COPIA!
+// NON SI COPIA!
+// NON SI COPIA!
+//
 public class Warehouse {
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
 
@@ -135,12 +142,11 @@ public class Warehouse {
     }
 
     public boolean isEmpty() {
-        if(devices.isEmpty()) {
+        if (devices.isEmpty()) {
             return true;
         }
         return false;
     }
-
 
 
 }
