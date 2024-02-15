@@ -1,6 +1,7 @@
 import Devices.DeviceClasses;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -20,96 +21,100 @@ public class Operatore {
             System.out.println("8) Rimuovi dal magazzino:");
             System.out.println("0) Fine:");
             sceltaUser = sc.next();
-            switch (sceltaUser) {
-                case "1":
-                    warehouse.printAllDevices();
-                    break;
-                case "2":
-                    System.out.println("Inserisci il nome del tipo di dispositivo:");
-                    String sceltaDisp = sc.next();
-                    ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
-                    if (devicesCompatibili.isEmpty()) {
-                        System.out.println("Nessun dispositivo compatibile trovato.");
-                    } else {
-                        System.out.println(devicesCompatibili);
-                    }
-                    break;
-                case "3":
-                    System.out.println("Inserisci il nome del brand del dispositivo:");
-                    String sceltaBrand = sc.next();
-                    ArrayList<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
-                    if (brandCompatibili.isEmpty()) {
-                        System.out.println("Nessun dispositivo compatibile trovato.");
-                    } else {
-                        System.out.println(brandCompatibili);
-                    }
-                    break;
-                case "4":
-                    System.out.println("Inserisci il nome del modello del dispositivo:");
-                    String sceltaModel = sc.next();
-                    ArrayList<DeviceClasses> modelCompatibili = warehouse.getCompatibles(sceltaModel, "model");
-                    if (modelCompatibili.isEmpty()) {
-                        System.out.println("Nessun dispositivo compatibile trovato.");
-                    } else {
-                        System.out.println(modelCompatibili);
-                    }
-                    break;
-                case "5":
-                    System.out.println("Inserisci il prezzo:");
-                    int sceltaForPrice = sc.nextInt();
-                    ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(sceltaForPrice);
-                    if (priceCompatibili.isEmpty()) {
-                        System.out.println("Nessun dispositivo compatibile trovato.");
-                    } else {
-                        System.out.println(priceCompatibili);
-                    }
-                    break;
-                case "6":
-                    System.out.println("Inserisci il prezzo minimo:");
-                    int sceltaForPriceRange = sc.nextInt();
-                    System.out.println("Inserisci il prezzo massimo:");
-                    int sceltaForPriceRange2 = sc.nextInt();
-
-                    ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(sceltaForPriceRange, sceltaForPriceRange2);
-                    if (rangeCompatibili.isEmpty()) {
-                        System.out.println("Nessun dispositivo in range trovato");
-                    } else {
-                        System.out.println(rangeCompatibili);
-                    }
-                    break;
-                case "7":
-                    System.out.println("Digita un id per aggiungere al magazzino:");
-                    DeviceClasses newDevice = addNewDevice();
-                    setIdAddDeviceInWarehouse(warehouse,newDevice);
-                    break;
-                case "8":
-                    System.out.println("Digita un id per rimuovere al magazzino:");
-                    if (sc.hasNextLong()) {
-                        long sceltaId2 = sc.nextLong();
-                        if (!warehouse.containsDeviceById(sceltaId2)) {
-                            System.out.println("Non è stato trovato alcun dispositivo con questo ID");
-                            break;
+            try {
+                switch (sceltaUser) {
+                    case "1":
+                        warehouse.printAllDevices();
+                        break;
+                    case "2":
+                        System.out.println("Inserisci il nome del tipo di dispositivo:");
+                        String sceltaDisp = sc.next();
+                        ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
+                        if (devicesCompatibili.isEmpty()) {
+                            System.out.println("Nessun dispositivo compatibile trovato.");
+                        } else {
+                            System.out.println(devicesCompatibili);
                         }
+                        break;
+                    case "3":
+                        System.out.println("Inserisci il nome del brand del dispositivo:");
+                        String sceltaBrand = sc.next();
+                        ArrayList<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
+                        if (brandCompatibili.isEmpty()) {
+                            System.out.println("Nessun dispositivo compatibile trovato.");
+                        } else {
+                            System.out.println(brandCompatibili);
+                        }
+                        break;
+                    case "4":
+                        System.out.println("Inserisci il nome del modello del dispositivo:");
+                        String sceltaModel = sc.next();
+                        ArrayList<DeviceClasses> modelCompatibili = warehouse.getCompatibles(sceltaModel, "model");
+                        if (modelCompatibili.isEmpty()) {
+                            System.out.println("Nessun dispositivo compatibile trovato.");
+                        } else {
+                            System.out.println(modelCompatibili);
+                        }
+                        break;
+                    case "5":
+                        System.out.println("Inserisci il prezzo:");
+                        Integer sceltaForPrice = sc.nextInt();
+                        ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(sceltaForPrice);
+                        if (priceCompatibili.isEmpty()) {
+                            System.out.println("Nessun dispositivo compatibile trovato.");
+                        } else {
+                            System.out.println(priceCompatibili);
+                        }
+                        break;
+                    case "6":
+                        System.out.println("Inserisci il prezzo minimo:");
+                        int sceltaForPriceRange = sc.nextInt();
+                        System.out.println("Inserisci il prezzo massimo:");
+                        int sceltaForPriceRange2 = sc.nextInt();
 
-                    } else {
-                        System.out.println("Input non valido. Devi digitare un numero intero per l'ID.");
-                        sc.next();
-                    }
-                    break;
-                case "0":
-                    break;
-                default:
-                    System.out.println("Scelta non valida");
+                        ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(sceltaForPriceRange, sceltaForPriceRange2);
+                        if (rangeCompatibili.isEmpty()) {
+                            System.out.println("Nessun dispositivo in range trovato");
+                        } else {
+                            System.out.println(rangeCompatibili);
+                        }
+                        break;
+                    case "7":
+                        System.out.println("Digita un id per aggiungere al magazzino:");
+                        DeviceClasses newDevice = addNewDevice();
+                        setIdAddDeviceInWarehouse(warehouse, newDevice);
+                        break;
+                    case "8":
+                        System.out.println("Digita un id per rimuovere al magazzino:");
+                        if (sc.hasNextLong()) {
+                            long sceltaId2 = sc.nextLong();
+                            if (!warehouse.containsDeviceById(sceltaId2)) {
+                                System.out.println("Non è stato trovato alcun dispositivo con questo ID");
+                                break;
+                            }
+
+                        } else {
+                            System.out.println("Input non valido. Devi digitare un numero intero per l'ID.");
+                            sc.next();
+                        }
+                        break;
+                    case "0":
+                        break;
+                    default:
+                        System.out.println("Scelta non valida");
+                }
+            } catch (InputMismatchException e) {
             }
-
         } while (!sceltaUser.equals("0"));
     }
+
     public static void setIdAddDeviceInWarehouse(Warehouse warehouse, DeviceClasses device) {
         Random rand = new Random();
         warehouse.addDevice(device);
         device.setId(rand.nextLong(999999999));
     }
-    public static DeviceClasses addNewDevice(){
+
+    public static DeviceClasses addNewDevice() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Inserisci i dati del dispositivo:");
         System.out.println("Device:");
@@ -128,7 +133,7 @@ public class Operatore {
         double purchase = sc.nextDouble();
         System.out.println("Sale:");
         double sale = sc.nextDouble();
-        DeviceClasses deviceF = new DeviceClasses(sale,device,brand,model,description,display,storage,purchase);
+        DeviceClasses deviceF = new DeviceClasses(sale, device, brand, model, description, display, storage, purchase);
         return deviceF;
     }
 
