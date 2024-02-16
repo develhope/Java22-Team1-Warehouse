@@ -2,7 +2,6 @@ import Devices.DeviceClasses;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.Objects;
 import java.util.Scanner;
 
 //
@@ -11,7 +10,7 @@ import java.util.Scanner;
 // NON SI COPIA!
 //
 
-public class Utente {
+public class User {
     public void userMenu(Cart cart, Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
         String sceltaUser;
@@ -46,27 +45,21 @@ public class Utente {
                         break;
                     case "3":
                         searchByBrand(warehouse, sc);
-
                         break;
                     case "4":
                         searchByModel(warehouse, sc);
-
                         break;
                     case "5":
                         searchBySellPrice(warehouse, sc);
-
                         break;
                     case "6":
                         searchByPriceRange(warehouse, sc);
-
                         break;
                     case "7":
                         addToCartById(warehouse, cart, sc);
-
                         break;
                     case "8":
                         removeFromCartById(warehouse, cart, sc);
-
                         break;
                     case "9":
                         if (cart.isEmpty()) {
@@ -88,9 +81,8 @@ public class Utente {
                         System.out.println("2) per tornare nel menu principale;");
                         String sceltaFinale = sc.next();
                         if (sceltaFinale.equals("1")) {
-
-                            boolean partitaIva = getIvaUtente(new Scanner(System.in));
-                            System.out.println(finalizzaVendita(cart, partitaIva));
+                            boolean partitaIva = getIvaUser(new Scanner(System.in));
+                            System.out.println(finalizeSale(cart, partitaIva));
                             break;
                         } else if (sceltaFinale.equals("2")) {
                             break;
@@ -120,7 +112,7 @@ public class Utente {
         cart.printAllDevices();
     }
 
-    public static String finalizzaVendita(Cart cart, boolean iva) {
+    public static String finalizeSale(Cart cart, boolean iva) {
         double finalPrice;
         if (iva) {
             finalPrice = cart.getFinalPrice() * 1.22;
@@ -131,15 +123,14 @@ public class Utente {
         return "Questo è il tuo prezzo finale: " + finalPrice;
     }
 
-    public static boolean getIvaUtente(Scanner sc) {
+    public static boolean getIvaUser(Scanner sc) {
         while (true) {
-            System.out.println("Seleziona il tipo di utente:");
+            System.out.println("Seleziona il tipo di user:");
             System.out.println("1) Privato");
             System.out.println("2) Azienda con Partita IVA");
-
             if (sc.hasNextInt()) {
-                int sceltaUtente = sc.nextInt();
-                switch (sceltaUtente) {
+                int sceltaUser = sc.nextInt();
+                switch (sceltaUser) {
                     case 1:
                         return true;
                     case 2:

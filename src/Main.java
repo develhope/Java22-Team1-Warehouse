@@ -9,7 +9,7 @@ public class Main {
         Warehouse warehouse = new Warehouse();
         warehouse.fillWarehouse();
         Cart cart = new Cart();
-        Utente utente = new Utente();
+        User user = new User();
         Operatore operator = new Operatore();
         Scanner sc = new Scanner(System.in);
 
@@ -28,7 +28,7 @@ public class Main {
         }
         switch (scelta) {
             case "1":
-                utente.userMenu(cart, warehouse);
+                user.userMenu(cart, warehouse);
                 break;
             case "2":
                 operator.operatorMenu(warehouse);

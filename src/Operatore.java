@@ -24,8 +24,9 @@ public class Operatore {
             System.out.println("5) Ricerca per prezzo di vendita:");
             System.out.println("6) Ricerca per prezzo di acquisto:");
             System.out.println("7) Ricerca per range di prezzo:");
-            System.out.println("8) Aggiungi al magazzino:");
-            System.out.println("9) Rimuovi dal magazzino:");
+            System.out.println("8) Ricerca spesa media dispositivo");
+            System.out.println("9) Aggiungi al magazzino:");
+            System.out.println("10) Rimuovi dal magazzino:");
             System.out.println("0) Fine:");
             sceltaUser = sc.next();
 
@@ -50,17 +51,19 @@ public class Operatore {
                     searchBySellPrice(warehouse, sc);
                     break;
                 case "6":
-                    searchByBuyPrice(warehouse, sc);
+                    searchByPurchasePrice(warehouse, sc);
                     break;
-
                 case "7":
                     searchByPriceRange(warehouse, sc);
                     break;
                 case "8":
+                    searchByAverageDevicePrice(warehouse, sc);
+                    break;
+                case "9":
                     DeviceClasses newDevice = addNewDevice();
                     setIdAddDeviceInWarehouse(warehouse, newDevice);
                     break;
-                case "9":
+                case "10":
                     try {
                         if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
@@ -134,8 +137,6 @@ public class Operatore {
                     System.out.println("Prezzo di vendita:");
                     sale = sc.nextDouble();
                 }
-
-
                 if (device != null && brand != null && model != null && description != null && display != 0 && storage != 0 && purchase != 0 && sale != 0) {
                     break;
                 }
@@ -144,9 +145,7 @@ public class Operatore {
                 sc.nextLine();
             }
         }
-
-        DeviceClasses deviceF = new DeviceClasses(sale, device, brand, model, description, display, storage, purchase);
-        return deviceF;
+        return new DeviceClasses(sale, device, brand, model, description, display, storage, purchase);
     }
 
     private void searchByType(Warehouse warehouse, Scanner sc) {
@@ -214,7 +213,7 @@ public class Operatore {
         }
     }
 
-    private void searchByBuyPrice(Warehouse warehouse, Scanner sc) {
+    private void searchByPurchasePrice(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -256,6 +255,19 @@ public class Operatore {
             sc.nextLine();
         }
     }
+
+    private void searchByAverageDevicePrice(Warehouse warehouse, Scanner sc) {
+        if (warehouse.isEmpty()) {
+            System.out.println("Il magazzino e' vuoto!");
+            return;
+        }
+        System.out.println("Inserisci il tipo di device di cui vuoi sapere il prezzo medio:");
+        String scelta = sc.next();
+        double averagePrice = warehouse.getAverageDevicePrice(scelta);
+        if (!Double.isNaN(averagePrice) && averagePrice != 0) {
+            System.out.println("il prezzo medio è: " + averagePrice);
+        } else {
+            System.out.println("Errore: inserisci un device valido!");
+        }
+    }
 }
-
-

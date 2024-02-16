@@ -13,7 +13,7 @@ Si scriva un programma in Java per la gestione di un magazzino.
  - Il prezzo di acquisto
  - Il prezzo di vendita
  - Id del dispositivo che rappresenti univocamente il dispositivo nel magazzino.
- - Il programma dovrà avere la gestione del carrello in cui l’utente potrà aggiungere un dispositivo al carrello rimuovendolo dalla lista dei dispositivi attualmente in magazzino quando l’operazione di vendita sarà conclusa.
+ - Il programma dovrà avere la gestione del carrello in cui l’user potrà aggiungere un dispositivo al carrello rimuovendolo dalla lista dei dispositivi attualmente in magazzino quando l’operazione di vendita sarà conclusa.
   Si suggerisce l’uso dell’input da tastiera per la selezione delle operazioni da compiere (1. aggiunta a magazzino, 2. scarico merce da magazzino, 3. creazione carrello, 4. aggiunta elemento al carrello, ecc.)
 
 ### Il programma dovrà avere una serie di metodi:

@@ -14,7 +14,9 @@ import java.util.Random;
 public class Warehouse {
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
 
-    public Warehouse() {}
+    public Warehouse() {
+    }
+
     public void addDevice(DeviceClasses device) {
         devices.add(device);
     }
@@ -148,14 +150,15 @@ public class Warehouse {
         }
         return false;
     }
+
     public void fillWarehouse() {
-        Notebook notebook = new Notebook(1500, "Notabook", "Samsung", "Galaxy Book3", "Gaming computer", 15.6, 1000, 899);
+        Notebook notebook = new Notebook(1500, "Notebook", "Samsung", "Galaxy Book 3", "Gaming computer", 15.6, 1000, 799);
         setIdAddDeviceInWarehouse(notebook);
-        Smartphone smartphone = new Smartphone(159, "Smartphone", "Samsung", "A14", "nero", 6.6, 128, 49);
+        Smartphone smartphone = new Smartphone(979, "Smartphone", "Apple", "iPhone 15", "Nero", 6.1, 128, 349);
         setIdAddDeviceInWarehouse(smartphone);
-        Tablet tablet = new Tablet(549, "Tablet", "Samsung", "Galaxy Tab S8", "grigio siderale", 11, 128, 349);
+        Tablet tablet = new Tablet(1149, "Tablet", "Apple", "iPad Pro", "Grigio Siderale", 11, 256, 549);
         setIdAddDeviceInWarehouse(tablet);
-        Notebook notebook1 = new Notebook(1449, "Notebook", "Huawei", "Pippo", "molto bello", 25.0, 7000, 5000);
+        Notebook notebook1 = new Notebook(629, "Notebook", "HP", "15S-FQ5073NL", "Argento", 15.6, 512, 249);
         setIdAddDeviceInWarehouse(notebook1);
     }
 
@@ -164,6 +167,4 @@ public class Warehouse {
         devices.add(device);
         device.setId(rand.nextLong(999999999));
     }
-
-
 }
