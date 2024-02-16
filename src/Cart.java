@@ -2,25 +2,25 @@ import java.util.ArrayList;
 
 import Devices.DeviceClasses;
 
-//
-// NON SI COPIA!
-// NON SI COPIA!
-// NON SI COPIA!
-//
+//IL CODICE CREATO NON VA RICOPIATO
+
+// Classe per gestire il carrello
 public class Cart {
 
+    // Lista dei dispositivi nel carrello
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
 
+    // Costruttore della classe Cart
     public Cart() {
         this.devices = new ArrayList<>();
     }
 
-    // Aggiungere al cart
+    // Metodo per aggiungere un dispositivo al carrello
     public void addDevice(DeviceClasses dispositivo) {
         devices.add(dispositivo);
     }
 
-    // Rimuove dal carrello tramite ID
+    // Metodo per rimuovere un dispositivo dal carrello utilizzando l'ID
     public void removeDeviceById(long id) {
         for (int i = 0; i < devices.size(); i++) {
             if (devices.get(i).getId() == id) {
@@ -30,7 +30,7 @@ public class Cart {
         }
     }
 
-    //Ottieni prodotto da ID
+    // Metodo per ottenere un dispositivo dal carrello utilizzando l'ID
     public DeviceClasses getDeviceById(long id) {
         for (int i = 0; i < devices.size(); i++) {
             if (devices.get(i).getId() == id) {
@@ -40,7 +40,7 @@ public class Cart {
         return null;
     }
 
-    // Controlla se l'id esiste
+    // Metodo per verificare se un dispositivo è presente nel carrello utilizzando l'ID
     public boolean containsDeviceById(long id) {
         for (DeviceClasses device : devices) {
             if (device.getId() == id) {
@@ -50,7 +50,8 @@ public class Cart {
         return false;
     }
 
-    // Controlla se cart e' vuoto
+    // Metodo per verificare se il carrello è vuoto
+
     public boolean isEmpty() {
         if (devices.isEmpty()) {
             return true;
@@ -58,7 +59,7 @@ public class Cart {
         return false;
     }
 
-    // Stampare elementi nel cart
+    // Metodo per stampare tutti i dispositivi presenti nel carrello
     public void printAllDevices() {
         if (devices.isEmpty()) {
             System.out.println("Il carrello è vuoto!");
@@ -70,7 +71,7 @@ public class Cart {
         }
     }
 
-    // Calcolare prezzo finale
+    // Metodo per calcolare il prezzo finale dei dispositivi nel carrello
     public double getFinalPrice() {
         double prezzoFinale = 0;
         for (DeviceClasses dispositivo : devices) {
@@ -79,7 +80,7 @@ public class Cart {
         return prezzoFinale;
     }
 
-    // Svuota cart
+    // Metodo per svuotare il carrello
     public void emptyList() {
         devices.clear();
     }

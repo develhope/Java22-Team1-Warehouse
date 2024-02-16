@@ -6,33 +6,32 @@ import Devices.Tablet;
 import java.util.ArrayList;
 import java.util.Random;
 
-//
-// NON SI COPIA!
-// NON SI COPIA!
-// NON SI COPIA!
-//
+//IL CODICE CREATO NON VA RICOPIATO
+
 public class Warehouse {
+    // ArrayList contenente tutti i dispositivi nel magazzino
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
 
+    // Costruttore vuoto della classe Warehouse
     public Warehouse() {
     }
 
+    // Aggiunge un dispositivo al magazzino
     public void addDevice(DeviceClasses device) {
         devices.add(device);
     }
 
-    // ottenere il dispositivo tramite id
+    // Ottiene un dispositivo tramite il suo ID
     public DeviceClasses getDeviceById(long id) {
         for (int i = 0; i < devices.size(); i++) {
             if (devices.get(i).getId() == id) {
                 return devices.get(i);
-
             }
         }
         return null;
     }
 
-    // rimuovere il dispositivo tramite id
+    // Rimuove un dispositivo dal magazzino tramite il suo ID
     public void removeDeviceById(long id) {
         for (int i = 0; i < devices.size(); i++) {
             if (devices.get(i).getId() == id) {
@@ -42,7 +41,7 @@ public class Warehouse {
         }
     }
 
-    // Controlla se l'id esiste
+    // Verifica se un dispositivo con l'ID specificato esiste nel magazzino
     public boolean containsDeviceById(long id) {
         for (DeviceClasses device : devices) {
             if (device.getId() == id) {
@@ -52,12 +51,14 @@ public class Warehouse {
         return false;
     }
 
+    // Stampa tutti i dispositivi presenti nel magazzino
     public void printAllDevices() {
         for (int i = 0; i < devices.size(); i++) {
             System.out.print(devices.get(i));
         }
     }
 
+    // Ottiene i dispositivi compatibili con la ricerca per tipo, modello o brand
     public ArrayList<DeviceClasses> getCompatibles(String input, String researchType) {
         String inputLowerCase = input.toLowerCase();
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
@@ -83,6 +84,7 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
+    // Ottiene i dispositivi nel range di prezzo di acquisto
     public ArrayList<DeviceClasses> getRangePurchase(int valLow, int valHigh) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
@@ -94,6 +96,7 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
+    // Ottiene i dispositivi nel range di prezzo di vendita
     public ArrayList<DeviceClasses> getRangeSale(int valLow, int valHigh) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
@@ -105,6 +108,7 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
+    // Ottiene i dispositivi con un prezzo di vendita specifico
     public ArrayList<DeviceClasses> getBySellPrice(int range) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
@@ -116,6 +120,7 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
+    // Ottiene i dispositivi con un prezzo di acquisto specifico
     public ArrayList<DeviceClasses> getByPurchasePrice(int range) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
@@ -130,6 +135,7 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
+    // Calcola il prezzo medio dei dispositivi di un tipo specifico
     public double getAverageDevicePrice(String device) {
         double sum = 0;
         int counter = 0;
@@ -144,6 +150,7 @@ public class Warehouse {
         return sum / counter;
     }
 
+    // Verifica se il magazzino è vuoto
     public boolean isEmpty() {
         if (devices.isEmpty()) {
             return true;
@@ -151,6 +158,7 @@ public class Warehouse {
         return false;
     }
 
+    // Popola il magazzino con alcuni dispositivi predefiniti
     public void fillWarehouse() {
         Notebook notebook = new Notebook(1500, "Notebook", "Samsung", "Galaxy Book 3", "Gaming computer", 15.6, 1000, 799);
         setIdAddDeviceInWarehouse(notebook);
@@ -162,6 +170,7 @@ public class Warehouse {
         setIdAddDeviceInWarehouse(notebook1);
     }
 
+    // Imposta un ID casuale per un dispositivo e lo aggiunge al magazzino
     public void setIdAddDeviceInWarehouse(DeviceClasses device) {
         Random rand = new Random();
         devices.add(device);

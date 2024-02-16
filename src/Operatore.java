@@ -5,17 +5,17 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-//
-// NON SI COPIA!
-// NON SI COPIA!
-// NON SI COPIA!
-//
+//IL CODICE CREATO NON VA RICOPIATO
 
+// Classe per gestire le azioni dell'operatore
 public class Operatore {
+
+    // Metodo per visualizzare il menu dell'operatore e gestire le operazioni
     public void operatorMenu(Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
         String sceltaUser;
         do {
+            // Mostra le opzioni disponibili per l'operatore
             System.out.println("Scegli l operazione da effettuare:");
             System.out.println("1) Visualizza tutti prodotti");
             System.out.println("2) Ricerca per tipo dispositivo:");
@@ -60,10 +60,12 @@ public class Operatore {
                     searchByAverageDevicePrice(warehouse, sc);
                     break;
                 case "9":
+                    // Aggiungi un nuovo dispositivo al magazzino
                     DeviceClasses newDevice = addNewDevice();
                     setIdAddDeviceInWarehouse(warehouse, newDevice);
                     break;
                 case "10":
+                    // Rimuovi un dispositivo dal magazzino
                     try {
                         if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
@@ -90,12 +92,14 @@ public class Operatore {
         } while (!sceltaUser.equals("0"));
     }
 
+    // Metodo per impostare un ID e aggiungere un dispositivo al magazzino
     public static void setIdAddDeviceInWarehouse(Warehouse warehouse, DeviceClasses device) {
         Random rand = new Random();
         warehouse.addDevice(device);
         device.setId(rand.nextLong(999999999));
     }
 
+    // Metodo per aggiungere un nuovo dispositivo
     public static DeviceClasses addNewDevice() {
         Scanner sc = new Scanner(System.in);
         String device = null, brand = null, model = null, description = null;
@@ -148,6 +152,7 @@ public class Operatore {
         return new DeviceClasses(sale, device, brand, model, description, display, storage, purchase);
     }
 
+    // Metodo per la ricerca per tipo dispositivo
     private void searchByType(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -163,6 +168,7 @@ public class Operatore {
         }
     }
 
+    // Metodo per la ricerca per produttore
     private void searchByBrand(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -178,6 +184,7 @@ public class Operatore {
         }
     }
 
+    // Metodo per la ricerca per modello
     private void searchByModel(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -193,6 +200,7 @@ public class Operatore {
         }
     }
 
+    // Metodo per la ricerca per prezzo di vendita
     private void searchBySellPrice(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -213,6 +221,7 @@ public class Operatore {
         }
     }
 
+    // Metodo per la ricerca per prezzo di acquisto
     private void searchByPurchasePrice(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -233,6 +242,7 @@ public class Operatore {
         }
     }
 
+    // Metodo per la ricerca per range di prezzo
     private void searchByPriceRange(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -256,6 +266,7 @@ public class Operatore {
         }
     }
 
+    // Metodo per la ricerca per spesa media dispositivo
     private void searchByAverageDevicePrice(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");

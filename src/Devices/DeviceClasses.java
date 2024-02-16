@@ -3,6 +3,7 @@ package Devices;
 import java.util.Objects;
 
 public class DeviceClasses {
+    // Dichiarazione delle variabili di istanza
     private String device;
     private String brand;
     private String model;
@@ -11,9 +12,9 @@ public class DeviceClasses {
     private double storage;
     private double purchase;
     private double sale;
-
     private long id;
 
+    // Costruttore della classe DeviceClasses
     public DeviceClasses(double sale,
                          String device,
                          String brand,
@@ -22,6 +23,7 @@ public class DeviceClasses {
                          double display,
                          double storage,
                          double purchase) {
+        // Inizializzazione delle variabili di istanza tramite i parametri del costruttore
         this.device = device;
         this.brand = brand;
         this.model = model;
@@ -32,14 +34,17 @@ public class DeviceClasses {
         this.sale = sale;
     }
 
+    // Metodo per ottenere l'ID del dispositivo
     public long getId() {
         return id;
     }
 
+    // Metodo per impostare l'ID del dispositivo
     public void setId(long id) {
         this.id = id;
     }
 
+    // Metodi setter per impostare i valori delle variabili di istanza
     public void setDevice(String device) {
         this.device = device;
     }
@@ -72,6 +77,7 @@ public class DeviceClasses {
         this.sale = sale;
     }
 
+    // Metodi getter per ottenere i valori delle variabili di istanza
     public String getDevice() {
         return device;
     }
@@ -104,18 +110,17 @@ public class DeviceClasses {
         return sale;
     }
 
-
+    // Metodo toString per rappresentare l'oggetto DeviceClasses come stringa
     @Override
     public String toString() {
-        return
-                "Device: " + device +
-                        ", Brand: " + brand +
-                        ", Model: " + model +
-                        ", Description: " + description +
-                        ", Display: " + display +
-                        ", Storage: " + storage +
-                        ", Purchase " + purchase +
-                        ", Sale: " + sale +
-                        ", Id: " + id + "\n";
+        return "Device: " + device +
+                ", Brand: " + brand +
+                ", Model: " + model +
+                ", Description: " + description +
+                ", Display: " + display +
+                ", Storage: " + storage +
+                ", Purchase " + purchase +
+                ", Sale: " + sale +
+                ", Id: " + id + "\n";
     }
 }

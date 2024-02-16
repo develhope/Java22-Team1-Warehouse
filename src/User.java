@@ -4,20 +4,19 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-//
-// NON SI COPIA!
-// NON SI COPIA!
-// NON SI COPIA!
-//
+//IL CODICE CREATO NON VA RICOPIATO
 
 public class User {
+    // Metodo per gestire il menu dell'utente
     public void userMenu(Cart cart, Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
         String sceltaUser;
+        // Loop per mantenere attivo il menu finché l'utente non sceglie di uscire
         do {
-            System.out.println("Scegli l operazione da effettuare:");
-            System.out.println("1) Visualizza tutti prodotti");
-            System.out.println("2) Ricerca per tipo dispositivo:");
+            // Mostra le opzioni disponibili nel menu
+            System.out.println("Scegli l'operazione da effettuare:");
+            System.out.println("1) Visualizza tutti i prodotti");
+            System.out.println("2) Ricerca per tipo di dispositivo:");
             System.out.println("3) Ricerca per produttore:");
             System.out.println("4) Ricerca per modello:");
             System.out.println("5) Ricerca per prezzo di vendita:");
@@ -28,11 +27,12 @@ public class User {
             System.out.println("10) Visualizza carrello:");
             System.out.println("11) Acquista:");
             System.out.println("0) Fine:");
+            // Ottiene l'input dell'utente
             sceltaUser = sc.next();
 
             try {
                 switch (sceltaUser) {
-
+                    // Caso 1: Visualizza tutti i prodotti nel magazzino
                     case "1":
                         if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino è vuoto.");
@@ -40,27 +40,35 @@ public class User {
                         }
                         warehouse.printAllDevices();
                         break;
+                    // Caso 2: Ricerca per tipo di dispositivo
                     case "2":
                         searchByType(warehouse, sc);
                         break;
+                    // Caso 3: Ricerca per produttore
                     case "3":
                         searchByBrand(warehouse, sc);
                         break;
+                    // Caso 4: Ricerca per modello
                     case "4":
                         searchByModel(warehouse, sc);
                         break;
+                    // Caso 5: Ricerca per prezzo di vendita
                     case "5":
                         searchBySellPrice(warehouse, sc);
                         break;
+                    // Caso 6: Ricerca per range di prezzo
                     case "6":
                         searchByPriceRange(warehouse, sc);
                         break;
+                    // Caso 7: Aggiungi un dispositivo al carrello
                     case "7":
                         addToCartById(warehouse, cart, sc);
                         break;
+                    // Caso 8: Rimuovi un dispositivo dal carrello
                     case "8":
                         removeFromCartById(warehouse, cart, sc);
                         break;
+                    // Caso 9: Calcola il totale del carrello
                     case "9":
                         if (cart.isEmpty()) {
                             System.out.println("Il carrello è vuoto.");
@@ -69,9 +77,11 @@ public class User {
                         System.out.println("Il prezzo finale del carrello è:");
                         System.out.println(cart.getFinalPrice());
                         break;
+                    // Caso 10: Visualizza tutti i dispositivi nel carrello
                     case "10":
                         cart.printAllDevices();
                         break;
+                    // Caso 11: Acquista i prodotti nel carrello
                     case "11":
                         if (cart.isEmpty()) {
                             System.out.println("Il carrello è vuoto.");
@@ -90,8 +100,10 @@ public class User {
                             System.out.println("Scelta non consentita.");
                         }
                         break;
+                    // Caso 0: Esci dal menu
                     case "0":
                         break;
+                    // Gestione dell'input non valido
                     default:
                         System.out.println("Scelta non valida.");
                 }
@@ -100,32 +112,38 @@ public class User {
         } while (!sceltaUser.equals("0"));
     }
 
+    // Metodo per spostare un dispositivo dal magazzino al carrello
     public static void fromWarehouseToCart(Warehouse warehouse, Cart cart, long id) {
         cart.addDevice(warehouse.getDeviceById(id));
         warehouse.removeDeviceById(id);
         cart.printAllDevices();
     }
 
+    // Metodo per spostare un dispositivo dal carrello al magazzino
     public static void fromCartToWarehouse(Warehouse warehouse, Cart cart, long id) {
         warehouse.addDevice(cart.getDeviceById(id));
         cart.removeDeviceById(id);
         cart.printAllDevices();
     }
 
+    // Metodo per finalizzare l'acquisto nel carrello
     public static String finalizeSale(Cart cart, boolean iva) {
         double finalPrice;
+        // Calcola il prezzo finale considerando l'IVA se necessario
         if (iva) {
             finalPrice = cart.getFinalPrice() * 1.22;
         } else {
             finalPrice = cart.getFinalPrice();
         }
+        // Svuota il carrello dopo l'acquisto
         cart.emptyList();
         return "Questo è il tuo prezzo finale: " + finalPrice;
     }
 
+    // Metodo per ottenere il tipo di utente per l'applicazione dell'IVA
     public static boolean getIvaUser(Scanner sc) {
         while (true) {
-            System.out.println("Seleziona il tipo di user:");
+            System.out.println("Seleziona il tipo di utente:");
             System.out.println("1) Privato");
             System.out.println("2) Azienda con Partita IVA");
             if (sc.hasNextInt()) {
@@ -146,6 +164,7 @@ public class User {
         }
     }
 
+    // Metodo privato per la ricerca per tipo di dispositivo
     private void searchByType(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
@@ -161,6 +180,7 @@ public class User {
         }
     }
 
+    // Metodo privato per la ricerca per produttore
     private void searchByBrand(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
@@ -176,7 +196,7 @@ public class User {
         }
     }
 
-
+    // Metodo privato per la ricerca per modello
     private void searchByModel(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
@@ -192,7 +212,7 @@ public class User {
         }
     }
 
-
+    // Metodo privato per la ricerca per prezzo di vendita
     private void searchBySellPrice(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
@@ -213,7 +233,7 @@ public class User {
         }
     }
 
-
+    // Metodo privato per la ricerca per range di prezzo
     private void searchByPriceRange(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
@@ -237,7 +257,7 @@ public class User {
         }
     }
 
-
+    // Metodo privato per aggiungere un dispositivo al carrello tramite ID
     private void addToCartById(Warehouse warehouse, Cart cart, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
@@ -257,7 +277,7 @@ public class User {
         }
     }
 
-
+    // Metodo privato per rimuovere un dispositivo dal carrello tramite ID
     private void removeFromCartById(Warehouse warehouse, Cart cart, Scanner sc) {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
