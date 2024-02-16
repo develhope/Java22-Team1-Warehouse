@@ -13,6 +13,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Warehouse warehouse = new Warehouse(fillWarehouse());
+
         Cart cart = new Cart();
         Utente utente = new Utente();
         Operatore operator = new Operatore();
