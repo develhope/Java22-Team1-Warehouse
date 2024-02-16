@@ -36,113 +36,41 @@ public class Utente {
 
                     case "1":
                         if (warehouse.isEmpty()) {
-                            System.out.println("Il magazzino e' vuoto!");
+                            System.out.println("Il magazzino è vuoto.");
                             continue;
                         }
                         warehouse.printAllDevices();
                         break;
                     case "2":
-                        if (warehouse.isEmpty()) {
-                            System.out.println("Il magazzino e' vuoto!");
-                            continue;
-                        }
-                        System.out.println("Inserisci il nome del tipo di dispositivo:");
-                        String sceltaDisp = sc.next();
-                        ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
-                        if (devicesCompatibili.isEmpty()) {
-                            System.out.println("Nessun dispositivo compatibile trovato.");
-                        } else {
-                            System.out.println(devicesCompatibili);
-                        }
+                        searchByType(warehouse, sc);
                         break;
                     case "3":
-                        if (warehouse.isEmpty()) {
-                            System.out.println("Il magazzino e' vuoto!");
-                            continue;
-                        }
-                        System.out.println("Inserisci il nome del brand del dispositivo:");
-                        String sceltaBrand = sc.next();
-                        ArrayList<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
-                        if (brandCompatibili.isEmpty()) {
-                            System.out.println("Nessun dispositivo compatibile trovato.");
-                        } else {
-                            System.out.println(brandCompatibili);
-                        }
+                        searchByBrand(warehouse, sc);
+
                         break;
                     case "4":
-                        if (warehouse.isEmpty()) {
-                            System.out.println("Il magazzino e' vuoto!");
-                            continue;
-                        }
-                        System.out.println("Inserisci il nome del modello del dispositivo:");
-                        String sceltaModel = sc.next();
-                        ArrayList<DeviceClasses> modelCompatibili = warehouse.getCompatibles(sceltaModel, "model");
-                        if (modelCompatibili.isEmpty()) {
-                            System.out.println("Nessun dispositivo compatibile trovato.");
-                        } else {
-                            System.out.println(modelCompatibili);
-                        }
+                        searchByModel(warehouse, sc);
+
                         break;
                     case "5":
-                        if (warehouse.isEmpty()) {
-                            System.out.println("Il magazzino e' vuoto!");
-                            continue;
-                        }
-                        System.out.println("Inserisci il prezzo:");
-                        int sceltaForPrice = sc.nextInt();
-                        ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(sceltaForPrice);
-                        if (priceCompatibili.isEmpty()) {
-                            System.out.println("Nessun dispositivo compatibile trovato.");
-                        } else {
-                            System.out.println(priceCompatibili);
-                        }
+                        searchBySellPrice(warehouse, sc);
+
                         break;
                     case "6":
-                        if (warehouse.isEmpty()) {
-                            System.out.println("Il magazzino e' vuoto!");
-                            continue;
-                        }
-                        System.out.println("Inserisci il prezzo minimo:");
-                        int sceltaForPriceRange = sc.nextInt();
-                        System.out.println("Inserisci il prezzo massimo:");
-                        int sceltaForPriceRange2 = sc.nextInt();
+                        searchByPriceRange(warehouse, sc);
 
-                        ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(sceltaForPriceRange, sceltaForPriceRange2);
-                        if (rangeCompatibili.isEmpty()) {
-                            System.out.println("Nessun dispositivo in range trovato");
-                        } else {
-                            System.out.println(rangeCompatibili);
-                        }
                         break;
                     case "7":
-                        if (warehouse.isEmpty()) {
-                            System.out.println("Il magazzino e' vuoto!");
-                            continue;
-                        }
-                        System.out.println("Digita un id per aggiungere al carrello:");
-                        long sceltaId = sc.nextLong();
-                        if (!warehouse.containsDeviceById(sceltaId)) {
-                            System.out.println("Non è stato trovato alcun dispositivo con questo ID");
-                            break;
-                        }
-                        fromWarehouseToCart(warehouse, cart, sceltaId);
+                        addToCartById(warehouse, cart, sc);
+
                         break;
                     case "8":
-                        if (cart.isEmpty()) {
-                            System.out.println("Il carrello è vuoto");
-                            break;
-                        }
-                        System.out.println("Digita un id per rimuovere al carrello:");
-                        long sceltaId2 = sc.nextLong();
-                        if (!cart.containsDeviceById(sceltaId2)) {
-                            System.out.println("Non è stato trovato alcun dispositivo con questo ID");
-                            break;
-                        }
-                        fromCartToWarehouse(warehouse, cart, sceltaId2);
+                        removeFromCartById(warehouse, cart, sc);
+
                         break;
                     case "9":
                         if (cart.isEmpty()) {
-                            System.out.println("Il carrello è vuoto");
+                            System.out.println("Il carrello è vuoto.");
                             break;
                         }
                         System.out.println("Il prezzo finale del carrello è:");
@@ -152,30 +80,28 @@ public class Utente {
                         cart.printAllDevices();
                         break;
                     case "11":
-
                         if (cart.isEmpty()) {
-                            System.out.println("Il carrello è ancora vuoto.");
+                            System.out.println("Il carrello è vuoto.");
                             break;
-
                         }
                         System.out.println("1) per procedere;");
                         System.out.println("2) per tornare nel menu principale;");
                         String sceltaFinale = sc.next();
-                        if (Objects.equals(sceltaFinale, "1")) {
-                            boolean partitaIva = getIvaUtente(new Scanner(System.in));
+                        if (sceltaFinale.equals("1")) {
 
+                            boolean partitaIva = getIvaUtente(new Scanner(System.in));
                             System.out.println(finalizzaVendita(cart, partitaIva));
                             break;
-                        } else if (Objects.equals(sceltaFinale, "2")) {
+                        } else if (sceltaFinale.equals("2")) {
                             break;
                         } else {
-                            System.out.println("Scelta non consentita!");
+                            System.out.println("Scelta non consentita.");
                         }
                         break;
                     case "0":
                         break;
                     default:
-                        System.out.println("Scelta non valida");
+                        System.out.println("Scelta non valida.");
                 }
             } catch (InputMismatchException e) {
             }
@@ -207,23 +133,157 @@ public class Utente {
 
     public static boolean getIvaUtente(Scanner sc) {
         while (true) {
-            System.out.println("1) Sei un privato ");
-            System.out.println("2) Hai una partita iva");
+            System.out.println("Seleziona il tipo di utente:");
+            System.out.println("1) Privato");
+            System.out.println("2) Azienda con Partita IVA");
+
             if (sc.hasNextInt()) {
                 int sceltaUtente = sc.nextInt();
-                if (sceltaUtente == 1) {
-                    return true;
-                } else if (sceltaUtente == 2) {
-                    return false;
-                } else {
-                    System.out.println("Scelta non valida, riprova.");
+                switch (sceltaUtente) {
+                    case 1:
+                        return true;
+                    case 2:
+                        return false;
+                    default:
+                        System.out.println("Opzione non valida, riprova.");
+                        break;
                 }
             } else {
-                System.out.println("Scelta non valida, riprova.");
+                System.out.println("Input non valido, riprova.");
                 sc.next();
             }
         }
     }
 
+    private void searchByType(Warehouse warehouse, Scanner sc) {
+        if (warehouse.isEmpty()) {
+            System.out.println("Il magazzino e' vuoto.");
+            return;
+        }
+        System.out.println("Inserisci il nome del tipo di dispositivo:");
+        String sceltaDisp = sc.next();
+        ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
+        if (devicesCompatibili.isEmpty()) {
+            System.out.println("Nessun dispositivo compatibile trovato.");
+        } else {
+            System.out.println(devicesCompatibili);
+        }
+    }
+
+    private void searchByBrand(Warehouse warehouse, Scanner sc) {
+        if (warehouse.isEmpty()) {
+            System.out.println("Il magazzino e' vuoto.");
+            return;
+        }
+        System.out.println("Inserisci il nome del brand del dispositivo:");
+        String sceltaBrand = sc.next();
+        ArrayList<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
+        if (brandCompatibili.isEmpty()) {
+            System.out.println("Nessun dispositivo compatibile trovato.");
+        } else {
+            System.out.println(brandCompatibili);
+        }
+    }
+
+
+    private void searchByModel(Warehouse warehouse, Scanner sc) {
+        if (warehouse.isEmpty()) {
+            System.out.println("Il magazzino e' vuoto.");
+            return;
+        }
+        System.out.println("Inserisci il nome del modello del dispositivo:");
+        String sceltaModel = sc.next();
+        ArrayList<DeviceClasses> modelCompatibili = warehouse.getCompatibles(sceltaModel, "model");
+        if (modelCompatibili.isEmpty()) {
+            System.out.println("Nessun dispositivo compatibile trovato.");
+        } else {
+            System.out.println(modelCompatibili);
+        }
+    }
+
+
+    private void searchBySellPrice(Warehouse warehouse, Scanner sc) {
+        if (warehouse.isEmpty()) {
+            System.out.println("Il magazzino e' vuoto.");
+            return;
+        }
+        System.out.println("Inserisci il prezzo:");
+        try {
+            int scelta = Integer.parseInt(sc.next());
+            ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(scelta);
+            if (priceCompatibili.isEmpty()) {
+                System.out.println("Nessun dispositivo compatibile trovato.");
+            } else {
+                System.out.println(priceCompatibili);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Input non valido, inserisci un numero valido per il prezzo.");
+            sc.nextLine();
+        }
+    }
+
+
+    private void searchByPriceRange(Warehouse warehouse, Scanner sc) {
+        if (warehouse.isEmpty()) {
+            System.out.println("Il magazzino e' vuoto.");
+            return;
+        }
+        try {
+            System.out.println("Inserisci il prezzo minimo:");
+            int scelta1 = Integer.parseInt(sc.next());
+            System.out.println("Inserisci il prezzo massimo:");
+            int scelta2 = Integer.parseInt(sc.next());
+
+            ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(scelta1, scelta2);
+            if (rangeCompatibili.isEmpty()) {
+                System.out.println("Nessun dispositivo in range trovato.");
+            } else {
+                System.out.println(rangeCompatibili);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Input non valido, assicurati di mettere un numero.");
+            sc.nextLine();
+        }
+    }
+
+
+    private void addToCartById(Warehouse warehouse, Cart cart, Scanner sc) {
+        if (warehouse.isEmpty()) {
+            System.out.println("Il magazzino e' vuoto.");
+            return;
+        }
+        System.out.println("Digita un id per aggiungere al carrello:");
+        try {
+            long sceltaId = Long.parseLong(sc.next());
+            if (!warehouse.containsDeviceById(sceltaId)) {
+                System.out.println("Non è stato trovato alcun dispositivo con questo ID");
+                return;
+            }
+            fromWarehouseToCart(warehouse, cart, sceltaId);
+        } catch (NumberFormatException e) {
+            System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
+            sc.nextLine();
+        }
+    }
+
+
+    private void removeFromCartById(Warehouse warehouse, Cart cart, Scanner sc) {
+        if (cart.isEmpty()) {
+            System.out.println("Il carrello è vuoto.");
+            return;
+        }
+        System.out.println("Digita un id per rimuovere al carrello:");
+        try {
+            long sceltaId2 = Long.parseLong(sc.next());
+            if (!cart.containsDeviceById(sceltaId2)) {
+                System.out.println("Non è stato trovato alcun dispositivo con questo ID.");
+                return;
+            }
+            fromCartToWarehouse(warehouse, cart, sceltaId2);
+        } catch (NumberFormatException e) {
+            System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
+            sc.nextLine();
+        }
+    }
 
 }
