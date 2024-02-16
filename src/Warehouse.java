@@ -1,6 +1,10 @@
 import Devices.DeviceClasses;
+import Devices.Notebook;
+import Devices.Smartphone;
+import Devices.Tablet;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 //
 // NON SI COPIA!
@@ -10,10 +14,7 @@ import java.util.ArrayList;
 public class Warehouse {
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
 
-    public Warehouse(ArrayList<DeviceClasses> devices) {
-        this.devices = devices;
-    }
-
+    public Warehouse() {}
     public void addDevice(DeviceClasses device) {
         devices.add(device);
     }
@@ -146,6 +147,22 @@ public class Warehouse {
             return true;
         }
         return false;
+    }
+    public void fillWarehouse() {
+        Notebook notebook = new Notebook(1500, "Notabook", "Samsung", "Galaxy Book3", "Gaming computer", 15.6, 1000, 899);
+        setIdAddDeviceInWarehouse(notebook);
+        Smartphone smartphone = new Smartphone(159, "Smartphone", "Samsung", "A14", "nero", 6.6, 128, 49);
+        setIdAddDeviceInWarehouse(smartphone);
+        Tablet tablet = new Tablet(549, "Tablet", "Samsung", "Galaxy Tab S8", "grigio siderale", 11, 128, 349);
+        setIdAddDeviceInWarehouse(tablet);
+        Notebook notebook1 = new Notebook(1449, "Notebook", "Huawei", "Pippo", "molto bello", 25.0, 7000, 5000);
+        setIdAddDeviceInWarehouse(notebook1);
+    }
+
+    public void setIdAddDeviceInWarehouse(DeviceClasses device) {
+        Random rand = new Random();
+        devices.add(device);
+        device.setId(rand.nextLong(999999999));
     }
 
 
