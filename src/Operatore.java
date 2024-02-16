@@ -95,23 +95,56 @@ public class Operatore {
 
     public static DeviceClasses addNewDevice() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Inserisci i dati del dispositivo:");
-        System.out.println("Device:");
-        String device = sc.next();
-        System.out.println("Brand:");
-        String brand = sc.next();
-        System.out.println("Model:");
-        String model = sc.next();
-        System.out.println("Description:");
-        String description = sc.next();
-        System.out.println("Display:");
-        double display = sc.nextDouble();
-        System.out.println("Storage:");
-        int storage = sc.nextInt();
-        System.out.println("Purchase:");
-        double purchase = sc.nextDouble();
-        System.out.println("Sale:");
-        double sale = sc.nextDouble();
+        String device = null, brand = null, model = null, description = null;
+        double display = 0, purchase = 0, sale = 0;
+        int storage = 0;
+
+        while (true) {
+            try {
+                System.out.println("Inserisci i dati del dispositivo:");
+                if (device == null) {
+                    System.out.println("Dispositivo:");
+                    device = sc.next();
+                }
+                if (brand == null) {
+                    System.out.println("Brand:");
+                    brand = sc.next();
+                }
+                if (model == null) {
+                    System.out.println("Modello:");
+                    model = sc.next();
+                }
+                if (description == null) {
+                    System.out.println("Descrizione:");
+                    description = sc.next();
+                }
+                if (display == 0) {
+                    System.out.println("Display:");
+                    display = sc.nextDouble();
+                }
+                if (storage == 0) {
+                    System.out.println("Memoria di archiviazione:");
+                    storage = sc.nextInt();
+                }
+                if (purchase == 0) {
+                    System.out.println("Prezzo di acquisto:");
+                    purchase = sc.nextDouble();
+                }
+                if (sale == 0) {
+                    System.out.println("Prezzo di vendita:");
+                    sale = sc.nextDouble();
+                }
+
+
+                if (device != null && brand != null && model != null && description != null && display != 0 && storage != 0 && purchase != 0 && sale != 0) {
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Input non valido. Assicurati di inserire un formato corretto.");
+                sc.nextLine();
+            }
+        }
+
         DeviceClasses deviceF = new DeviceClasses(sale, device, brand, model, description, display, storage, purchase);
         return deviceF;
     }
