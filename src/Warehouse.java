@@ -124,9 +124,6 @@ public class Warehouse {
                 devicesCompatibili.add(devices.get(i));
             }
         }
-        if (devicesCompatibili.isEmpty()) {
-            System.out.println("Nessun dispositivo con questo prezzo trovato.");
-        }
         return devicesCompatibili;
     }
 
