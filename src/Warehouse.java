@@ -68,7 +68,7 @@ public class Warehouse {
                     ", Descrizione: " + device.getDescription() +
                     ", Display: " + device.getDisplay() +
                     ", Archiviazione: " + device.getStorage() +
-                    ", Prezzo: " + formattedPrice + purchasePrice);
+                    ", Prezzo di vendità: " + formattedPrice + purchasePrice);
         }
     }
 

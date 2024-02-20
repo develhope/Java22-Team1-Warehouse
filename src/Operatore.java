@@ -23,8 +23,8 @@ public class Operatore {
             System.out.println("4) Ricerca per modello:");
             System.out.println("5) Ricerca per prezzo di vendita:");
             System.out.println("6) Ricerca per prezzo di acquisto:");
-            System.out.println("7) Ricerca per range di prezzo:");
-            System.out.println("8) Ricerca spesa media dispositivo");
+            System.out.println("7) Ricerca per range di prezzo di acquisto:");
+            System.out.println("8) Ricerca spesa media dispositivo:");
             System.out.println("9) Aggiungi al magazzino:");
             System.out.println("10) Rimuovi dal magazzino:");
             System.out.println("0) Fine:");
@@ -98,102 +98,75 @@ public class Operatore {
 
     public static DeviceClasses addNewDevice() {
         Scanner sc = new Scanner(System.in);
-        String device = null, brand = null, model = null, description = null;
-        double display = 0, purchase = 0, sale = 0;
-        int storage = 0;
+        String device = switchDevice(sc);
+        String brand = getValidInput("Brand:", 15, sc);
+        String model = getValidInput("Modello:", 15, sc);
+        String description = getValidInput("Descrizione:", 20, sc);
+        double display = getValidDoubleInput("Display:", sc);
+        int storage = getValidIntegerInput("Memoria di archiviazione:", sc);
+        double purchase = getValidDoubleInput("Prezzo di acquisto:", sc);
+        double sale = getValidDoubleInput("Prezzo di vendita:", sc);
 
-        while (true) {
-            try {
-                System.out.println("Inserisci i dati del dispositivo:");
-                if (device == null) {
-                    device = switchDevice(sc);
-                }
-                if (brand == null) {
-                    System.out.println("Brand:");
-                    brand = sc.nextLine().trim();
-                    if (brand.length() > 15) {
-                        brand = checkStringLength(brand, "Brand", 15, sc);
-                    }
-                }
-                if (model == null) {
-                    System.out.println("Modello:");
-                    model = sc.nextLine().trim();
-                    if (model.length() > 15) {
-                        model = checkStringLength(model, "Modello", 15, sc);
-                    }
-                }
-                if (description == null) {
-                    System.out.println("Descrizione:");
-                    description = sc.nextLine().trim();
-                    if (description.length() > 20) {
-                        description = checkStringLength(description, "Descrizione", 20, sc);
-                    }
-                }
-                if (display == 0) {
-                    System.out.println("Display:");
-                    display = sc.nextDouble();
-                }
-                if (storage == 0) {
-                    System.out.println("Memoria di archiviazione:");
-                    storage = sc.nextInt();
-                }
-                if (purchase == 0) {
-                    System.out.println("Prezzo di acquisto:");
-                    purchase = sc.nextDouble();
-                }
-                if (sale == 0) {
-                    System.out.println("Prezzo di vendita:");
-                    sale = sc.nextDouble();
-                }
-                if (device != null && brand != null && model != null && description != null && display != 0 && storage != 0 && purchase != 0 && sale != 0) {
-                    break;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Input non valido. Assicurati di inserire un formato corretto.");
-                sc.nextLine();
-            }
-        }
         return new DeviceClasses(sale, device, brand, model, description, display, storage, purchase);
     }
 
     private static String switchDevice(Scanner sc) {
-        String choice;
-        String ritorno = "";
-        boolean chosenDevice = false;
-        while (!chosenDevice) {
+        String scelta;
+        do {
             System.out.println("Scegli che tipo di dispositivo aggiungere");
             System.out.println("1) Smartphone");
             System.out.println("2) Tablet");
             System.out.println("3) Notebook");
-            choice = sc.nextLine();
+            scelta = sc.nextLine();
 
-            switch (choice) {
+            switch (scelta) {
                 case "1":
-                    ritorno = "Smartphone";
-                    chosenDevice = true;
-                    break;
+                    return "Smartphone";
                 case "2":
-                    ritorno = "Tablet";
-                    chosenDevice = true;
-                    break;
+                    return "Tablet";
                 case "3":
-                    chosenDevice = true;
-                    break;
+                    return "Notebook";
                 default:
                     System.out.println("Scelta non valida");
             }
-        }
-        return ritorno;
+        } while (true);
     }
 
-    private static String checkStringLength(String stringa, String controllo, int stringLength, Scanner sc) {
-        String newString = stringa;
-        while (newString.length() > stringLength) {
-            System.out.println("Input troppo lungo, riprova.");
-            System.out.println(controllo + ":");
-            newString = sc.nextLine().trim();
-        }
-        return newString;
+    private static String getValidInput(String prompt, int maxLength, Scanner sc) {
+        String input;
+        do {
+            System.out.println(prompt);
+            input = sc.nextLine().trim();
+            if (input.length() > maxLength) {
+                System.out.println("La lunghezza massima consentita è " + maxLength + " caratteri.");
+            } else {
+                return input;
+            }
+        } while (true);
+    }
+
+    private static double getValidDoubleInput(String prompt, Scanner sc) {
+        do {
+            System.out.println(prompt);
+            try {
+                return sc.nextDouble();
+            } catch (InputMismatchException e) {
+                System.out.println("Input non valido. Inserisci un numero valido.");
+                sc.nextLine();
+            }
+        } while (true);
+    }
+
+    private static int getValidIntegerInput(String prompt, Scanner sc) {
+        do {
+            System.out.println(prompt);
+            try {
+                return sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Input non valido. Inserisci un numero intero valido.");
+                sc.nextLine();
+            }
+        } while (true);
     }
 
     private void searchByType(Warehouse warehouse, Scanner sc) {
@@ -207,7 +180,8 @@ public class Operatore {
         if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            System.out.println(devicesCompatibili);
+            printDevices(devicesCompatibili);
+
         }
     }
 
@@ -222,7 +196,8 @@ public class Operatore {
         if (brandCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            System.out.println(brandCompatibili);
+            printDevices(brandCompatibili);
+
         }
     }
 
@@ -237,7 +212,7 @@ public class Operatore {
         if (modelCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            System.out.println(modelCompatibili);
+            printDevices(modelCompatibili);
         }
     }
 
@@ -253,7 +228,7 @@ public class Operatore {
             if (priceCompatibili.isEmpty()) {
                 System.out.println("Nessun dispositivo compatibile trovato.");
             } else {
-                System.out.println(priceCompatibili);
+                printDevices(priceCompatibili);
             }
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, inserisci un numero valido per il prezzo!");
@@ -273,7 +248,7 @@ public class Operatore {
             if (priceBuyCompatibili.isEmpty()) {
                 System.out.println("Nessun dispositivo compatibile trovato.");
             } else {
-                System.out.println(priceBuyCompatibili);
+                printDevices(priceBuyCompatibili);
             }
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, inserisci un numero valido per il prezzo!");
@@ -296,7 +271,7 @@ public class Operatore {
             if (rangeCompatibili.isEmpty()) {
                 System.out.println("Nessun dispositivo in range trovato");
             } else {
-                System.out.println(rangeCompatibili);
+                printDevices(rangeCompatibili);
             }
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, assicurati di mettere un numero!");
@@ -316,6 +291,20 @@ public class Operatore {
             System.out.println("il prezzo medio è: " + averagePrice);
         } else {
             System.out.println("Errore: inserisci un device valido!");
+        }
+    }
+
+    private void printDevices(ArrayList<DeviceClasses> devices) {
+        for (DeviceClasses device : devices) {
+            System.out.println("Id: " + device.getId() +
+                    ", Dispositivo: " + device.getDevice() +
+                    ", Brand: " + device.getBrand() +
+                    ", Modello: " + device.getModel() +
+                    ", Descrizione: " + device.getDescription() +
+                    ", Display: " + device.getDisplay() +
+                    ", Archiviazione: " + device.getStorage() +
+                    ", Prezzo di vendità: " + device.getSale() +
+                    ", Prezzo di acquisto: " + device.getPurchase());
         }
     }
 }
