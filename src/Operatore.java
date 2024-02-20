@@ -36,7 +36,7 @@ public class Operatore {
                         System.out.println("Il magazzino e' vuoto!");
                         continue;
                     }
-                    warehouse.printAllDevices(true, true);
+                    warehouse.printAllDevices(false, true);
                     break;
                 case "2":
                     searchByType(warehouse, sc);
@@ -106,20 +106,28 @@ public class Operatore {
             try {
                 System.out.println("Inserisci i dati del dispositivo:");
                 if (device == null) {
-                    System.out.println("Dispositivo:");
-                    device = sc.nextLine().trim();
+                    device = switchDevice(sc);
                 }
                 if (brand == null) {
                     System.out.println("Brand:");
                     brand = sc.nextLine().trim();
+                    if (brand.length() > 15) {
+                        brand = checkString(brand, "Brand", 15, sc);
+                    }
                 }
                 if (model == null) {
                     System.out.println("Modello:");
                     model = sc.nextLine().trim();
+                    if (model.length() > 15) {
+                        model = checkString(model, "Modello", 15, sc);
+                    }
                 }
                 if (description == null) {
                     System.out.println("Descrizione:");
                     description = sc.nextLine().trim();
+                    if (description.length() > 20) {
+                        description = checkString(description, "Descrizione", 20, sc);
+                    }
                 }
                 if (display == 0) {
                     System.out.println("Display:");
@@ -146,6 +154,43 @@ public class Operatore {
             }
         }
         return new DeviceClasses(sale, device, brand, model, description, display, storage, purchase);
+    }
+
+    private static String switchDevice(Scanner sc) {
+        String scelta;
+        String ritorno = "";
+        do {
+            System.out.println("Scegli che tipo di dispositivo aggiungere");
+            System.out.println("1) Smartphone");
+            System.out.println("2) Tablet");
+            System.out.println("3) Notebook");
+            scelta = sc.next();
+
+            switch (scelta) {
+                case "1":
+                    ritorno = "Smartphone";
+                    break;
+                case "2":
+                    ritorno = "Tablet";
+                    break;
+                case "3":
+                    ritorno = "Notebook";
+                    break;
+                default:
+                    System.out.println("Scelta non valida");
+            }
+        } while (scelta.equals("1") || scelta.equals("2") || scelta.equals("3"));
+        return ritorno;
+    }
+
+    private static String checkString(String stringa, String controllo, int lunghezza, Scanner sc) {
+        String newString = stringa;
+        while (newString.length() > 10) {
+            System.out.println("Riprova, questa non va bene.");
+            System.out.println(controllo + ":");
+            newString = sc.nextLine().trim();
+        }
+        return newString;
     }
 
     private void searchByType(Warehouse warehouse, Scanner sc) {

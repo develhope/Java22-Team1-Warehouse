@@ -91,6 +91,8 @@ public class User {
 
                         if (sceltaFinale.equals("1")) {
                             System.out.println(finalizeSale(cart, partitaIva));
+                            System.out.println("Grazie per l'acquisto, speriamo di vederti presto.");
+
                             break;
                         } else if (sceltaFinale.equals("2")) {
                             break;
@@ -239,7 +241,7 @@ public class User {
             int minSearchedPrice = iva ? (int) (minPrice / 1.22) : minPrice;
             int maxSearchedPrice = iva ? (int) (maxPrice / 1.22) : maxPrice;
 
-            ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(minPrice, maxSearchedPrice);
+            ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(minSearchedPrice, maxSearchedPrice);
             if (rangeCompatibili.isEmpty()) {
                 System.out.println("Nessun dispositivo in range trovato.");
             } else {
