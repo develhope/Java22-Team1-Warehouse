@@ -70,12 +70,11 @@ public class User {
                             break;
                         }
                         System.out.println("Il prezzo finale del carrello è:");
-                        if (partitaIva) {
+                        if (!partitaIva) {
                             System.out.println(cart.getFinalPrice());
                         } else {
                             System.out.println(cart.getFinalPrice() * 1.22);
                         }
-
                         break;
                     case "10":
                         cart.printAllDevices(partitaIva);
@@ -161,7 +160,7 @@ public class User {
             return;
         }
         System.out.println("Inserisci il nome del tipo di dispositivo:");
-        String sceltaDisp = sc.nextLine();
+        String sceltaDisp = sc.next();
         ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
         if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
@@ -176,7 +175,7 @@ public class User {
             return;
         }
         System.out.println("Inserisci il nome del brand del dispositivo:");
-        String sceltaBrand = sc.nextLine();
+        String sceltaBrand = sc.next();
         ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
         if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
@@ -192,7 +191,7 @@ public class User {
             return;
         }
         System.out.println("Inserisci il nome del modello del dispositivo:");
-        String sceltaModel = sc.nextLine();
+        String sceltaModel = sc.next();
         ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaModel, "model");
         if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
@@ -217,7 +216,7 @@ public class User {
             if (priceCompatibili.isEmpty()) {
                 System.out.println("Nessun dispositivo compatibile trovato.");
             } else {
-                System.out.println(priceCompatibili);
+                printDevices(priceCompatibili, iva);
             }
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, inserisci un numero valido per il prezzo.");
@@ -244,7 +243,7 @@ public class User {
             if (rangeCompatibili.isEmpty()) {
                 System.out.println("Nessun dispositivo in range trovato.");
             } else {
-                System.out.println(rangeCompatibili);
+                printDevices(rangeCompatibili, iva);
             }
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, assicurati di mettere un numero.");
