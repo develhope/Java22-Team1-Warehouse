@@ -112,21 +112,21 @@ public class Operatore {
                     System.out.println("Brand:");
                     brand = sc.nextLine().trim();
                     if (brand.length() > 15) {
-                        brand = checkString(brand, "Brand", 15, sc);
+                        brand = checkStringLength(brand, "Brand", 15, sc);
                     }
                 }
                 if (model == null) {
                     System.out.println("Modello:");
                     model = sc.nextLine().trim();
                     if (model.length() > 15) {
-                        model = checkString(model, "Modello", 15, sc);
+                        model = checkStringLength(model, "Modello", 15, sc);
                     }
                 }
                 if (description == null) {
                     System.out.println("Descrizione:");
                     description = sc.nextLine().trim();
                     if (description.length() > 20) {
-                        description = checkString(description, "Descrizione", 20, sc);
+                        description = checkStringLength(description, "Descrizione", 20, sc);
                     }
                 }
                 if (display == 0) {
@@ -157,36 +157,39 @@ public class Operatore {
     }
 
     private static String switchDevice(Scanner sc) {
-        String scelta;
+        String choice;
         String ritorno = "";
-        do {
+        boolean chosenDevice = false;
+        while (!chosenDevice) {
             System.out.println("Scegli che tipo di dispositivo aggiungere");
             System.out.println("1) Smartphone");
             System.out.println("2) Tablet");
             System.out.println("3) Notebook");
-            scelta = sc.next();
+            choice = sc.nextLine();
 
-            switch (scelta) {
+            switch (choice) {
                 case "1":
                     ritorno = "Smartphone";
+                    chosenDevice = true;
                     break;
                 case "2":
                     ritorno = "Tablet";
+                    chosenDevice = true;
                     break;
                 case "3":
-                    ritorno = "Notebook";
+                    chosenDevice = true;
                     break;
                 default:
                     System.out.println("Scelta non valida");
             }
-        } while (scelta.equals("1") || scelta.equals("2") || scelta.equals("3"));
+        }
         return ritorno;
     }
 
-    private static String checkString(String stringa, String controllo, int lunghezza, Scanner sc) {
+    private static String checkStringLength(String stringa, String controllo, int stringLength, Scanner sc) {
         String newString = stringa;
-        while (newString.length() > 10) {
-            System.out.println("Riprova, questa non va bene.");
+        while (newString.length() > stringLength) {
+            System.out.println("Input troppo lungo, riprova.");
             System.out.println(controllo + ":");
             newString = sc.nextLine().trim();
         }

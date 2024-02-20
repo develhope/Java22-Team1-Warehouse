@@ -44,13 +44,13 @@ public class User {
                         warehouse.printAllDevices(partitaIva, false);
                         break;
                     case "2":
-                        searchByType(warehouse, sc);
+                        searchByType(warehouse, sc, partitaIva);
                         break;
                     case "3":
-                        searchByBrand(warehouse, sc);
+                        searchByBrand(warehouse, sc, partitaIva);
                         break;
                     case "4":
-                        searchByModel(warehouse, sc);
+                        searchByModel(warehouse, sc, partitaIva);
                         break;
                     case "5":
                         searchBySellPrice(warehouse, sc, partitaIva);
@@ -70,7 +70,7 @@ public class User {
                             break;
                         }
                         System.out.println("Il prezzo finale del carrello è:");
-                        if(partitaIva) {
+                        if (partitaIva) {
                             System.out.println(cart.getFinalPrice());
                         } else {
                             System.out.println(cart.getFinalPrice() * 1.22);
@@ -85,14 +85,13 @@ public class User {
                             System.out.println("Il carrello è vuoto.");
                             break;
                         }
-                        System.out.println("1) per procedere;");
-                        System.out.println("2) per tornare nel menu principale;");
+                        System.out.println("1) Per procedere all'acquisto.");
+                        System.out.println("2) Per tornare al menu principale.");
                         String sceltaFinale = sc.next();
 
                         if (sceltaFinale.equals("1")) {
                             System.out.println(finalizeSale(cart, partitaIva));
-                            System.out.println("Grazie per l'acquisto, speriamo di vederti presto.");
-
+                            System.out.println("Grazie per l'acquisto, speriamo di rivederti presto.");
                             break;
                         } else if (sceltaFinale.equals("2")) {
                             break;
@@ -156,49 +155,49 @@ public class User {
         }
     }
 
-    private void searchByType(Warehouse warehouse, Scanner sc) {
+    private void searchByType(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
             return;
         }
         System.out.println("Inserisci il nome del tipo di dispositivo:");
-        String sceltaDisp = sc.next();
+        String sceltaDisp = sc.nextLine();
         ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
         if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            System.out.println(devicesCompatibili);
+            printDevices(devicesCompatibili, iva);
         }
     }
 
-    private void searchByBrand(Warehouse warehouse, Scanner sc) {
+    private void searchByBrand(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
             return;
         }
         System.out.println("Inserisci il nome del brand del dispositivo:");
-        String sceltaBrand = sc.next();
-        ArrayList<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
-        if (brandCompatibili.isEmpty()) {
+        String sceltaBrand = sc.nextLine();
+        ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
+        if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            System.out.println(brandCompatibili);
+            printDevices(devicesCompatibili, iva);
         }
     }
 
 
-    private void searchByModel(Warehouse warehouse, Scanner sc) {
+    private void searchByModel(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
             return;
         }
         System.out.println("Inserisci il nome del modello del dispositivo:");
-        String sceltaModel = sc.next();
-        ArrayList<DeviceClasses> modelCompatibili = warehouse.getCompatibles(sceltaModel, "model");
-        if (modelCompatibili.isEmpty()) {
+        String sceltaModel = sc.nextLine();
+        ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaModel, "model");
+        if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            System.out.println(modelCompatibili);
+            printDevices(devicesCompatibili, iva);
         }
     }
 
@@ -293,4 +292,17 @@ public class User {
         }
     }
 
+    private void printDevices(ArrayList<DeviceClasses> devices, boolean iva) {
+        for (DeviceClasses device : devices) {
+            double price = iva ? device.getPriceWithIVA() : device.getSale();
+            System.out.println("Id: " + device.getId() +
+                    ", Dispositivo: " + device.getDevice() +
+                    ", Brand: " + device.getBrand() +
+                    ", Modello: " + device.getModel() +
+                    ", Descrizione: " + device.getDescription() +
+                    ", Display: " + device.getDisplay() +
+                    ", Archiviazione: " + device.getStorage() +
+                    ", Prezzo: " + price);
+        }
+    }
 }

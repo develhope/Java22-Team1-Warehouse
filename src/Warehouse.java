@@ -24,9 +24,9 @@ public class Warehouse {
 
     // ottenere il dispositivo tramite id
     public DeviceClasses getDeviceById(long id) {
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getId() == id) {
-                return devices.get(i);
+        for (DeviceClasses device : devices) {
+            if (device.getId() == id) {
+                return device;
 
             }
         }
@@ -76,22 +76,22 @@ public class Warehouse {
         String inputLowerCase = input.toLowerCase();
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
-        for (int i = 0; i < devices.size(); i++) {
+        for (DeviceClasses device : devices) {
             String researchLowerCase = "";
 
             switch (researchType) {
                 case "device":
-                    researchLowerCase = devices.get(i).getDevice().toLowerCase();
+                    researchLowerCase = device.getDevice().toLowerCase();
                     break;
                 case "model":
-                    researchLowerCase = devices.get(i).getModel().toLowerCase();
+                    researchLowerCase = device.getModel().toLowerCase();
                     break;
                 case "brand":
-                    researchLowerCase = devices.get(i).getBrand().toLowerCase();
+                    researchLowerCase = device.getBrand().toLowerCase();
             }
 
             if (researchLowerCase.contains(inputLowerCase)) {
-                devicesCompatibili.add(devices.get(i));
+                devicesCompatibili.add(device);
             }
         }
         return devicesCompatibili;
@@ -156,10 +156,7 @@ public class Warehouse {
     }
 
     public boolean isEmpty() {
-        if (devices.isEmpty()) {
-            return true;
-        }
-        return false;
+        return devices.isEmpty();
     }
 
     public void fillWarehouse() {
