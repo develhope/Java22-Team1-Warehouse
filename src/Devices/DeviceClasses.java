@@ -104,18 +104,21 @@ public class DeviceClasses {
         return sale;
     }
 
+    public double getPriceWithIVA() {
+        return this.getSale() * 1.22;
+    }
 
     @Override
     public String toString() {
         return
-                "Device: " + device +
+                "Id: " + id +
+                        ", Dispositivo: " + device +
                         ", Brand: " + brand +
                         ", Model: " + model +
                         ", Description: " + description +
                         ", Display: " + display +
                         ", Storage: " + storage +
                         ", Purchase " + purchase +
-                        ", Sale: " + sale +
-                        ", Id: " + id + "\n";
+                        ", Sale: " + sale + "\n";
     }
 }

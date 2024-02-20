@@ -14,6 +14,9 @@ public class User {
     public void userMenu(Cart cart, Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
         String sceltaUser;
+
+        boolean partitaIva = getIvaUser(new Scanner(System.in));
+
         do {
             System.out.println("Scegli l operazione da effettuare:");
             System.out.println("1) Visualizza tutti prodotti");
@@ -38,7 +41,7 @@ public class User {
                             System.out.println("Il magazzino è vuoto.");
                             continue;
                         }
-                        warehouse.printAllDevices();
+                        warehouse.printAllDevices(partitaIva, false);
                         break;
                     case "2":
                         searchByType(warehouse, sc);
@@ -50,16 +53,16 @@ public class User {
                         searchByModel(warehouse, sc);
                         break;
                     case "5":
-                        searchBySellPrice(warehouse, sc);
+                        searchBySellPrice(warehouse, sc, partitaIva);
                         break;
                     case "6":
-                        searchByPriceRange(warehouse, sc);
+                        searchByPriceRange(warehouse, sc, partitaIva);
                         break;
                     case "7":
-                        addToCartById(warehouse, cart, sc);
+                        addToCartById(warehouse, cart, sc, partitaIva);
                         break;
                     case "8":
-                        removeFromCartById(warehouse, cart, sc);
+                        removeFromCartById(warehouse, cart, sc, partitaIva);
                         break;
                     case "9":
                         if (cart.isEmpty()) {
@@ -67,10 +70,15 @@ public class User {
                             break;
                         }
                         System.out.println("Il prezzo finale del carrello è:");
-                        System.out.println(cart.getFinalPrice());
+                        if(partitaIva) {
+                            System.out.println(cart.getFinalPrice());
+                        } else {
+                            System.out.println(cart.getFinalPrice() * 1.22);
+                        }
+
                         break;
                     case "10":
-                        cart.printAllDevices();
+                        cart.printAllDevices(partitaIva);
                         break;
                     case "11":
                         if (cart.isEmpty()) {
@@ -80,8 +88,8 @@ public class User {
                         System.out.println("1) per procedere;");
                         System.out.println("2) per tornare nel menu principale;");
                         String sceltaFinale = sc.next();
+
                         if (sceltaFinale.equals("1")) {
-                            boolean partitaIva = getIvaUser(new Scanner(System.in));
                             System.out.println(finalizeSale(cart, partitaIva));
                             break;
                         } else if (sceltaFinale.equals("2")) {
@@ -100,16 +108,16 @@ public class User {
         } while (!sceltaUser.equals("0"));
     }
 
-    public static void fromWarehouseToCart(Warehouse warehouse, Cart cart, long id) {
+    public static void fromWarehouseToCart(Warehouse warehouse, Cart cart, long id, Boolean iva) {
         cart.addDevice(warehouse.getDeviceById(id));
         warehouse.removeDeviceById(id);
-        cart.printAllDevices();
+        cart.printAllDevices(iva);
     }
 
-    public static void fromCartToWarehouse(Warehouse warehouse, Cart cart, long id) {
+    public static void fromCartToWarehouse(Warehouse warehouse, Cart cart, long id, Boolean iva) {
         warehouse.addDevice(cart.getDeviceById(id));
         cart.removeDeviceById(id);
-        cart.printAllDevices();
+        cart.printAllDevices(iva);
     }
 
     public static String finalizeSale(Cart cart, boolean iva) {
@@ -193,15 +201,18 @@ public class User {
     }
 
 
-    private void searchBySellPrice(Warehouse warehouse, Scanner sc) {
+    private void searchBySellPrice(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
             return;
         }
         System.out.println("Inserisci il prezzo:");
         try {
-            int scelta = Integer.parseInt(sc.next());
-            ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(scelta);
+            int price = Integer.parseInt(sc.next());
+
+            int searchedPrice = iva ? (int) (price / 1.22) : price;
+
+            ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(searchedPrice);
             if (priceCompatibili.isEmpty()) {
                 System.out.println("Nessun dispositivo compatibile trovato.");
             } else {
@@ -214,18 +225,21 @@ public class User {
     }
 
 
-    private void searchByPriceRange(Warehouse warehouse, Scanner sc) {
+    private void searchByPriceRange(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
             return;
         }
         try {
             System.out.println("Inserisci il prezzo minimo:");
-            int scelta1 = Integer.parseInt(sc.next());
+            int minPrice = Integer.parseInt(sc.next());
             System.out.println("Inserisci il prezzo massimo:");
-            int scelta2 = Integer.parseInt(sc.next());
+            int maxPrice = Integer.parseInt(sc.next());
 
-            ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(scelta1, scelta2);
+            int minSearchedPrice = iva ? (int) (minPrice / 1.22) : minPrice;
+            int maxSearchedPrice = iva ? (int) (maxPrice / 1.22) : maxPrice;
+
+            ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(minPrice, maxSearchedPrice);
             if (rangeCompatibili.isEmpty()) {
                 System.out.println("Nessun dispositivo in range trovato.");
             } else {
@@ -238,7 +252,7 @@ public class User {
     }
 
 
-    private void addToCartById(Warehouse warehouse, Cart cart, Scanner sc) {
+    private void addToCartById(Warehouse warehouse, Cart cart, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
             return;
@@ -250,7 +264,7 @@ public class User {
                 System.out.println("Non è stato trovato alcun dispositivo con questo ID");
                 return;
             }
-            fromWarehouseToCart(warehouse, cart, sceltaId);
+            fromWarehouseToCart(warehouse, cart, sceltaId, iva);
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
             sc.nextLine();
@@ -258,7 +272,7 @@ public class User {
     }
 
 
-    private void removeFromCartById(Warehouse warehouse, Cart cart, Scanner sc) {
+    private void removeFromCartById(Warehouse warehouse, Cart cart, Scanner sc, boolean iva) {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
             return;
@@ -270,7 +284,7 @@ public class User {
                 System.out.println("Non è stato trovato alcun dispositivo con questo ID.");
                 return;
             }
-            fromCartToWarehouse(warehouse, cart, sceltaId2);
+            fromCartToWarehouse(warehouse, cart, sceltaId2, iva);
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
             sc.nextLine();

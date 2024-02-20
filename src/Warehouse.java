@@ -3,6 +3,7 @@ import Devices.Notebook;
 import Devices.Smartphone;
 import Devices.Tablet;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -52,9 +53,22 @@ public class Warehouse {
         return false;
     }
 
-    public void printAllDevices() {
-        for (int i = 0; i < devices.size(); i++) {
-            System.out.print(devices.get(i));
+    public void printAllDevices(boolean iva, boolean includePurchasePrice) {
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        for (DeviceClasses device : devices) {
+            double priceWithIVA = !iva ? device.getSale() : device.getPriceWithIVA();
+            String formattedPrice = df.format(priceWithIVA);
+            String purchasePrice = includePurchasePrice ? ", Prezzo di acquisto: " + device.getPurchase() : "";
+
+            System.out.println("Id: " + device.getId() +
+                    ", Dispositivo: " + device.getDevice() +
+                    ", Brand: " + device.getBrand() +
+                    ", Modello: " + device.getModel() +
+                    ", Descrizione: " + device.getDescription() +
+                    ", Display: " + device.getDisplay() +
+                    ", Archiviazione: " + device.getStorage() +
+                    ", Prezzo: " + formattedPrice + purchasePrice);
         }
     }
 

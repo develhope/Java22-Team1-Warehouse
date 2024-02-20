@@ -36,7 +36,7 @@ public class Operatore {
                         System.out.println("Il magazzino e' vuoto!");
                         continue;
                     }
-                    warehouse.printAllDevices();
+                    warehouse.printAllDevices(true, true);
                     break;
                 case "2":
                     searchByType(warehouse, sc);
@@ -107,19 +107,19 @@ public class Operatore {
                 System.out.println("Inserisci i dati del dispositivo:");
                 if (device == null) {
                     System.out.println("Dispositivo:");
-                    device = sc.next();
+                    device = sc.nextLine().trim();
                 }
                 if (brand == null) {
                     System.out.println("Brand:");
-                    brand = sc.next();
+                    brand = sc.nextLine().trim();
                 }
                 if (model == null) {
                     System.out.println("Modello:");
-                    model = sc.next();
+                    model = sc.nextLine().trim();
                 }
                 if (description == null) {
                     System.out.println("Descrizione:");
-                    description = sc.next();
+                    description = sc.nextLine().trim();
                 }
                 if (display == 0) {
                     System.out.println("Display:");
