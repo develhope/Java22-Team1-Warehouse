@@ -14,5 +14,3 @@ public class Smartphone extends DeviceClasses {
 
 
 }
-
-

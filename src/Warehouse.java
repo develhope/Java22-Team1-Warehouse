@@ -3,27 +3,25 @@ import Devices.Notebook;
 import Devices.Smartphone;
 import Devices.Tablet;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
-//
-// NON SI COPIA!
-// NON SI COPIA!
-// NON SI COPIA!
-//
 public class Warehouse {
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
 
-    public Warehouse() {}
+    public Warehouse() {
+    }
+
     public void addDevice(DeviceClasses device) {
         devices.add(device);
     }
 
     // ottenere il dispositivo tramite id
     public DeviceClasses getDeviceById(long id) {
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getId() == id) {
-                return devices.get(i);
+        for (DeviceClasses device : devices) {
+            if (device.getId() == id) {
+                return device;
 
             }
         }
@@ -50,9 +48,21 @@ public class Warehouse {
         return false;
     }
 
-    public void printAllDevices() {
-        for (int i = 0; i < devices.size(); i++) {
-            System.out.print(devices.get(i));
+    public void printAllDevices(boolean iva, boolean includePurchasePrice) {
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        for (DeviceClasses device : devices) {
+            double priceWithIVA = !iva ? device.getSale() : device.getPriceWithIVA();
+            String purchasePrice = includePurchasePrice ? ", Prezzo di acquisto: " + df.format(device.getPurchase()) : "";
+
+            System.out.println("Id: " + device.getId() +
+                    ", Dispositivo: " + device.getDevice() +
+                    ", Brand: " + device.getBrand() +
+                    ", Modello: " + device.getModel() +
+                    ", Descrizione: " + device.getDescription() +
+                    ", Display: " + df.format(device.getDisplay()) +
+                    ", Archiviazione: " + df.format(device.getStorage()) +
+                    ", Prezzo di vendità: " + df.format(priceWithIVA) + purchasePrice);
         }
     }
 
@@ -60,22 +70,22 @@ public class Warehouse {
         String inputLowerCase = input.toLowerCase();
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
-        for (int i = 0; i < devices.size(); i++) {
+        for (DeviceClasses device : devices) {
             String researchLowerCase = "";
 
             switch (researchType) {
                 case "device":
-                    researchLowerCase = devices.get(i).getDevice().toLowerCase();
+                    researchLowerCase = device.getDevice().toLowerCase();
                     break;
                 case "model":
-                    researchLowerCase = devices.get(i).getModel().toLowerCase();
+                    researchLowerCase = device.getModel().toLowerCase();
                     break;
                 case "brand":
-                    researchLowerCase = devices.get(i).getBrand().toLowerCase();
+                    researchLowerCase = device.getBrand().toLowerCase();
             }
 
             if (researchLowerCase.contains(inputLowerCase)) {
-                devicesCompatibili.add(devices.get(i));
+                devicesCompatibili.add(device);
             }
         }
         return devicesCompatibili;
@@ -84,9 +94,9 @@ public class Warehouse {
     public ArrayList<DeviceClasses> getRangePurchase(int valLow, int valHigh) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getPurchase() <= valHigh && devices.get(i).getPurchase() >= valLow) {
-                devicesCompatibili.add(devices.get(i));
+        for (DeviceClasses device : devices) {
+            if (device.getPurchase() <= valHigh && device.getPurchase() >= valLow) {
+                devicesCompatibili.add(device);
             }
         }
         return devicesCompatibili;
@@ -95,9 +105,9 @@ public class Warehouse {
     public ArrayList<DeviceClasses> getRangeSale(int valLow, int valHigh) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getSale() <= valHigh && devices.get(i).getSale() >= valLow) {
-                devicesCompatibili.add(devices.get(i));
+        for (DeviceClasses device : devices) {
+            if (device.getSale() <= valHigh && device.getSale() >= valLow) {
+                devicesCompatibili.add(device);
             }
         }
         return devicesCompatibili;
@@ -106,9 +116,9 @@ public class Warehouse {
     public ArrayList<DeviceClasses> getBySellPrice(int range) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getSale() == range) {
-                devicesCompatibili.add(devices.get(i));
+        for (DeviceClasses device : devices) {
+            if (device.getSale() == range) {
+                devicesCompatibili.add(device);
             }
         }
         return devicesCompatibili;
@@ -117,13 +127,10 @@ public class Warehouse {
     public ArrayList<DeviceClasses> getByPurchasePrice(int range) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getPurchase() == range) {
-                devicesCompatibili.add(devices.get(i));
+        for (DeviceClasses device : devices) {
+            if (device.getPurchase() == range) {
+                devicesCompatibili.add(device);
             }
-        }
-        if (devicesCompatibili.isEmpty()) {
-            System.out.println("Nessun dispositivo con questo prezzo trovato.");
         }
         return devicesCompatibili;
     }
@@ -133,9 +140,9 @@ public class Warehouse {
         int counter = 0;
         String deviceLowerCase = device.trim().toLowerCase();
 
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getDevice().toLowerCase().equals(deviceLowerCase)) {
-                sum += devices.get(i).getPurchase();
+        for (DeviceClasses deviceClasses : devices) {
+            if (deviceClasses.getDevice().toLowerCase().equals(deviceLowerCase)) {
+                sum += deviceClasses.getPurchase();
                 counter++;
             }
         }
@@ -143,19 +150,17 @@ public class Warehouse {
     }
 
     public boolean isEmpty() {
-        if (devices.isEmpty()) {
-            return true;
-        }
-        return false;
+        return devices.isEmpty();
     }
+
     public void fillWarehouse() {
-        Notebook notebook = new Notebook(1500, "Notabook", "Samsung", "Galaxy Book3", "Gaming computer", 15.6, 1000, 899);
+        Notebook notebook = new Notebook(1500, "Notebook", "Samsung", "Galaxy Book 3", "Gaming computer", 15.6, 1000, 799);
         setIdAddDeviceInWarehouse(notebook);
-        Smartphone smartphone = new Smartphone(159, "Smartphone", "Samsung", "A14", "nero", 6.6, 128, 49);
+        Smartphone smartphone = new Smartphone(979, "Smartphone", "Apple", "iPhone 15", "Nero", 6.1, 128, 349);
         setIdAddDeviceInWarehouse(smartphone);
-        Tablet tablet = new Tablet(549, "Tablet", "Samsung", "Galaxy Tab S8", "grigio siderale", 11, 128, 349);
+        Tablet tablet = new Tablet(1149, "Tablet", "Apple", "iPad Pro", "Grigio Siderale", 11, 256, 549);
         setIdAddDeviceInWarehouse(tablet);
-        Notebook notebook1 = new Notebook(1449, "Notebook", "Huawei", "Pippo", "molto bello", 25.0, 7000, 5000);
+        Notebook notebook1 = new Notebook(629, "Notebook", "HP", "15S-FQ5073NL", "Argento", 15.6, 512, 249);
         setIdAddDeviceInWarehouse(notebook1);
     }
 
@@ -164,6 +169,4 @@ public class Warehouse {
         devices.add(device);
         device.setId(rand.nextLong(999999999));
     }
-
-
 }

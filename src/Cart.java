@@ -1,12 +1,8 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import Devices.DeviceClasses;
 
-//
-// NON SI COPIA!
-// NON SI COPIA!
-// NON SI COPIA!
-//
 public class Cart {
 
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
@@ -59,14 +55,28 @@ public class Cart {
     }
 
     // Stampare elementi nel cart
-    public void printAllDevices() {
+    public void printAllDevices(boolean iva) {
         if (devices.isEmpty()) {
-            System.out.println("Il carrello è vuoto!");
-        } else {
-            System.out.println("Questo è il carrello:");
-            for (int i = 0; i < devices.size(); i++) {
-                System.out.print(devices.get(i));
-            }
+            System.out.println("Il carrelo è vuoto.");
+            return;
+        }
+
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        for (DeviceClasses device : devices) {
+            double priceWithIVA = !iva ? device.getSale() : device.getPriceWithIVA();
+            String formattedPrice = df.format(priceWithIVA);
+
+
+            System.out.println("Id: " + device.getId() +
+                    ", Dispositivo: " + device.getDevice() +
+                    ", Brand: " + device.getBrand() +
+                    ", Modello: " + device.getModel() +
+                    ", Descrizione: " + device.getDescription() +
+                    ", Display: " + device.getDisplay() +
+                    ", Archiviazione: " + device.getStorage() +
+                    ", Prezzo: " + formattedPrice);
+
         }
     }
 
