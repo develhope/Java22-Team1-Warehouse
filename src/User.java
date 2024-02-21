@@ -153,34 +153,6 @@ public class User extends ResearchMethods {
         }
     }
 
-    //Metodo per la ricerca dei prodotti per range di prezzo
-
-    private void searchByPriceRange(Warehouse warehouse, Scanner sc, boolean iva) {
-        if (warehouse.isEmpty()) {
-            System.out.println("Il magazzino e' vuoto.");
-            return;
-        }
-        try {
-            System.out.println("Inserisci il prezzo minimo:");
-            int minPrice = Integer.parseInt(sc.next());
-            System.out.println("Inserisci il prezzo massimo:");
-            int maxPrice = Integer.parseInt(sc.next());
-
-            int minSearchedPrice = iva ? (int) (minPrice / 1.22) : minPrice;
-            int maxSearchedPrice = iva ? (int) (maxPrice / 1.22) : maxPrice;
-
-            ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(minSearchedPrice, maxSearchedPrice);
-            if (rangeCompatibili.isEmpty()) {
-                System.out.println("Nessun dispositivo in range trovato.");
-            } else {
-                printDevices(rangeCompatibili, iva);
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Input non valido, assicurati di mettere un numero.");
-            sc.nextLine();
-        }
-    }
-
     //Metodo per aggiungere i prodotti al carrello tramite un ID
     private void addToCartById(Warehouse warehouse, Cart cart, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {

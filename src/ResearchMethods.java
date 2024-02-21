@@ -143,4 +143,31 @@ public abstract class ResearchMethods {
         }
     }
 
+    // ricerca per range del prezzo di vendita
+    void searchByPriceRange(Warehouse warehouse, Scanner sc, boolean iva) {
+        if (warehouse.isEmpty()) {
+            System.out.println("Il magazzino e' vuoto!");
+            return;
+        }
+        sc.nextLine();
+        int minPrice = getValidIntegerInput("Inserisci il prezzo minimo:", sc);
+        int maxPrice = getValidIntegerInput("Inserisci il prezzo massimo:", sc);
+
+        int minSearchedPrice = iva ? (int) (minPrice / 1.22) : minPrice;
+        int maxSearchedPrice = iva ? (int) (maxPrice / 1.22) : maxPrice;
+
+        if (minSearchedPrice > maxSearchedPrice) {
+            System.out.println("Il prezzo minimo non può essere maggiore del prezzo massimo.");
+            return;
+        }
+
+        ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(minSearchedPrice, maxSearchedPrice);
+        if (rangeCompatibili.isEmpty()) {
+            System.out.println("Nessun dispositivo in range trovato");
+        } else {
+            printDevices(rangeCompatibili, iva);
+        }
+
+    }
+
 }

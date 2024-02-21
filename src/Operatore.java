@@ -50,7 +50,7 @@ public class Operatore extends ResearchMethods {
                     searchByPurchasePrice(warehouse, sc);
                     break;
                 case "7":
-                    searchByPriceRange(warehouse, sc);
+                    searchByPriceRange(warehouse, sc, false);
                     break;
                 case "8":
                     searchByAverageDevicePrice(warehouse, sc);
@@ -87,14 +87,14 @@ public class Operatore extends ResearchMethods {
     }
 
     // set ID del device utilizzando un Random e aggiunge il device al magazzino
-    public static void setIdAddDeviceInWarehouse(Warehouse warehouse, DeviceClasses device) {
+    private static void setIdAddDeviceInWarehouse(Warehouse warehouse, DeviceClasses device) {
         Random rand = new Random();
         warehouse.addDevice(device);
         device.setId(rand.nextLong(999999999));
     }
 
     // aggiunge un nuovo device al magazzino
-    public static DeviceClasses addNewDevice(Scanner sc) {
+    private static DeviceClasses addNewDevice(Scanner sc) {
 
         String device = switchDevice(sc);
         String brand = getValidInput("Brand:", 15, sc);
@@ -149,29 +149,6 @@ public class Operatore extends ResearchMethods {
         }
     }
 
-    // ricerca per range del prezzo di vendita
-    private void searchByPriceRange(Warehouse warehouse, Scanner sc) {
-        if (warehouse.isEmpty()) {
-            System.out.println("Il magazzino e' vuoto!");
-            return;
-        }
-        sc.nextLine();
-        int scelta1 = getValidIntegerInput("Inserisci il prezzo minimo:", sc);
-        int scelta2 = getValidIntegerInput("Inserisci il prezzo massimo:", sc);
-
-        if (scelta1 > scelta2) {
-            System.out.println("Il prezzo minimo non può essere maggiore del prezzo massimo.");
-            return;
-        }
-
-        ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(scelta1, scelta2);
-        if (rangeCompatibili.isEmpty()) {
-            System.out.println("Nessun dispositivo in range trovato");
-        } else {
-            printDevices(rangeCompatibili, false);
-        }
-
-    }
 
     // ricerca per prezzo medio del device
     private void searchByAverageDevicePrice(Warehouse warehouse, Scanner sc) {
