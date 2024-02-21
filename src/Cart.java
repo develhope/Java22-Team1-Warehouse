@@ -28,9 +28,9 @@ public class Cart {
 
     //Ottieni prodotto da ID
     public DeviceClasses getDeviceById(long id) {
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getId() == id) {
-                return devices.get(i);
+        for (DeviceClasses device : devices) {
+            if (device.getId() == id) {
+                return device;
             }
         }
         return null;
@@ -48,10 +48,7 @@ public class Cart {
 
     // Controlla se cart e' vuoto
     public boolean isEmpty() {
-        if (devices.isEmpty()) {
-            return true;
-        }
-        return false;
+        return devices.isEmpty();
     }
 
     // Stampare elementi nel cart

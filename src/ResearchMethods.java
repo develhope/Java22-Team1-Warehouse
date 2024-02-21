@@ -22,7 +22,6 @@ public abstract class ResearchMethods {
     }
 
     // Prende un input string e lo valida prima di ritornarlo
-
     static String getValidInput(String prompt, int maxLength, Scanner sc) {
         String input;
         do {
@@ -167,7 +166,5 @@ public abstract class ResearchMethods {
         } else {
             printDevices(rangeCompatibili, iva);
         }
-
     }
-
 }

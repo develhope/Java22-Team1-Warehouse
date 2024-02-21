@@ -9,6 +9,10 @@ public class Main {
         Operatore operator = new Operatore();
         Scanner sc = new Scanner(System.in);
 
+        initializeMenu(sc, user, cart, warehouse, operator);
+    }
+
+    private static void initializeMenu(Scanner sc, User user, Cart cart, Warehouse warehouse, Operatore operator) {
         System.out.println("1) Digitare 1 per profilo utente:");
         System.out.println("2) Digitare 2 per profilo operatore:");
         String scelta = sc.next();
