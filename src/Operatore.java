@@ -1,5 +1,6 @@
 import Devices.DeviceClasses;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -267,7 +268,7 @@ public class Operatore {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
-            if (input.matches("[0-9]+")) {
+            if (input.matches(("[0-9]+(.[0-9]+)?"))) {
                 try {
                     return Double.parseDouble(input);
                 } catch (NumberFormatException e) {
@@ -296,16 +297,17 @@ public class Operatore {
     }
 
     private void printDevices(ArrayList<DeviceClasses> devices) {
+        DecimalFormat df = new DecimalFormat("#.##");
         for (DeviceClasses device : devices) {
             System.out.println("Id: " + device.getId() +
                     ", Dispositivo: " + device.getDevice() +
                     ", Brand: " + device.getBrand() +
                     ", Modello: " + device.getModel() +
                     ", Descrizione: " + device.getDescription() +
-                    ", Display: " + device.getDisplay() +
-                    ", Archiviazione: " + device.getStorage() +
-                    ", Prezzo di vendità: " + device.getSale() +
-                    ", Prezzo di acquisto: " + device.getPurchase());
+                    ", Display: " + df.format(device.getDisplay()) +
+                    ", Archiviazione: " + df.format(device.getStorage()) +
+                    ", Prezzo di vendità: " + df.format(device.getSale()) +
+                    ", Prezzo di acquisto: " + df.format(device.getPurchase()));
         }
     }
 }

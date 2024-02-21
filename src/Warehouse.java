@@ -58,17 +58,16 @@ public class Warehouse {
 
         for (DeviceClasses device : devices) {
             double priceWithIVA = !iva ? device.getSale() : device.getPriceWithIVA();
-            String formattedPrice = df.format(priceWithIVA);
-            String purchasePrice = includePurchasePrice ? ", Prezzo di acquisto: " + device.getPurchase() : "";
+            String purchasePrice = includePurchasePrice ? ", Prezzo di acquisto: " + df.format(device.getPurchase()) : "";
 
             System.out.println("Id: " + device.getId() +
                     ", Dispositivo: " + device.getDevice() +
                     ", Brand: " + device.getBrand() +
                     ", Modello: " + device.getModel() +
                     ", Descrizione: " + device.getDescription() +
-                    ", Display: " + device.getDisplay() +
-                    ", Archiviazione: " + device.getStorage() +
-                    ", Prezzo di vendità: " + formattedPrice + purchasePrice);
+                    ", Display: " + df.format(device.getDisplay()) +
+                    ", Archiviazione: " + df.format(device.getStorage()) +
+                    ", Prezzo di vendità: " + df.format(priceWithIVA) + purchasePrice);
         }
     }
 
@@ -100,9 +99,9 @@ public class Warehouse {
     public ArrayList<DeviceClasses> getRangePurchase(int valLow, int valHigh) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getPurchase() <= valHigh && devices.get(i).getPurchase() >= valLow) {
-                devicesCompatibili.add(devices.get(i));
+        for (DeviceClasses device : devices) {
+            if (device.getPurchase() <= valHigh && device.getPurchase() >= valLow) {
+                devicesCompatibili.add(device);
             }
         }
         return devicesCompatibili;
@@ -111,9 +110,9 @@ public class Warehouse {
     public ArrayList<DeviceClasses> getRangeSale(int valLow, int valHigh) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getSale() <= valHigh && devices.get(i).getSale() >= valLow) {
-                devicesCompatibili.add(devices.get(i));
+        for (DeviceClasses device : devices) {
+            if (device.getSale() <= valHigh && device.getSale() >= valLow) {
+                devicesCompatibili.add(device);
             }
         }
         return devicesCompatibili;
@@ -122,9 +121,9 @@ public class Warehouse {
     public ArrayList<DeviceClasses> getBySellPrice(int range) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getSale() == range) {
-                devicesCompatibili.add(devices.get(i));
+        for (DeviceClasses device : devices) {
+            if (device.getSale() == range) {
+                devicesCompatibili.add(device);
             }
         }
         return devicesCompatibili;
@@ -133,9 +132,9 @@ public class Warehouse {
     public ArrayList<DeviceClasses> getByPurchasePrice(int range) {
         ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getPurchase() == range) {
-                devicesCompatibili.add(devices.get(i));
+        for (DeviceClasses device : devices) {
+            if (device.getPurchase() == range) {
+                devicesCompatibili.add(device);
             }
         }
         return devicesCompatibili;
@@ -146,9 +145,9 @@ public class Warehouse {
         int counter = 0;
         String deviceLowerCase = device.trim().toLowerCase();
 
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getDevice().toLowerCase().equals(deviceLowerCase)) {
-                sum += devices.get(i).getPurchase();
+        for (DeviceClasses deviceClasses : devices) {
+            if (deviceClasses.getDevice().toLowerCase().equals(deviceLowerCase)) {
+                sum += deviceClasses.getPurchase();
                 counter++;
             }
         }

@@ -1,5 +1,6 @@
 import Devices.DeviceClasses;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -292,6 +293,7 @@ public class User {
     }
 
     private void printDevices(ArrayList<DeviceClasses> devices, boolean iva) {
+        DecimalFormat df = new DecimalFormat("#.##");
         for (DeviceClasses device : devices) {
             double price = iva ? device.getPriceWithIVA() : device.getSale();
             System.out.println("Id: " + device.getId() +
@@ -299,9 +301,9 @@ public class User {
                     ", Brand: " + device.getBrand() +
                     ", Modello: " + device.getModel() +
                     ", Descrizione: " + device.getDescription() +
-                    ", Display: " + device.getDisplay() +
-                    ", Archiviazione: " + device.getStorage() +
-                    ", Prezzo: " + price);
+                    ", Display: " + df.format(device.getDisplay()) +
+                    ", Archiviazione: " + df.format(device.getStorage()) +
+                    ", Prezzo: " + df.format(price));
         }
     }
 }
