@@ -11,7 +11,7 @@ public class User extends ResearchMethods {
         String sceltaUser;
 
         boolean partitaIva = getIvaUser(new Scanner(System.in));
-
+        //Menu per scelta Utente
         do {
             System.out.println("Scegli l operazione da effettuare:");
             System.out.println("1) Visualizza tutti prodotti");
@@ -103,18 +103,21 @@ public class User extends ResearchMethods {
         } while (!sceltaUser.equals("0"));
     }
 
+    //Metodo per aggiungere prodotti dal magazzino al carrello
     public static void fromWarehouseToCart(Warehouse warehouse, Cart cart, long id, Boolean iva) {
         cart.addDevice(warehouse.getDeviceById(id));
         warehouse.removeDeviceById(id);
         cart.printAllDevices(iva);
     }
 
+    //Metodo per aggiungere prodotti dal carrello al magazzino
     public static void fromCartToWarehouse(Warehouse warehouse, Cart cart, long id, Boolean iva) {
         warehouse.addDevice(cart.getDeviceById(id));
         cart.removeDeviceById(id);
         cart.printAllDevices(iva);
     }
 
+    //Metodo che finalizza l' acquisto
     public static String finalizeSale(Cart cart, boolean iva) {
         double finalPrice;
         if (iva) {
@@ -126,6 +129,7 @@ public class User extends ResearchMethods {
         return "Questo è il tuo prezzo finale: " + finalPrice;
     }
 
+    //Metodo che gestisce se l' utente e' un privato o possiede una partita iva
     public static boolean getIvaUser(Scanner sc) {
         while (true) {
             System.out.println("Seleziona il tipo di user:");
@@ -148,6 +152,8 @@ public class User extends ResearchMethods {
             }
         }
     }
+
+    //Metodo per la ricerca dei prodotti per range di prezzo
 
     private void searchByPriceRange(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
@@ -175,7 +181,7 @@ public class User extends ResearchMethods {
         }
     }
 
-
+    //Metodo per aggiungere i prodotti al carrello tramite un ID
     private void addToCartById(Warehouse warehouse, Cart cart, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
@@ -195,7 +201,7 @@ public class User extends ResearchMethods {
         }
     }
 
-
+    //Metodo per rimuovere i prodotti dal carrello tramite ID
     private void removeFromCartById(Warehouse warehouse, Cart cart, Scanner sc, boolean iva) {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
