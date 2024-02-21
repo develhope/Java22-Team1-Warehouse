@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class ResearchMethods {
+    // Stampa i device passati, cambia prezzi con iva se viene passata
     void printDevices(ArrayList<DeviceClasses> devices, boolean iva) {
         DecimalFormat df = new DecimalFormat("#.##");
         for (DeviceClasses device : devices) {
@@ -20,6 +21,8 @@ public abstract class ResearchMethods {
         }
     }
 
+    // Prende un input string e lo valida prima di ritornarlo
+
     static String getValidInput(String prompt, int maxLength, Scanner sc) {
         String input;
         do {
@@ -32,6 +35,9 @@ public abstract class ResearchMethods {
             }
         } while (true);
     }
+
+
+    // Prende un input double e lo valida prima di ritornarlo
 
     static double getValidDoubleInput(String prompt, Scanner sc) {
         do {
@@ -49,6 +55,7 @@ public abstract class ResearchMethods {
         } while (true);
     }
 
+    // Prende un input integer e lo valida prima di ritornarlo
     static int getValidIntegerInput(String prompt, Scanner sc) {
         do {
             System.out.println(prompt);
@@ -64,6 +71,8 @@ public abstract class ResearchMethods {
             }
         } while (true);
     }
+
+    // Cerca per tipo, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
     void searchByType(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
@@ -81,6 +90,8 @@ public abstract class ResearchMethods {
         }
     }
 
+    // Cerca per brand, ritorna i dispositivi trovati con prezzi dipendenti da iva
+
     void searchByBrand(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -97,6 +108,8 @@ public abstract class ResearchMethods {
         }
     }
 
+    // Cerca per modello, ritorna i dispositivi trovati con prezzi dipendenti da iva
+
     void searchByModel(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -111,6 +124,8 @@ public abstract class ResearchMethods {
             printDevices(modelCompatibili, iva);
         }
     }
+
+    // Cerca per prezzo di vendità, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
     void searchBySellPrice(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
