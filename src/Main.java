@@ -2,8 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Warehouse warehouse = new Warehouse();
-        warehouse.fillWarehouse();
+        Warehouse warehouse = new Warehouse(Warehouse::fillWarehouse);
         Cart cart = new Cart();
         User user = new User();
         Operatore operator = new Operatore();
