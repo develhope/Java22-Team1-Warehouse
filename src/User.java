@@ -154,6 +154,7 @@ public class User extends ResearchMethods {
     }
 
     //Metodo per la ricerca dei prodotti per range di prezzo
+
     private void searchByPriceRange(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");

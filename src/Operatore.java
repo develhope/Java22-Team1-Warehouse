@@ -5,7 +5,9 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Operatore extends ResearchMethods{
+public class Operatore extends ResearchMethods {
+
+    // menu con tutti i controlli dell'operatore
     public void operatorMenu(Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
         String sceltaUser;
@@ -84,12 +86,14 @@ public class Operatore extends ResearchMethods{
         } while (!sceltaUser.equals("0"));
     }
 
+    // set ID del device utilizzando un Random e aggiunge il device al magazzino
     public static void setIdAddDeviceInWarehouse(Warehouse warehouse, DeviceClasses device) {
         Random rand = new Random();
         warehouse.addDevice(device);
         device.setId(rand.nextLong(999999999));
     }
 
+    // aggiunge un nuovo device al magazzino
     public static DeviceClasses addNewDevice(Scanner sc) {
 
         String device = switchDevice(sc);
@@ -104,6 +108,7 @@ public class Operatore extends ResearchMethods{
         return new DeviceClasses(sale, device, brand, model, description, display, storage, purchase);
     }
 
+    // aggiunge un device scegliendo soltanto tra le opzioni disponibili
     private static String switchDevice(Scanner sc) {
         sc.nextLine();
         String scelta;
@@ -127,6 +132,7 @@ public class Operatore extends ResearchMethods{
         } while (true);
     }
 
+    // ricerca per prezzo di acquisto
     private void searchByPurchasePrice(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -143,6 +149,7 @@ public class Operatore extends ResearchMethods{
         }
     }
 
+    // ricerca per range del prezzo di vendita
     private void searchByPriceRange(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -166,6 +173,7 @@ public class Operatore extends ResearchMethods{
 
     }
 
+    // ricerca per prezzo medio del device
     private void searchByAverageDevicePrice(Warehouse warehouse, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");

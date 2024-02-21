@@ -56,7 +56,7 @@ public class Cart {
 
     // Stampare elementi nel cart
     public void printAllDevices(boolean iva) {
-        if(devices.isEmpty()) {
+        if (devices.isEmpty()) {
             System.out.println("Il carrelo è vuoto.");
             return;
         }
