@@ -1,19 +1,13 @@
 import Devices.DeviceClasses;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-//
-// NON SI COPIA!
-// NON SI COPIA!
-// NON SI COPIA!
-//
-
-public class User {
+public class User extends ResearchMethods {
     public void userMenu(Cart cart, Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
+
         String sceltaUser;
 
         boolean partitaIva = getIvaUser(new Scanner(System.in));
@@ -154,78 +148,6 @@ public class User {
             }
         }
     }
-
-    private void searchByType(Warehouse warehouse, Scanner sc, boolean iva) {
-        if (warehouse.isEmpty()) {
-            System.out.println("Il magazzino e' vuoto.");
-            return;
-        }
-        System.out.println("Inserisci il nome del tipo di dispositivo:");
-        String sceltaDisp = sc.next();
-        ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
-        if (devicesCompatibili.isEmpty()) {
-            System.out.println("Nessun dispositivo compatibile trovato.");
-        } else {
-            printDevices(devicesCompatibili, iva);
-        }
-    }
-
-    private void searchByBrand(Warehouse warehouse, Scanner sc, boolean iva) {
-        if (warehouse.isEmpty()) {
-            System.out.println("Il magazzino e' vuoto.");
-            return;
-        }
-        System.out.println("Inserisci il nome del brand del dispositivo:");
-        String sceltaBrand = sc.next();
-        ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
-        if (devicesCompatibili.isEmpty()) {
-            System.out.println("Nessun dispositivo compatibile trovato.");
-        } else {
-            printDevices(devicesCompatibili, iva);
-        }
-    }
-
-
-    private void searchByModel(Warehouse warehouse, Scanner sc, boolean iva) {
-        if (warehouse.isEmpty()) {
-            System.out.println("Il magazzino e' vuoto.");
-            return;
-        }
-        System.out.println("Inserisci il nome del modello del dispositivo:");
-        String sceltaModel = sc.next();
-        ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaModel, "model");
-        if (devicesCompatibili.isEmpty()) {
-            System.out.println("Nessun dispositivo compatibile trovato.");
-        } else {
-            printDevices(devicesCompatibili, iva);
-        }
-    }
-
-
-    private void searchBySellPrice(Warehouse warehouse, Scanner sc, boolean iva) {
-        if (warehouse.isEmpty()) {
-            System.out.println("Il magazzino e' vuoto.");
-            return;
-        }
-        System.out.println("Inserisci il prezzo:");
-        try {
-            int price = Integer.parseInt(sc.next());
-
-            int searchedPrice = iva ? (int) (price / 1.22) : price;
-
-            ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(searchedPrice);
-            if (priceCompatibili.isEmpty()) {
-                System.out.println("Nessun dispositivo compatibile trovato.");
-            } else {
-                printDevices(priceCompatibili, iva);
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Input non valido, inserisci un numero valido per il prezzo.");
-            sc.nextLine();
-        }
-    }
-
-
     private void searchByPriceRange(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
@@ -289,21 +211,6 @@ public class User {
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
             sc.nextLine();
-        }
-    }
-
-    private void printDevices(ArrayList<DeviceClasses> devices, boolean iva) {
-        DecimalFormat df = new DecimalFormat("#.##");
-        for (DeviceClasses device : devices) {
-            double price = iva ? device.getPriceWithIVA() : device.getSale();
-            System.out.println("Id: " + device.getId() +
-                    ", Dispositivo: " + device.getDevice() +
-                    ", Brand: " + device.getBrand() +
-                    ", Modello: " + device.getModel() +
-                    ", Descrizione: " + device.getDescription() +
-                    ", Display: " + df.format(device.getDisplay()) +
-                    ", Archiviazione: " + df.format(device.getStorage()) +
-                    ", Prezzo: " + df.format(price));
         }
     }
 }

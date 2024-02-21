@@ -3,11 +3,6 @@ import java.util.ArrayList;
 
 import Devices.DeviceClasses;
 
-//
-// NON SI COPIA!
-// NON SI COPIA!
-// NON SI COPIA!
-//
 public class Cart {
 
     private ArrayList<DeviceClasses> devices = new ArrayList<>();

@@ -7,11 +7,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
-//
-// NON SI COPIA!
-// NON SI COPIA!
-// NON SI COPIA!
-//
 public class Warehouse {
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
 
