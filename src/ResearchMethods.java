@@ -19,6 +19,7 @@ public abstract class ResearchMethods {
                     ", Prezzo: " + df.format(price));
         }
     }
+
     static String getValidInput(String prompt, int maxLength, Scanner sc) {
         String input;
         do {
@@ -31,6 +32,7 @@ public abstract class ResearchMethods {
             }
         } while (true);
     }
+
     static double getValidDoubleInput(String prompt, Scanner sc) {
         do {
             System.out.println(prompt);
@@ -62,6 +64,7 @@ public abstract class ResearchMethods {
             }
         } while (true);
     }
+
     void searchByType(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -73,10 +76,11 @@ public abstract class ResearchMethods {
         if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            printDevices(devicesCompatibili,iva);
+            printDevices(devicesCompatibili, iva);
 
         }
     }
+
     void searchByBrand(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -88,10 +92,11 @@ public abstract class ResearchMethods {
         if (brandCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            printDevices(brandCompatibili,iva);
+            printDevices(brandCompatibili, iva);
 
         }
     }
+
     void searchByModel(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -103,9 +108,10 @@ public abstract class ResearchMethods {
         if (modelCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            printDevices(modelCompatibili,iva);
+            printDevices(modelCompatibili, iva);
         }
     }
+
     void searchBySellPrice(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
@@ -118,7 +124,7 @@ public abstract class ResearchMethods {
         if (priceCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            printDevices(priceCompatibili,iva);
+            printDevices(priceCompatibili, iva);
         }
     }
 

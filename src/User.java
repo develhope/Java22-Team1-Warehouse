@@ -148,6 +148,7 @@ public class User extends ResearchMethods {
             }
         }
     }
+
     private void searchByPriceRange(Warehouse warehouse, Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
