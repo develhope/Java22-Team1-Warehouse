@@ -11,14 +11,16 @@ public class Main {
 
         System.out.println("1) Digitare 1 per profilo utente:");
         System.out.println("2) Digitare 2 per profilo operatore:");
+        System.out.println("0) Digitare 0 per uscire dal programma");
         String scelta = sc.next();
 
-        while (!scelta.equals("1") && !scelta.equals("2")) {
+        while (!scelta.equals("1") && !scelta.equals("2") && !scelta.equals("0")) {
 
-            if (!scelta.equals("1") && !scelta.equals("2")) {
+            if (!scelta.equals("1") && !scelta.equals("2") && !scelta.equals("0")) {
                 System.out.println("Scelta non disponiblie");
                 System.out.println("1) Digitare 1 per profilo utente:");
                 System.out.println("2) Digitare 2 per profilo operatore:");
+                System.out.println("0) Digitare 0 per uscire dal programma");
             }
             scelta = sc.next();
         }
@@ -28,6 +30,8 @@ public class Main {
                 break;
             case "2":
                 operator.operatorMenu(warehouse);
+                break;
+            case "0":
                 break;
         }
     }
