@@ -78,7 +78,6 @@ public abstract class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        sc.nextLine();
         String sceltaDisp = getValidInput("Inserisci il nome del tipo di dispositivo", 15, sc);
         ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
         if (devicesCompatibili.isEmpty()) {
@@ -96,7 +95,6 @@ public abstract class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        sc.nextLine();
         String sceltaBrand = getValidInput("Inserisci il nome del brand del dispositivo:", 15, sc);
         ArrayList<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
         if (brandCompatibili.isEmpty()) {
@@ -114,7 +112,6 @@ public abstract class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        sc.nextLine();
         String scelta = getValidInput("Inserisci il nome del modello del dispositivo:", 15, sc);
         ArrayList<DeviceClasses> modelCompatibili = warehouse.getCompatibles(scelta, "model");
         if (modelCompatibili.isEmpty()) {
@@ -131,7 +128,6 @@ public abstract class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        sc.nextLine();
         int price = getValidIntegerInput("Inserisci il prezzo:", sc);
         int searchedPrice = iva ? (int) (price / 1.22) : price;
         ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(searchedPrice);
@@ -148,7 +144,6 @@ public abstract class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        sc.nextLine();
         int minPrice = getValidIntegerInput("Inserisci il prezzo minimo:", sc);
         int maxPrice = getValidIntegerInput("Inserisci il prezzo massimo:", sc);
 

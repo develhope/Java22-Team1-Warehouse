@@ -5,61 +5,86 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
+enum MenuOptions {
+    VISUALIZZA_TUTTI_PRODOTTI,
+    RICERCA_PER_TIPO_DISPOSITIVO,
+    RICERCA_PER_PRODUTTORE,
+    RICERCA_PER_MODELLO,
+    RICERCA_PER_PREZZO_DI_VENDITA,
+    RICERCA_PER_PREZZO_DI_ACQUISTO,
+    RICERCA_PER_RANGE_DI_ACQUISTO,
+    RICERCA_SPESA_MEDIA_DISPOSITIVO,
+    AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO,
+    RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO,
+    FINE;
+
+}
+
 public class Operatore extends ResearchMethods {
 
     // menu con tutti i controlli dell'operatore
     public void operatorMenu(Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
-        String sceltaUser;
-        do {
-            System.out.println("Scegli l operazione da effettuare:");
-            System.out.println("1) Visualizza tutti prodotti");
-            System.out.println("2) Ricerca per tipo dispositivo:");
-            System.out.println("3) Ricerca per produttore:");
-            System.out.println("4) Ricerca per modello:");
-            System.out.println("5) Ricerca per prezzo di vendita:");
-            System.out.println("6) Ricerca per prezzo di acquisto:");
-            System.out.println("7) Ricerca per range di prezzo di acquisto:");
-            System.out.println("8) Ricerca spesa media dispositivo:");
-            System.out.println("9) Aggiungi al magazzino:");
-            System.out.println("10) Rimuovi dal magazzino:");
-            System.out.println("0) Fine:");
-            sceltaUser = sc.next();
+        MenuOptions sceltaUser = MenuOptions.FINE;
 
+        do {
+            System.out.println("Scegli un'opzione:");
+            for (MenuOptions option : MenuOptions.values()) {
+                System.out.println(option.ordinal() + ") " + option.name().toLowerCase().replace("_", " "));
+            }
+
+            String input = sc.nextLine();
+
+            if (input.matches("\\d+")) {
+                int index = Integer.parseInt(input);
+                if (index >= 0 && index < MenuOptions.values().length) {
+                    sceltaUser = MenuOptions.values()[index];
+                } else {
+                    System.out.println("Opzione non valida. Riprova.");
+                    continue;
+                }
+            } else {
+                try {
+                    sceltaUser = MenuOptions.valueOf(input.toUpperCase().replace(" ", "_"));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Opzione non valida. Riprova.");
+                    continue;
+                }
+            }
             switch (sceltaUser) {
-                case "1":
+                case VISUALIZZA_TUTTI_PRODOTTI:
                     if (warehouse.isEmpty()) {
                         System.out.println("Il magazzino e' vuoto!");
                         continue;
                     }
                     warehouse.printAllDevices(false, true);
                     break;
-                case "2":
+                case RICERCA_PER_TIPO_DISPOSITIVO:
                     searchByType(warehouse, sc, false);
                     break;
-                case "3":
+                case RICERCA_PER_PRODUTTORE:
                     searchByBrand(warehouse, sc, false);
                     break;
-                case "4":
+                case RICERCA_PER_MODELLO:
                     searchByModel(warehouse, sc, false);
                     break;
-                case "5":
+                case RICERCA_PER_PREZZO_DI_VENDITA:
                     searchBySellPrice(warehouse, sc, false);
                     break;
-                case "6":
+                case RICERCA_PER_PREZZO_DI_ACQUISTO:
                     searchByPurchasePrice(warehouse, sc);
                     break;
-                case "7":
+                case RICERCA_PER_RANGE_DI_ACQUISTO:
                     searchByPriceRange(warehouse, sc, false);
                     break;
-                case "8":
+                case RICERCA_SPESA_MEDIA_DISPOSITIVO:
                     searchByAverageDevicePrice(warehouse, sc);
                     break;
-                case "9":
+                case AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO:
                     DeviceClasses newDevice = addNewDevice(sc);
                     setIdAddDeviceInWarehouse(warehouse, newDevice);
                     break;
-                case "10":
+                case RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO:
                     try {
                         if (warehouse.isEmpty()) {
                             System.out.println("Il magazzino e' vuoto!");
@@ -77,13 +102,14 @@ public class Operatore extends ResearchMethods {
                         sc.nextLine();
                     }
                     break;
-                case "0":
+                case FINE:
+                    System.out.println("Arrivederci!");
                     break;
                 default:
                     System.out.println("Scelta non valida");
             }
 
-        } while (!sceltaUser.equals("0"));
+        } while (sceltaUser != MenuOptions.FINE);
     }
 
     // set ID del device utilizzando un Random e aggiunge il device al magazzino
@@ -138,8 +164,6 @@ public class Operatore extends ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-
-        sc.nextLine();
         int scelta = getValidIntegerInput("Inserisci il prezzo:", sc);
         ArrayList<DeviceClasses> priceBuyCompatibili = warehouse.getByPurchasePrice(scelta);
         if (priceBuyCompatibili.isEmpty()) {
@@ -156,11 +180,10 @@ public class Operatore extends ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        sc.nextLine();
         String scelta = getValidInput("Inserisci il tipo di device di cui vuoi sapere il prezzo medio:", 20, sc);
         double averagePrice = warehouse.getAverageDevicePrice(scelta);
         if (!Double.isNaN(averagePrice) && averagePrice != 0) {
-            System.out.println("il prezzo medio è: " + averagePrice);
+            System.out.println("Il prezzo medio per " + scelta + " è: " + averagePrice);
         } else {
             System.out.println("Errore: inserisci un device valido!");
         }

@@ -6,13 +6,12 @@ import Devices.Tablet;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.function.Consumer;
 
 public class Warehouse {
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
 
-    public Warehouse(Consumer<Warehouse> initializer) {
-        initializer.accept(this);
+    public Warehouse() {
+        fillWarehouse();
     }
 
     public void addDevice(DeviceClasses device) {
