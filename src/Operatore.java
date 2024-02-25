@@ -30,26 +30,17 @@ public class Operatore extends ResearchMethods {
         do {
             System.out.println("Scegli un'opzione:");
             for (MenuOptions option : MenuOptions.values()) {
-                System.out.println(option.ordinal() + ") " + option.name().toLowerCase().replace("_", " "));
+                String optionName = option.name().replace("_", " ").toLowerCase();
+                optionName = optionName.substring(0, 1).toUpperCase() + optionName.substring(1);
+                System.out.println(option.ordinal() + ") " + optionName);
             }
 
             String input = sc.nextLine();
 
             if (input.matches("\\d+")) {
-                int index = Integer.parseInt(input);
-                if (index >= 0 && index < MenuOptions.values().length) {
-                    sceltaUser = MenuOptions.values()[index];
-                } else {
-                    System.out.println("Opzione non valida. Riprova.");
-                    continue;
-                }
+               sceltaUser = getMenuOptionsByIndex(input);
             } else {
-                try {
-                    sceltaUser = MenuOptions.valueOf(input.toUpperCase().replace(" ", "_"));
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Opzione non valida. Riprova.");
-                    continue;
-                }
+                sceltaUser = getMenuOptionsByString(input);
             }
             switch (sceltaUser) {
                 case VISUALIZZA_TUTTI_PRODOTTI:
@@ -186,6 +177,25 @@ public class Operatore extends ResearchMethods {
             System.out.println("Il prezzo medio per " + scelta + " è: " + averagePrice);
         } else {
             System.out.println("Errore: inserisci un device valido!");
+        }
+    }
+
+    private MenuOptions getMenuOptionsByIndex(String input) {
+        int index = Integer.parseInt(input);
+        if (index >= 0 && index < MenuOptions.values().length) {
+            return MenuOptions.values()[index];
+        } else {
+            System.out.println("Opzione non valida. Riprova.");
+            return null;
+        }
+    }
+
+    private MenuOptions getMenuOptionsByString(String input) {
+        try {
+            return MenuOptions.valueOf(input.toUpperCase().replace(" ", "_"));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Opzione non valida. Riprova.");
+            return null;
         }
     }
 }
