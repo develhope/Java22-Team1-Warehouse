@@ -72,6 +72,11 @@ public class User extends ResearchMethods {
                         }
                         break;
                     case "10":
+                        if (cart.isEmpty()) {
+                            System.out.println("Il carrello è vuoto.");
+                            break;
+                        }
+                        System.out.println("Questo è il carrello: ");
                         cart.printAllDevices(partitaIva);
                         break;
                     case "11":
@@ -132,9 +137,9 @@ public class User extends ResearchMethods {
     //Metodo che gestisce se l' utente e' un privato o possiede una partita iva
     public static boolean getIvaUser(Scanner sc) {
         while (true) {
-            System.out.println("Seleziona il tipo di user:");
-            System.out.println("1) Privato");
-            System.out.println("2) Azienda con Partita IVA");
+            System.out.println("Seleziona il tipo di utente:");
+            System.out.println("1) Utente SENZA partita IVA.");
+            System.out.println("2) Utente CON partita IVA.");
             if (sc.hasNextInt()) {
                 int sceltaUser = sc.nextInt();
                 switch (sceltaUser) {
@@ -166,6 +171,7 @@ public class User extends ResearchMethods {
                 System.out.println("Non è stato trovato alcun dispositivo con questo ID");
                 return;
             }
+            System.out.println("Questo è il carrello: ");
             fromWarehouseToCart(warehouse, cart, sceltaId, iva);
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
