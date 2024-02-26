@@ -11,6 +11,7 @@ public class Warehouse {
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
 
     public Warehouse() {
+        fillWarehouse();
     }
 
     public void addDevice(DeviceClasses device) {
