@@ -4,9 +4,8 @@ public class Main {
     public static void main(String[] args) {
         Warehouse warehouse = new Warehouse();
         warehouse.fillWarehouse();
-        Cart cart = new Cart();
-        User user = new User();
-        Operatore operator = new Operatore();
+
+
         Scanner sc = new Scanner(System.in);
 
         System.out.println("1) Digitare 1 per profilo utente:");
@@ -26,9 +25,12 @@ public class Main {
         }
         switch (scelta) {
             case "1":
+                Cart cart = new Cart();
+                User user = new User();
                 user.userMenu(cart, warehouse);
                 break;
             case "2":
+                Operatore operator = new Operatore();
                 operator.operatorMenu(warehouse);
                 break;
             case "0":
