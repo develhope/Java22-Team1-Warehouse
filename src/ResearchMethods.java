@@ -46,12 +46,30 @@ public abstract class ResearchMethods {
                 try {
                     return Double.parseDouble(input);
                 } catch (NumberFormatException e) {
-                    System.out.println("Input non valido. Inserisci un numero intero valido.");
+                    System.out.println("Input non valido. Inserisci un numero valido.");
                 }
             } else {
-                System.out.println("Input non valido. Inserisci un numero intero valido.");
+                System.out.println("Input non valido. Inserisci un numero valido.");
             }
         } while (true);
+    }
+
+    static Long getValidLongInput(String prompt, Scanner sc) {
+        do {
+            System.out.println(prompt);
+            String input = sc.nextLine().trim();
+            if (input.matches(("[0-9]+(.[0-9]+)?"))) {
+                try {
+                    return Long.parseLong(input);
+                } catch (NumberFormatException e) {
+                    System.out.println("Input non valido. Inserisci un numero valido.");
+                }
+            } else {
+                System.out.println("Input non valido. Inserisci un numero valido.");
+                break;
+            }
+        } while (true);
+        return null;
     }
 
     // Prende un input integer e lo valida prima di ritornarlo

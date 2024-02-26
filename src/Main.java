@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Warehouse warehouse = new Warehouse();
-        warehouse.fillWarehouse();
         Scanner sc = new Scanner(System.in);
         initializeMenu(sc, warehouse);
     }

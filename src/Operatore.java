@@ -25,7 +25,7 @@ public class Operatore extends ResearchMethods {
     // menu con tutti i controlli dell'operatore
     public void operatorMenu(Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
-        MenuOptions sceltaUser = MenuOptions.FINE;
+        MenuOptions sceltaUser;
 
         do {
             System.out.println("Scegli un'opzione:");
@@ -76,22 +76,7 @@ public class Operatore extends ResearchMethods {
                     setIdAddDeviceInWarehouse(warehouse, newDevice);
                     break;
                 case RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO:
-                    try {
-                        if (warehouse.isEmpty()) {
-                            System.out.println("Il magazzino e' vuoto!");
-                            continue;
-                        }
-                        System.out.println("Digita un id per rimuovere al magazzino:");
-                        long sceltaId2 = sc.nextLong();
-                        if (!warehouse.containsDeviceById(sceltaId2)) {
-                            System.out.println("Non è stato trovato alcun dispositivo con questo ID");
-                            break;
-                        }
-                        warehouse.removeDeviceById(sceltaId2);
-                    } catch (InputMismatchException e) {
-                        System.out.println("Input non valido, assicurati di inserire un ID corretto");
-                        sc.nextLine();
-                    }
+                    removeFromWarehouseById(warehouse, sc);
                     break;
                 case FINE:
                     System.out.println("Arrivederci!");
@@ -127,7 +112,6 @@ public class Operatore extends ResearchMethods {
 
     // aggiunge un device scegliendo soltanto tra le opzioni disponibili
     private static String switchDevice(Scanner sc) {
-        sc.nextLine();
         String scelta;
         do {
             System.out.println("Scegli che tipo di dispositivo aggiungere");
@@ -196,6 +180,27 @@ public class Operatore extends ResearchMethods {
         } catch (IllegalArgumentException e) {
             System.out.println("Opzione non valida. Riprova.");
             return null;
+        }
+    }
+
+    private void removeFromWarehouseById(Warehouse warehouse, Scanner sc) {
+        try {
+            if (warehouse.isEmpty()) {
+                System.out.println("Il magazzino e' vuoto!");
+                return;
+            }
+            Long sceltaId2 = getValidLongInput("Digita un id per rimuovere al magazzino:", sc);
+            if(sceltaId2 == null) {
+                return;
+            }
+
+            if (!warehouse.containsDeviceById(sceltaId2)) {
+                System.out.println("Non è stato trovato alcun dispositivo con questo ID");
+                return;
+            }
+            warehouse.removeDeviceById(sceltaId2);
+        } catch (InputMismatchException e) {
+            System.out.println("Input non valido, assicurati di inserire un ID corretto");
         }
     }
 }
