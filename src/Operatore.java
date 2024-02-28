@@ -5,85 +5,88 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
+enum MenuOptionsOperator {
+    VISUALIZZA_TUTTI_PRODOTTI,
+    RICERCA_PER_TIPO_DISPOSITIVO,
+    RICERCA_PER_PRODUTTORE,
+    RICERCA_PER_MODELLO,
+    RICERCA_PER_PREZZO_DI_VENDITA,
+    RICERCA_PER_PREZZO_DI_ACQUISTO,
+    RICERCA_PER_RANGE_DI_ACQUISTO,
+    RICERCA_SPESA_MEDIA_DISPOSITIVO,
+    AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO,
+    RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO,
+    FINE;
+}
+
 public class Operatore extends ResearchMethods {
 
     // menu con tutti i controlli dell'operatore
     public void operatorMenu(Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
-        String sceltaUser;
-        do {
-            System.out.println("Scegli l operazione da effettuare:");
-            System.out.println("1) Visualizza tutti prodotti");
-            System.out.println("2) Ricerca per tipo dispositivo:");
-            System.out.println("3) Ricerca per produttore:");
-            System.out.println("4) Ricerca per modello:");
-            System.out.println("5) Ricerca per prezzo di vendita:");
-            System.out.println("6) Ricerca per prezzo di acquisto:");
-            System.out.println("7) Ricerca per range di prezzo di acquisto:");
-            System.out.println("8) Ricerca spesa media dispositivo:");
-            System.out.println("9) Aggiungi al magazzino:");
-            System.out.println("10) Rimuovi dal magazzino:");
-            System.out.println("0) Fine:");
-            sceltaUser = sc.next();
+        MenuOptionsOperator sceltaUser;
 
+        do {
+            System.out.println("Scegli un'opzione:");
+            for (MenuOptionsOperator option : MenuOptionsOperator.values()) {
+                String optionName = option.name().replace("_", " ").toLowerCase();
+                optionName = optionName.substring(0, 1).toUpperCase() + optionName.substring(1);
+                System.out.println(option.ordinal() + ") " + optionName + ": ");
+            }
+
+            String input = sc.nextLine();
+
+            if (input.matches("\\d+")) {
+                sceltaUser = getMenuOptionsByIndex(input, MenuOptionsOperator.class);
+            } else {
+                sceltaUser = getMenuOptionsByString(input, MenuOptionsOperator.class);
+            }
             switch (sceltaUser) {
-                case "1":
+                case VISUALIZZA_TUTTI_PRODOTTI:
                     if (warehouse.isEmpty()) {
                         System.out.println("Il magazzino e' vuoto!");
                         continue;
                     }
                     warehouse.printAllDevices(false, true);
                     break;
-                case "2":
+                case RICERCA_PER_TIPO_DISPOSITIVO:
                     searchByType(warehouse, sc, false);
                     break;
-                case "3":
+                case RICERCA_PER_PRODUTTORE:
                     searchByBrand(warehouse, sc, false);
                     break;
-                case "4":
+                case RICERCA_PER_MODELLO:
                     searchByModel(warehouse, sc, false);
                     break;
-                case "5":
+                case RICERCA_PER_PREZZO_DI_VENDITA:
                     searchBySellPrice(warehouse, sc, false);
                     break;
-                case "6":
+                case RICERCA_PER_PREZZO_DI_ACQUISTO:
                     searchByPurchasePrice(warehouse, sc);
                     break;
-                case "7":
+                case RICERCA_PER_RANGE_DI_ACQUISTO:
                     searchByPriceRange(warehouse, sc, false);
                     break;
-                case "8":
+                case RICERCA_SPESA_MEDIA_DISPOSITIVO:
                     searchByAverageDevicePrice(warehouse, sc);
                     break;
-                case "9":
+                case AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO:
                     DeviceClasses newDevice = addNewDevice(sc);
                     setIdAddDeviceInWarehouse(warehouse, newDevice);
                     break;
-                case "10":
-                    try {
-                        if (warehouse.isEmpty()) {
-                            System.out.println("Il magazzino e' vuoto!");
-                            continue;
-                        }
-                        System.out.println("Digita un id per rimuovere al magazzino:");
-                        long sceltaId2 = sc.nextLong();
-                        if (!warehouse.containsDeviceById(sceltaId2)) {
-                            System.out.println("Non è stato trovato alcun dispositivo con questo ID");
-                            break;
-                        }
-                        warehouse.removeDeviceById(sceltaId2);
-                    } catch (InputMismatchException e) {
-                        System.out.println("Input non valido, assicurati di inserire un ID corretto");
-                        sc.nextLine();
-                    }
+                case RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO:
+                    removeFromWarehouseById(warehouse, sc);
                     break;
-                case "0":
+                case FINE:
+                    System.out.println("Arrivederci!");
+                    break;
+                case null:
                     break;
                 default:
                     System.out.println("Scelta non valida");
             }
 
-        } while (!sceltaUser.equals("0"));
+        } while (sceltaUser != MenuOptionsOperator.FINE);
     }
 
     // set ID del device utilizzando un Random e aggiunge il device al magazzino
@@ -110,7 +113,6 @@ public class Operatore extends ResearchMethods {
 
     // aggiunge un device scegliendo soltanto tra le opzioni disponibili
     private static String switchDevice(Scanner sc) {
-        sc.nextLine();
         String scelta;
         do {
             System.out.println("Scegli che tipo di dispositivo aggiungere");
@@ -138,8 +140,6 @@ public class Operatore extends ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-
-        sc.nextLine();
         int scelta = getValidIntegerInput("Inserisci il prezzo:", sc);
         ArrayList<DeviceClasses> priceBuyCompatibili = warehouse.getByPurchasePrice(scelta);
         if (priceBuyCompatibili.isEmpty()) {
@@ -156,13 +156,34 @@ public class Operatore extends ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        sc.nextLine();
         String scelta = getValidInput("Inserisci il tipo di device di cui vuoi sapere il prezzo medio:", 20, sc);
         double averagePrice = warehouse.getAverageDevicePrice(scelta);
         if (!Double.isNaN(averagePrice) && averagePrice != 0) {
-            System.out.println("il prezzo medio è: " + averagePrice);
+            System.out.println("Il prezzo medio per " + scelta + " è: " + averagePrice);
         } else {
             System.out.println("Errore: inserisci un device valido!");
+        }
+    }
+
+
+    private void removeFromWarehouseById(Warehouse warehouse, Scanner sc) {
+        try {
+            if (warehouse.isEmpty()) {
+                System.out.println("Il magazzino e' vuoto!");
+                return;
+            }
+            Long sceltaId2 = getValidLongInput("Digita un id per rimuovere al magazzino:", sc);
+            if (sceltaId2 == null) {
+                return;
+            }
+
+            if (!warehouse.containsDeviceById(sceltaId2)) {
+                System.out.println("Non è stato trovato alcun dispositivo con questo ID");
+                return;
+            }
+            warehouse.removeDeviceById(sceltaId2);
+        } catch (InputMismatchException e) {
+            System.out.println("Input non valido, assicurati di inserire un ID corretto");
         }
     }
 }

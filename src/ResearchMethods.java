@@ -22,7 +22,6 @@ public abstract class ResearchMethods {
     }
 
     // Prende un input string e lo valida prima di ritornarlo
-
     static String getValidInput(String prompt, int maxLength, Scanner sc) {
         String input;
         do {
@@ -47,12 +46,30 @@ public abstract class ResearchMethods {
                 try {
                     return Double.parseDouble(input);
                 } catch (NumberFormatException e) {
-                    System.out.println("Input non valido. Inserisci un numero intero valido.");
+                    System.out.println("Input non valido. Inserisci un numero valido.");
                 }
             } else {
-                System.out.println("Input non valido. Inserisci un numero intero valido.");
+                System.out.println("Input non valido. Inserisci un numero valido.");
             }
         } while (true);
+    }
+
+    static Long getValidLongInput(String prompt, Scanner sc) {
+        do {
+            System.out.println(prompt);
+            String input = sc.nextLine().trim();
+            if (input.matches(("[0-9]+(.[0-9]+)?"))) {
+                try {
+                    return Long.parseLong(input);
+                } catch (NumberFormatException e) {
+                    System.out.println("Input non valido. Inserisci un numero valido.");
+                }
+            } else {
+                System.out.println("Input non valido. Inserisci un numero valido.");
+                break;
+            }
+        } while (true);
+        return null;
     }
 
     // Prende un input integer e lo valida prima di ritornarlo
@@ -79,7 +96,6 @@ public abstract class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        sc.nextLine();
         String sceltaDisp = getValidInput("Inserisci il nome del tipo di dispositivo", 15, sc);
         ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
         if (devicesCompatibili.isEmpty()) {
@@ -97,7 +113,6 @@ public abstract class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        sc.nextLine();
         String sceltaBrand = getValidInput("Inserisci il nome del brand del dispositivo:", 15, sc);
         ArrayList<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
         if (brandCompatibili.isEmpty()) {
@@ -115,7 +130,6 @@ public abstract class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        sc.nextLine();
         String scelta = getValidInput("Inserisci il nome del modello del dispositivo:", 15, sc);
         ArrayList<DeviceClasses> modelCompatibili = warehouse.getCompatibles(scelta, "model");
         if (modelCompatibili.isEmpty()) {
@@ -132,7 +146,6 @@ public abstract class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        sc.nextLine();
         int price = getValidIntegerInput("Inserisci il prezzo:", sc);
         int searchedPrice = iva ? (int) (price / 1.22) : price;
         ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(searchedPrice);
@@ -149,7 +162,6 @@ public abstract class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        sc.nextLine();
         int minPrice = getValidIntegerInput("Inserisci il prezzo minimo:", sc);
         int maxPrice = getValidIntegerInput("Inserisci il prezzo massimo:", sc);
 
@@ -167,7 +179,24 @@ public abstract class ResearchMethods {
         } else {
             printDevices(rangeCompatibili, iva);
         }
-
     }
 
+     static <T extends Enum<T>> T getMenuOptionsByIndex(String input, Class<T> enumClass) {
+        int index = Integer.parseInt(input);
+        if (index >= 0 && index < enumClass.getEnumConstants().length) {
+            return enumClass.getEnumConstants()[index];
+        } else {
+            System.out.println("Opzione non valida. Riprova.");
+            return null;
+        }
+    }
+
+     static <T extends Enum<T>> T getMenuOptionsByString(String input, Class<T> enumClass) {
+        try {
+            return Enum.valueOf(enumClass, input.toUpperCase().replace(" ", "_"));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Opzione non valida. Riprova.");
+            return null;
+        }
+    }
 }
