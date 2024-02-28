@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-enum MenuOptions {
+enum MenuOptionsOperator {
     VISUALIZZA_TUTTI_PRODOTTI,
     RICERCA_PER_TIPO_DISPOSITIVO,
     RICERCA_PER_PRODUTTORE,
@@ -17,7 +17,6 @@ enum MenuOptions {
     AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO,
     RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO,
     FINE;
-
 }
 
 public class Operatore extends ResearchMethods {
@@ -25,11 +24,11 @@ public class Operatore extends ResearchMethods {
     // menu con tutti i controlli dell'operatore
     public void operatorMenu(Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
-        MenuOptions sceltaUser;
+        MenuOptionsOperator sceltaUser;
 
         do {
             System.out.println("Scegli un'opzione:");
-            for (MenuOptions option : MenuOptions.values()) {
+            for (MenuOptionsOperator option : MenuOptionsOperator.values()) {
                 String optionName = option.name().replace("_", " ").toLowerCase();
                 optionName = optionName.substring(0, 1).toUpperCase() + optionName.substring(1);
                 System.out.println(option.ordinal() + ") " + optionName);
@@ -81,11 +80,13 @@ public class Operatore extends ResearchMethods {
                 case FINE:
                     System.out.println("Arrivederci!");
                     break;
+                case null:
+                    break;
                 default:
                     System.out.println("Scelta non valida");
             }
 
-        } while (sceltaUser != MenuOptions.FINE);
+        } while (sceltaUser != MenuOptionsOperator.FINE);
     }
 
     // set ID del device utilizzando un Random e aggiunge il device al magazzino
@@ -164,24 +165,7 @@ public class Operatore extends ResearchMethods {
         }
     }
 
-    private MenuOptions getMenuOptionsByIndex(String input) {
-        int index = Integer.parseInt(input);
-        if (index >= 0 && index < MenuOptions.values().length) {
-            return MenuOptions.values()[index];
-        } else {
-            System.out.println("Opzione non valida. Riprova.");
-            return null;
-        }
-    }
 
-    private MenuOptions getMenuOptionsByString(String input) {
-        try {
-            return MenuOptions.valueOf(input.toUpperCase().replace(" ", "_"));
-        } catch (IllegalArgumentException e) {
-            System.out.println("Opzione non valida. Riprova.");
-            return null;
-        }
-    }
 
     private void removeFromWarehouseById(Warehouse warehouse, Scanner sc) {
         try {

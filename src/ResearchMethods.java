@@ -180,4 +180,23 @@ public abstract class ResearchMethods {
             printDevices(rangeCompatibili, iva);
         }
     }
+
+    static MenuOptionsOperator getMenuOptionsByIndex(String input) {
+        int index = Integer.parseInt(input);
+        if (index >= 0 && index < MenuOptionsOperator.values().length) {
+            return MenuOptionsOperator.values()[index];
+        } else {
+            System.out.println("Opzione non valida. Riprova.");
+            return null;
+        }
+    }
+
+    static MenuOptionsOperator getMenuOptionsByString(String input) {
+        try {
+            return MenuOptionsOperator.valueOf(input.toUpperCase().replace(" ", "_"));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Opzione non valida. Riprova.");
+            return null;
+        }
+    }
 }
