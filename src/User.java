@@ -30,10 +30,10 @@ public class User extends ResearchMethods {
         //Menu per scelta Utente
         do {
             System.out.println("Scegli un'opzione:");
-            for (MenuOptionsOperator option : MenuOptionsOperator.values()) {
+            for (MenuOptionsUser option : MenuOptionsUser.values()) {
                 String optionName = option.name().replace("_", " ").toLowerCase();
                 optionName = optionName.substring(0, 1).toUpperCase() + optionName.substring(1);
-                System.out.println(option.ordinal() + ") " + optionName);
+                System.out.println(option.ordinal() + ") " + optionName + ": ");
             }
 
             String input = sc.nextLine();
@@ -184,6 +184,7 @@ public class User extends ResearchMethods {
                 return;
             }
             fromWarehouseToCart(warehouse, cart, sceltaId, iva);
+            sc.nextLine();
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
             sc.nextLine();

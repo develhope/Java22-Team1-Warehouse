@@ -31,7 +31,7 @@ public class Operatore extends ResearchMethods {
             for (MenuOptionsOperator option : MenuOptionsOperator.values()) {
                 String optionName = option.name().replace("_", " ").toLowerCase();
                 optionName = optionName.substring(0, 1).toUpperCase() + optionName.substring(1);
-                System.out.println(option.ordinal() + ") " + optionName);
+                System.out.println(option.ordinal() + ") " + optionName + ": ");
             }
 
             String input = sc.nextLine();

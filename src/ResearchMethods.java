@@ -197,7 +197,6 @@ public abstract class ResearchMethods {
         } catch (IllegalArgumentException e) {
             System.out.println("Opzione non valida. Riprova.");
             return null;
-
         }
     }
 }
