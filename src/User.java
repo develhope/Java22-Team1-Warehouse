@@ -19,6 +19,7 @@ enum MenuOptionsUser {
     FINE;
 
 }
+
 public class User extends ResearchMethods {
     public void userMenu(Cart cart, Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
@@ -38,12 +39,11 @@ public class User extends ResearchMethods {
             String input = sc.nextLine();
 
             if (input.matches("\\d+")) {
-                sceltaUser = getMenuOptionsByIndex(input);
+                sceltaUser = getMenuOptionsByIndex(input, MenuOptionsUser.class);
             } else {
-                sceltaUser = getMenuOptionsByString(input);
+                sceltaUser = getMenuOptionsByString(input, MenuOptionsUser.class);
             }
 
-            try {
                 switch (sceltaUser) {
 
                     case VISUALIZZA_TUTTI_PRODOTTI:
@@ -108,11 +108,15 @@ public class User extends ResearchMethods {
                             System.out.println("Scelta non consentita.");
                         }
                         break;
+                    case FINE:
+                        System.out.println("Arrivederci!");
+                        break;
+                    case null:
+                        break;
                     default:
                         System.out.println("Scelta non valida.");
                 }
-            } catch (InputMismatchException e) {
-            }
+
         } while (sceltaUser != MenuOptionsUser.FINE);
     }
 

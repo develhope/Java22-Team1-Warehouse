@@ -37,9 +37,9 @@ public class Operatore extends ResearchMethods {
             String input = sc.nextLine();
 
             if (input.matches("\\d+")) {
-               sceltaUser = getMenuOptionsByIndex(input);
+                sceltaUser = getMenuOptionsByIndex(input, MenuOptionsOperator.class);
             } else {
-                sceltaUser = getMenuOptionsByString(input);
+                sceltaUser = getMenuOptionsByString(input, MenuOptionsOperator.class);
             }
             switch (sceltaUser) {
                 case VISUALIZZA_TUTTI_PRODOTTI:
@@ -166,7 +166,6 @@ public class Operatore extends ResearchMethods {
     }
 
 
-
     private void removeFromWarehouseById(Warehouse warehouse, Scanner sc) {
         try {
             if (warehouse.isEmpty()) {
@@ -174,7 +173,7 @@ public class Operatore extends ResearchMethods {
                 return;
             }
             Long sceltaId2 = getValidLongInput("Digita un id per rimuovere al magazzino:", sc);
-            if(sceltaId2 == null) {
+            if (sceltaId2 == null) {
                 return;
             }
 

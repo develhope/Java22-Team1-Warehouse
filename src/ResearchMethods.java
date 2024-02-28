@@ -181,22 +181,23 @@ public abstract class ResearchMethods {
         }
     }
 
-    static MenuOptionsOperator getMenuOptionsByIndex(String input) {
+     static <T extends Enum<T>> T getMenuOptionsByIndex(String input, Class<T> enumClass) {
         int index = Integer.parseInt(input);
-        if (index >= 0 && index < MenuOptionsOperator.values().length) {
-            return MenuOptionsOperator.values()[index];
+        if (index >= 0 && index < enumClass.getEnumConstants().length) {
+            return enumClass.getEnumConstants()[index];
         } else {
             System.out.println("Opzione non valida. Riprova.");
             return null;
         }
     }
 
-    static MenuOptionsOperator getMenuOptionsByString(String input) {
+     static <T extends Enum<T>> T getMenuOptionsByString(String input, Class<T> enumClass) {
         try {
-            return MenuOptionsOperator.valueOf(input.toUpperCase().replace(" ", "_"));
+            return Enum.valueOf(enumClass, input.toUpperCase().replace(" ", "_"));
         } catch (IllegalArgumentException e) {
             System.out.println("Opzione non valida. Riprova.");
             return null;
+
         }
     }
 }
