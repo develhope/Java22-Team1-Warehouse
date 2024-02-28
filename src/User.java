@@ -101,11 +101,14 @@ public class User extends ResearchMethods {
                         if (sceltaFinale.equals("1")) {
                             System.out.println(finalizeSale(cart, partitaIva));
                             System.out.println("Grazie per l'acquisto, speriamo di rivederti presto.");
+                            sc.nextLine();
                             break;
                         } else if (sceltaFinale.equals("2")) {
+                            sc.nextLine();
                             break;
                         } else {
                             System.out.println("Scelta non consentita.");
+                            sc.nextLine();
                         }
                         break;
                     case FINE:
@@ -205,6 +208,7 @@ public class User extends ResearchMethods {
                 return;
             }
             fromCartToWarehouse(warehouse, cart, sceltaId2, iva);
+            sc.nextLine();
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
             sc.nextLine();
