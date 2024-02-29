@@ -2,10 +2,10 @@ import Devices.DeviceClasses;
 
 import java.awt.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public  class ResearchMethods {
+public class ResearchMethods {
     private Warehouse warehouse;
     private Scanner sc;
 
@@ -15,7 +15,7 @@ public  class ResearchMethods {
     }
 
     // Stampa i device passati, cambia prezzi con iva se viene passata
-    void printDevices(ArrayList<DeviceClasses> devices, boolean iva) {
+    void printDevices(List<DeviceClasses> devices, boolean iva) {
         DecimalFormat df = new DecimalFormat("#.##");
         for (DeviceClasses device : devices) {
             double price = iva ? device.getPriceWithIVA() : device.getSale();
@@ -31,7 +31,7 @@ public  class ResearchMethods {
     }
 
     // Prende un input string e lo valida prima di ritornarlo
-    String getValidInput(String prompt, int maxLength, Scanner sc) {
+    String getValidInput(String prompt, int maxLength) {
         String input;
         do {
             System.out.println(prompt);
@@ -47,7 +47,7 @@ public  class ResearchMethods {
 
     // Prende un input double e lo valida prima di ritornarlo
 
-    double getValidDoubleInput(String prompt, Scanner sc) {
+    double getValidDoubleInput(String prompt) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -63,7 +63,7 @@ public  class ResearchMethods {
         } while (true);
     }
 
-    Long getValidLongInput(String prompt, Scanner sc) {
+    Long getValidLongInput(String prompt) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -82,7 +82,7 @@ public  class ResearchMethods {
     }
 
     // Prende un input integer e lo valida prima di ritornarlo
-    int getValidIntegerInput(String prompt, Scanner sc) {
+    int getValidIntegerInput(String prompt) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -105,8 +105,8 @@ public  class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        String sceltaDisp = getValidInput("Inserisci il nome del tipo di dispositivo", 15, sc);
-        ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
+        String sceltaDisp = getValidInput("Inserisci il nome del tipo di dispositivo", 15);
+        List<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
         if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
@@ -122,8 +122,8 @@ public  class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        String sceltaBrand = getValidInput("Inserisci il nome del brand del dispositivo:", 15, sc);
-        ArrayList<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
+        String sceltaBrand = getValidInput("Inserisci il nome del brand del dispositivo:", 15);
+        List<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
         if (brandCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
@@ -139,8 +139,8 @@ public  class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        String scelta = getValidInput("Inserisci il nome del modello del dispositivo:", 15, sc);
-        ArrayList<DeviceClasses> modelCompatibili = warehouse.getCompatibles(scelta, "model");
+        String scelta = getValidInput("Inserisci il nome del modello del dispositivo:", 15);
+        List<DeviceClasses> modelCompatibili = warehouse.getCompatibles(scelta, "model");
         if (modelCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
@@ -155,9 +155,9 @@ public  class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        int price = getValidIntegerInput("Inserisci il prezzo:", sc);
+        int price = getValidIntegerInput("Inserisci il prezzo:");
         int searchedPrice = iva ? (int) (price / 1.22) : price;
-        ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(searchedPrice);
+        List<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(searchedPrice);
         if (priceCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
@@ -171,8 +171,8 @@ public  class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        int minPrice = getValidIntegerInput("Inserisci il prezzo minimo:", sc);
-        int maxPrice = getValidIntegerInput("Inserisci il prezzo massimo:", sc);
+        int minPrice = getValidIntegerInput("Inserisci il prezzo minimo:");
+        int maxPrice = getValidIntegerInput("Inserisci il prezzo massimo:");
 
         int minSearchedPrice = iva ? (int) (minPrice / 1.22) : minPrice;
         int maxSearchedPrice = iva ? (int) (maxPrice / 1.22) : maxPrice;
@@ -182,7 +182,7 @@ public  class ResearchMethods {
             return;
         }
 
-        ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(minSearchedPrice, maxSearchedPrice);
+        List<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(minSearchedPrice, maxSearchedPrice);
         if (rangeCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo in range trovato");
         } else {
@@ -190,22 +190,20 @@ public  class ResearchMethods {
         }
     }
 
-  <T extends Enum<T>> MenuOptionsOperator getMenuOptionsByIndex(String input, Class<MenuOptionsOperator> enumClass) {
+    <T extends Enum<T>> MenuOptionsOperator getMenuOptionsByIndex(String input, Class<MenuOptionsOperator> enumClass) {
         int index = Integer.parseInt(input);
-        if (index >= 0 && index < enumClass.getEnumConstants().length) {
-            return enumClass.getEnumConstants()[index] ;
+        if (index >= 0 && index < enumClass.getEnumConstants().length - 1) {
+            return enumClass.getEnumConstants()[index];
         } else {
-            System.out.println("Opzione non valida. Riprova.");
             return MenuOptionsOperator.UNKNOWN;
         }
     }
 
     <T extends Enum<T>> MenuOptionsUser getMenuOptionsByIndexUser(String input, Class<MenuOptionsUser> enumClass) {
         int index = Integer.parseInt(input);
-        if (index >= 0 && index < enumClass.getEnumConstants().length) {
-            return enumClass.getEnumConstants()[index] ;
+        if (index >= 0 && index < enumClass.getEnumConstants().length - 1) {
+            return enumClass.getEnumConstants()[index];
         } else {
-            System.out.println("Opzione non valida. Riprova.");
             return MenuOptionsUser.UNKNOWN;
         }
     }

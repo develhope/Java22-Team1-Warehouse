@@ -1,11 +1,12 @@
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import Devices.DeviceClasses;
 
 public class Cart {
 
-    private ArrayList<DeviceClasses> devices = new ArrayList<>();
+    private List<DeviceClasses> devices = new ArrayList<>();
 
     public Cart() {
         this.devices = new ArrayList<>();

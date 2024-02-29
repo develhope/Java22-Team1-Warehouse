@@ -5,17 +5,17 @@ import Devices.Tablet;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Warehouse {
-    private ArrayList<DeviceClasses> devices = new ArrayList<>();
+    private List<DeviceClasses> devices = new ArrayList<>();
 
-    public ArrayList<DeviceClasses> getDevices() {
+    public List<DeviceClasses> getDevices() {
         return devices;
     }
 
     public Warehouse() {
-        fillWarehouse();
     }
 
     public void addDevice(DeviceClasses device) {
@@ -71,9 +71,9 @@ public class Warehouse {
         }
     }
 
-    public ArrayList<DeviceClasses> getCompatibles(String input, String researchType) {
+    public List<DeviceClasses> getCompatibles(String input, String researchType) {
         String inputLowerCase = input.toLowerCase();
-        ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
+        List<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (DeviceClasses device : devices) {
             String researchLowerCase = "";
@@ -96,8 +96,8 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
-    public ArrayList<DeviceClasses> getRangePurchase(int valLow, int valHigh) {
-        ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
+    public List<DeviceClasses> getRangePurchase(int valLow, int valHigh) {
+        List<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (DeviceClasses device : devices) {
             if (device.getPurchase() <= valHigh && device.getPurchase() >= valLow) {
@@ -107,8 +107,8 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
-    public ArrayList<DeviceClasses> getRangeSale(int valLow, int valHigh) {
-        ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
+    public List<DeviceClasses> getRangeSale(int valLow, int valHigh) {
+        List<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (DeviceClasses device : devices) {
             if (device.getSale() <= valHigh && device.getSale() >= valLow) {
@@ -118,8 +118,8 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
-    public ArrayList<DeviceClasses> getBySellPrice(int range) {
-        ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
+    public List<DeviceClasses> getBySellPrice(int range) {
+        List<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (DeviceClasses device : devices) {
             if (device.getSale() == range) {
@@ -129,8 +129,8 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
-    public ArrayList<DeviceClasses> getByPurchasePrice(int range) {
-        ArrayList<DeviceClasses> devicesCompatibili = new ArrayList<>();
+    public List<DeviceClasses> getByPurchasePrice(int range) {
+        List<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (DeviceClasses device : devices) {
             if (device.getPurchase() == range) {
