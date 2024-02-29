@@ -32,7 +32,11 @@ public class User {
             sc.nextLine();
             String input = sc.nextLine();
 
-            sceltaUser = researchMethods.getMenuOptionsByIndexUser(input, MenuOptionsUser.class);
+            if(input.matches("\\d+")) {
+                sceltaUser = researchMethods.getMenuOptionsByIndexUser(input, MenuOptionsUser.class);
+            } else {
+                sceltaUser = MenuOptionsUser.UNKNOWN;
+            }
 
 
             switch (sceltaUser) {
