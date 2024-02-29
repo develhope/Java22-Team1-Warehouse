@@ -192,7 +192,7 @@ public  class ResearchMethods {
 
   <T extends Enum<T>> MenuOptionsOperator getMenuOptionsByIndex(String input, Class<MenuOptionsOperator> enumClass) {
         int index = Integer.parseInt(input);
-        if (index >= 0 && index < enumClass.getEnumConstants().length) {
+        if (index >= 0 && index < enumClass.getEnumConstants().length-1) {
             return enumClass.getEnumConstants()[index] ;
         } else {
             System.out.println("Opzione non valida. Riprova.");
@@ -202,7 +202,7 @@ public  class ResearchMethods {
 
     <T extends Enum<T>> MenuOptionsUser getMenuOptionsByIndexUser(String input, Class<MenuOptionsUser> enumClass) {
         int index = Integer.parseInt(input);
-        if (index >= 0 && index < enumClass.getEnumConstants().length) {
+        if (index >= 0 && index < enumClass.getEnumConstants().length-1) {
             return enumClass.getEnumConstants()[index] ;
         } else {
             System.out.println("Opzione non valida. Riprova.");
