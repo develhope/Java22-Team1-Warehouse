@@ -27,8 +27,7 @@ public class User {
         do {
             System.out.println("Scegli un'opzione:");
             for (int i = 0; i < MenuOptionsUser.values().length - 1; i++) {
-                String optionName = MenuOptionsUser.values()[i].getStringa();
-                System.out.println(MenuOptionsUser.values()[i].ordinal() + ") " + optionName + ": ");
+                System.out.println(MenuOptionsUser.values()[i].ordinal() + ") " + MenuOptionsUser.values()[i].getStringa() + ": ");
             }
 
             String input = sc.nextLine();

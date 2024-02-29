@@ -23,9 +23,7 @@ public class Operatore {
         do {
             System.out.println("Scegli un'opzione:");
             for (int i = 0; i < MenuOptionsOperator.values().length - 1; i++) {
-                String optionName = MenuOptionsOperator.values()[i].name().replace("_", " ").toLowerCase();
-                optionName = optionName.substring(0, 1).toUpperCase() + optionName.substring(1);
-                System.out.println(MenuOptionsOperator.values()[i].ordinal() + ") " + optionName + ": ");
+                System.out.println(MenuOptionsOperator.values()[i].ordinal() + ") " + MenuOptionsOperator.values()[i].getStringa() + ": ");
             }
             String input = sc.nextLine();
 
