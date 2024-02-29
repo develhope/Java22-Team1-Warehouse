@@ -5,30 +5,18 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-enum MenuOptionsOperator {
-    VISUALIZZA_TUTTI_PRODOTTI,
-    RICERCA_PER_TIPO_DISPOSITIVO,
-    RICERCA_PER_PRODUTTORE,
-    RICERCA_PER_MODELLO,
-    RICERCA_PER_PREZZO_DI_VENDITA,
-    RICERCA_PER_PREZZO_DI_ACQUISTO,
-    RICERCA_PER_RANGE_DI_ACQUISTO,
-    RICERCA_SPESA_MEDIA_DISPOSITIVO,
-    AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO,
-    RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO,
-    FINE;
-}
+
 
 public class Operatore extends ResearchMethods {
 
     // menu con tutti i controlli dell'operatore
     public void operatorMenu(Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
-        MenuOptionsOperator sceltaUser;
+        EnumOperatore.MenuOptionsOperator sceltaUser;
 
         do {
             System.out.println("Scegli un'opzione:");
-            for (MenuOptionsOperator option : MenuOptionsOperator.values()) {
+            for (EnumOperatore.MenuOptionsOperator option : EnumOperatore.MenuOptionsOperator.values()) {
                 String optionName = option.name().replace("_", " ").toLowerCase();
                 optionName = optionName.substring(0, 1).toUpperCase() + optionName.substring(1);
                 System.out.println(option.ordinal() + ") " + optionName + ": ");
@@ -37,9 +25,9 @@ public class Operatore extends ResearchMethods {
             String input = sc.nextLine();
 
             if (input.matches("\\d+")) {
-                sceltaUser = getMenuOptionsByIndex(input, MenuOptionsOperator.class);
+                sceltaUser = getMenuOptionsByIndex(input, EnumOperatore.MenuOptionsOperator.class);
             } else {
-                sceltaUser = getMenuOptionsByString(input, MenuOptionsOperator.class);
+                sceltaUser = getMenuOptionsByString(input, EnumOperatore.MenuOptionsOperator.class);
             }
             switch (sceltaUser) {
                 case VISUALIZZA_TUTTI_PRODOTTI:
@@ -86,7 +74,7 @@ public class Operatore extends ResearchMethods {
                     System.out.println("Scelta non valida");
             }
 
-        } while (sceltaUser != MenuOptionsOperator.FINE);
+        } while (sceltaUser != EnumOperatore.MenuOptionsOperator.FINE);
     }
 
     // set ID del device utilizzando un Random e aggiunge il device al magazzino
