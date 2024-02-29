@@ -31,73 +31,7 @@ public class ResearchMethods {
     }
 
     // Prende un input string e lo valida prima di ritornarlo
-    String getValidInput(String prompt, int maxLength) {
-        String input;
-        do {
-            System.out.println(prompt);
-            input = sc.nextLine().trim();
-            if (input.length() > maxLength) {
-                System.out.println("La lunghezza massima consentita è " + maxLength + " caratteri.");
-            } else {
-                return input;
-            }
-        } while (true);
-    }
-
-
-    // Prende un input double e lo valida prima di ritornarlo
-
-    double getValidDoubleInput(String prompt) {
-        do {
-            System.out.println(prompt);
-            String input = sc.nextLine().trim();
-            if (input.matches(("[0-9]+(.[0-9]+)?"))) {
-                try {
-                    return Double.parseDouble(input);
-                } catch (NumberFormatException e) {
-                    System.out.println("Input non valido. Inserisci un numero valido.");
-                }
-            } else {
-                System.out.println("Input non valido. Inserisci un numero valido.");
-            }
-        } while (true);
-    }
-
-    Long getValidLongInput(String prompt) {
-        do {
-            System.out.println(prompt);
-            String input = sc.nextLine().trim();
-            if (input.matches(("[0-9]+(.[0-9]+)?"))) {
-                try {
-                    return Long.parseLong(input);
-                } catch (NumberFormatException e) {
-                    System.out.println("Input non valido. Inserisci un numero valido.");
-                }
-            } else {
-                System.out.println("Input non valido. Inserisci un numero valido.");
-                break;
-            }
-        } while (true);
-        return null;
-    }
-
-    // Prende un input integer e lo valida prima di ritornarlo
-    int getValidIntegerInput(String prompt) {
-        do {
-            System.out.println(prompt);
-            String input = sc.nextLine().trim();
-            if (input.matches("[0-9]+")) {
-                try {
-                    return Integer.parseInt(input);
-                } catch (NumberFormatException e) {
-                    System.out.println("Input non valido. Inserisci un numero intero valido.");
-                }
-            } else {
-                System.out.println("Input non valido. Inserisci un numero intero valido.");
-            }
-        } while (true);
-    }
-
+    
     // Cerca per tipo, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
     void searchByType(boolean iva) {
@@ -105,7 +39,7 @@ public class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        String sceltaDisp = getValidInput("Inserisci il nome del tipo di dispositivo", 15);
+        String sceltaDisp = GetValidInput.getString("Inserisci il nome del tipo di dispositivo", 15);
         List<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
         if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
@@ -122,7 +56,7 @@ public class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        String sceltaBrand = getValidInput("Inserisci il nome del brand del dispositivo:", 15);
+        String sceltaBrand = GetValidInput.getString("Inserisci il nome del brand del dispositivo:", 15);
         List<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
         if (brandCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
@@ -139,7 +73,7 @@ public class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        String scelta = getValidInput("Inserisci il nome del modello del dispositivo:", 15);
+        String scelta = GetValidInput.getString("Inserisci il nome del modello del dispositivo:", 15);
         List<DeviceClasses> modelCompatibili = warehouse.getCompatibles(scelta, "model");
         if (modelCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
@@ -155,7 +89,7 @@ public class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        int price = getValidIntegerInput("Inserisci il prezzo:");
+        int price = GetValidInput.getInteger("Inserisci il prezzo:");
         int searchedPrice = iva ? (int) (price / 1.22) : price;
         List<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(searchedPrice);
         if (priceCompatibili.isEmpty()) {
@@ -171,8 +105,8 @@ public class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        int minPrice = getValidIntegerInput("Inserisci il prezzo minimo:");
-        int maxPrice = getValidIntegerInput("Inserisci il prezzo massimo:");
+        int minPrice = GetValidInput.getInteger("Inserisci il prezzo minimo:");
+        int maxPrice = GetValidInput.getInteger("Inserisci il prezzo massimo:");
 
         int minSearchedPrice = iva ? (int) (minPrice / 1.22) : minPrice;
         int maxSearchedPrice = iva ? (int) (maxPrice / 1.22) : maxPrice;

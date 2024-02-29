@@ -92,13 +92,13 @@ public class Operatore {
     private static DeviceClasses addNewDevice(Scanner sc, ResearchMethods researchMethods) {
 
         String device = switchDevice(sc);
-        String brand = researchMethods.getValidInput("Brand:", 15);
-        String model = researchMethods.getValidInput("Modello:", 15);
-        String description = researchMethods.getValidInput("Descrizione:", 20);
-        double display = researchMethods.getValidDoubleInput("Display:");
-        int storage = researchMethods.getValidIntegerInput("Memoria di archiviazione:");
-        double purchase = researchMethods.getValidDoubleInput("Prezzo di acquisto:");
-        double sale = researchMethods.getValidDoubleInput("Prezzo di vendita:");
+        String brand = GetValidInput.getString("Brand:", 15);
+        String model = GetValidInput.getString("Modello:", 15);
+        String description = GetValidInput.getString("Descrizione:", 20);
+        double display = GetValidInput.getDouble("Display:");
+        int storage = GetValidInput.getInteger("Memoria di archiviazione:");
+        double purchase = GetValidInput.getDouble("Prezzo di acquisto:");
+        double sale = GetValidInput.getDouble("Prezzo di vendita:");
 
         return new DeviceClasses(sale, device, brand, model, description, display, storage, purchase);
     }
@@ -132,7 +132,7 @@ public class Operatore {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        int scelta = researchMethods.getValidIntegerInput("Inserisci il prezzo:");
+        int scelta = GetValidInput.getInteger("Inserisci il prezzo:");
         List<DeviceClasses> priceBuyCompatibili = warehouse.getByPurchasePrice(scelta);
         if (priceBuyCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
@@ -148,7 +148,7 @@ public class Operatore {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        String scelta = researchMethods.getValidInput("Inserisci il tipo di device di cui vuoi sapere il prezzo medio:", 20);
+        String scelta = GetValidInput.getString("Inserisci il tipo di device di cui vuoi sapere il prezzo medio:", 20);
         double averagePrice = warehouse.getAverageDevicePrice(scelta);
         if (!Double.isNaN(averagePrice) && averagePrice != 0) {
             System.out.println("Il prezzo medio per " + scelta + " è: " + averagePrice);
@@ -164,7 +164,7 @@ public class Operatore {
                 System.out.println("Il magazzino e' vuoto!");
                 return;
             }
-            Long sceltaId2 = researchMethods.getValidLongInput("Digita un id per rimuovere al magazzino:");
+            Long sceltaId2 = GetValidInput.getLong("Digita un id per rimuovere al magazzino:");
             if (sceltaId2 == null) {
                 return;
             }
