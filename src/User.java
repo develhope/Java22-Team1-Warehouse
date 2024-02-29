@@ -6,21 +6,23 @@ import java.util.Scanner;
 
 
 
-public class User extends ResearchMethods {
+public class User  {
+    private Warehouse warehouse;
+    private Cart cart;
     public void userMenu(Cart cart, Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
+        this.warehouse = warehouse;
+        this.cart = cart;
+        ResearchMethods researchMethods = new ResearchMethods(warehouse, sc);
 
-        EnumUser.MenuOptionsUser sceltaUser;
+        MenuOptionsUser sceltaUser;
 
         boolean partitaIva = getIvaUser(new Scanner(System.in));
         //Menu per scelta Utente
         do {
-
-
             String input = sc.nextLine();
 
-
-                sceltaUser = getMenuOptionsByIndex(input, EnumUser.MenuOptionsUser.class);
+                sceltaUser = researchMethods.getMenuOptionsByIndexUser(input, MenuOptionsUser.class);
 
 
                 switch (sceltaUser) {
@@ -33,25 +35,25 @@ public class User extends ResearchMethods {
                         warehouse.printAllDevices(partitaIva, false);
                         break;
                     case RICERCA_PER_TIPO_DISPOSITIVO:
-                        searchByType(warehouse, sc, partitaIva);
+                        researchMethods.searchByType(partitaIva);
                         break;
                     case RICERCA_PER_PRODUTTORE:
-                        searchByBrand(warehouse, sc, partitaIva);
+                        researchMethods.searchByBrand(partitaIva);
                         break;
                     case RICERCA_PER_MODELLO:
-                        searchByModel(warehouse, sc, partitaIva);
+                        researchMethods.searchByModel(partitaIva);
                         break;
                     case RICERCA_PER_PREZZO_DI_VENDITA:
-                        searchBySellPrice(warehouse, sc, partitaIva);
+                        researchMethods.searchBySellPrice(partitaIva);
                         break;
                     case RICERCA_PER_RANGE_DI_VENDITA:
-                        searchByPriceRange(warehouse, sc, partitaIva);
+                        researchMethods.searchByPriceRange(partitaIva);
                         break;
                     case AGGIUNGI_AL_CARRELLO:
-                        addToCartById(warehouse, cart, sc, partitaIva);
+                        addToCartById(sc, partitaIva);
                         break;
                     case RIMUOVI_DAL_CARRELLO:
-                        removeFromCartById(warehouse, cart, sc, partitaIva);
+                        removeFromCartById(sc, partitaIva);
                         break;
                     case CALCOLARE_IL_TOTALE:
                         if (cart.isEmpty()) {
@@ -93,24 +95,23 @@ public class User extends ResearchMethods {
                     case FINE:
                         System.out.println("Arrivederci!");
                         break;
-                    case null:
+                    case UNKNOWN:
                         break;
-                    default:
-                        System.out.println("Scelta non valida.");
+
                 }
 
-        } while (sceltaUser != EnumUser.MenuOptionsUser.FINE);
+        } while (sceltaUser != MenuOptionsUser.FINE);
     }
 
     //Metodo per aggiungere prodotti dal magazzino al carrello
-    public static void fromWarehouseToCart(Warehouse warehouse, Cart cart, long id, Boolean iva) {
+    public void fromWarehouseToCart(long id, Boolean iva) {
         cart.addDevice(warehouse.getDeviceById(id));
         warehouse.removeDeviceById(id);
         cart.printAllDevices(iva);
     }
 
     //Metodo per aggiungere prodotti dal carrello al magazzino
-    public static void fromCartToWarehouse(Warehouse warehouse, Cart cart, long id, Boolean iva) {
+    public void fromCartToWarehouse(long id, Boolean iva) {
         warehouse.addDevice(cart.getDeviceById(id));
         cart.removeDeviceById(id);
         cart.printAllDevices(iva);
@@ -153,7 +154,7 @@ public class User extends ResearchMethods {
     }
 
     //Metodo per aggiungere i prodotti al carrello tramite un ID
-    private void addToCartById(Warehouse warehouse, Cart cart, Scanner sc, boolean iva) {
+    private void addToCartById(Scanner sc, boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
             return;
@@ -166,7 +167,7 @@ public class User extends ResearchMethods {
                 return;
             }
             System.out.println("Questo è il carrello: ");
-            fromWarehouseToCart(warehouse, cart, sceltaId, iva);
+            fromWarehouseToCart(sceltaId, iva);
             sc.nextLine();
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
@@ -175,7 +176,7 @@ public class User extends ResearchMethods {
     }
 
     //Metodo per rimuovere i prodotti dal carrello tramite ID
-    private void removeFromCartById(Warehouse warehouse, Cart cart, Scanner sc, boolean iva) {
+    private void removeFromCartById(Scanner sc, boolean iva) {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
             return;
@@ -187,7 +188,7 @@ public class User extends ResearchMethods {
                 System.out.println("Non è stato trovato alcun dispositivo con questo ID.");
                 return;
             }
-            fromCartToWarehouse(warehouse, cart, sceltaId2, iva);
+            fromCartToWarehouse(sceltaId2, iva);
             sc.nextLine();
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");

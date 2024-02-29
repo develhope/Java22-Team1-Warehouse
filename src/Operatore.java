@@ -7,28 +7,21 @@ import java.util.Scanner;
 
 
 
-public class Operatore extends ResearchMethods {
-
+public class Operatore {
+private Warehouse warehouse;
     // menu con tutti i controlli dell'operatore
     public void operatorMenu(Warehouse warehouse) {
         Scanner sc = new Scanner(System.in);
-        EnumOperatore.MenuOptionsOperator sceltaUser;
+        MenuOptionsOperator sceltaUser;
+        ResearchMethods researchMethods = new ResearchMethods(warehouse, sc);
+        this.warehouse = warehouse;
 
         do {
-            System.out.println("Scegli un'opzione:");
-            for (EnumOperatore.MenuOptionsOperator option : EnumOperatore.MenuOptionsOperator.values()) {
-                String optionName = option.name().replace("_", " ").toLowerCase();
-                optionName = optionName.substring(0, 1).toUpperCase() + optionName.substring(1);
-                System.out.println(option.ordinal() + ") " + optionName + ": ");
-            }
 
             String input = sc.nextLine();
 
-            if (input.matches("\\d+")) {
-                sceltaUser = getMenuOptionsByIndex(input, EnumOperatore.MenuOptionsOperator.class);
-            } else {
-                sceltaUser = getMenuOptionsByString(input, EnumOperatore.MenuOptionsOperator.class);
-            }
+                sceltaUser = researchMethods.getMenuOptionsByIndex(input, MenuOptionsOperator.class);
+
             switch (sceltaUser) {
                 case VISUALIZZA_TUTTI_PRODOTTI:
                     if (warehouse.isEmpty()) {
@@ -38,43 +31,42 @@ public class Operatore extends ResearchMethods {
                     warehouse.printAllDevices(false, true);
                     break;
                 case RICERCA_PER_TIPO_DISPOSITIVO:
-                    searchByType(warehouse, sc, false);
+                    researchMethods.searchByType(false);
                     break;
                 case RICERCA_PER_PRODUTTORE:
-                    searchByBrand(warehouse, sc, false);
+                    researchMethods.searchByBrand(false);
                     break;
                 case RICERCA_PER_MODELLO:
-                    searchByModel(warehouse, sc, false);
+                    researchMethods.searchByModel(false);
                     break;
                 case RICERCA_PER_PREZZO_DI_VENDITA:
-                    searchBySellPrice(warehouse, sc, false);
+                    researchMethods.searchBySellPrice(false);
                     break;
                 case RICERCA_PER_PREZZO_DI_ACQUISTO:
-                    searchByPurchasePrice(warehouse, sc);
+                    searchByPurchasePrice(researchMethods, sc);
                     break;
                 case RICERCA_PER_RANGE_DI_ACQUISTO:
-                    searchByPriceRange(warehouse, sc, false);
+                    researchMethods.searchByPriceRange(false);
                     break;
                 case RICERCA_SPESA_MEDIA_DISPOSITIVO:
-                    searchByAverageDevicePrice(warehouse, sc);
+                    searchByAverageDevicePrice(researchMethods, sc);
                     break;
                 case AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO:
-                    DeviceClasses newDevice = addNewDevice(sc);
+                    DeviceClasses newDevice = addNewDevice(sc, researchMethods);
                     setIdAddDeviceInWarehouse(warehouse, newDevice);
                     break;
                 case RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO:
-                    removeFromWarehouseById(warehouse, sc);
+                    removeFromWarehouseById(researchMethods, sc);
                     break;
                 case FINE:
                     System.out.println("Arrivederci!");
                     break;
-                case null:
+                case UNKNOWN:
                     break;
-                default:
-                    System.out.println("Scelta non valida");
+
             }
 
-        } while (sceltaUser != EnumOperatore.MenuOptionsOperator.FINE);
+        } while (sceltaUser != MenuOptionsOperator.FINE);
     }
 
     // set ID del device utilizzando un Random e aggiunge il device al magazzino
@@ -85,16 +77,16 @@ public class Operatore extends ResearchMethods {
     }
 
     // aggiunge un nuovo device al magazzino
-    private static DeviceClasses addNewDevice(Scanner sc) {
+    private static DeviceClasses addNewDevice(Scanner sc, ResearchMethods researchMethods) {
 
         String device = switchDevice(sc);
-        String brand = getValidInput("Brand:", 15, sc);
-        String model = getValidInput("Modello:", 15, sc);
-        String description = getValidInput("Descrizione:", 20, sc);
-        double display = getValidDoubleInput("Display:", sc);
-        int storage = getValidIntegerInput("Memoria di archiviazione:", sc);
-        double purchase = getValidDoubleInput("Prezzo di acquisto:", sc);
-        double sale = getValidDoubleInput("Prezzo di vendita:", sc);
+        String brand = researchMethods.getValidInput("Brand:", 15, sc);
+        String model = researchMethods.getValidInput("Modello:", 15, sc);
+        String description = researchMethods.getValidInput("Descrizione:", 20, sc);
+        double display = researchMethods.getValidDoubleInput("Display:", sc);
+        int storage = researchMethods.getValidIntegerInput("Memoria di archiviazione:", sc);
+        double purchase = researchMethods.getValidDoubleInput("Prezzo di acquisto:", sc);
+        double sale = researchMethods.getValidDoubleInput("Prezzo di vendita:", sc);
 
         return new DeviceClasses(sale, device, brand, model, description, display, storage, purchase);
     }
@@ -123,28 +115,28 @@ public class Operatore extends ResearchMethods {
     }
 
     // ricerca per prezzo di acquisto
-    private void searchByPurchasePrice(Warehouse warehouse, Scanner sc) {
+    private void searchByPurchasePrice(ResearchMethods researchMethods, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        int scelta = getValidIntegerInput("Inserisci il prezzo:", sc);
+        int scelta = researchMethods.getValidIntegerInput("Inserisci il prezzo:", sc);
         ArrayList<DeviceClasses> priceBuyCompatibili = warehouse.getByPurchasePrice(scelta);
         if (priceBuyCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            printDevices(priceBuyCompatibili, false);
+            researchMethods.printDevices(priceBuyCompatibili, false);
         }
     }
 
 
     // ricerca per prezzo medio del device
-    private void searchByAverageDevicePrice(Warehouse warehouse, Scanner sc) {
+    private void searchByAverageDevicePrice(ResearchMethods researchMethods, Scanner sc) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        String scelta = getValidInput("Inserisci il tipo di device di cui vuoi sapere il prezzo medio:", 20, sc);
+        String scelta = researchMethods.getValidInput("Inserisci il tipo di device di cui vuoi sapere il prezzo medio:", 20, sc);
         double averagePrice = warehouse.getAverageDevicePrice(scelta);
         if (!Double.isNaN(averagePrice) && averagePrice != 0) {
             System.out.println("Il prezzo medio per " + scelta + " è: " + averagePrice);
@@ -154,13 +146,13 @@ public class Operatore extends ResearchMethods {
     }
 
 
-    private void removeFromWarehouseById(Warehouse warehouse, Scanner sc) {
+    private void removeFromWarehouseById(ResearchMethods researchMethods,Scanner sc) {
         try {
             if (warehouse.isEmpty()) {
                 System.out.println("Il magazzino e' vuoto!");
                 return;
             }
-            Long sceltaId2 = getValidLongInput("Digita un id per rimuovere al magazzino:", sc);
+            Long sceltaId2 = researchMethods.getValidLongInput("Digita un id per rimuovere al magazzino:", sc);
             if (sceltaId2 == null) {
                 return;
             }

@@ -1,4 +1,4 @@
-public class EnumUser {
+
     enum MenuOptionsUser {
         VISUALIZZA_TUTTI_PRODOTTI,
         RICERCA_PER_TIPO_DISPOSITIVO,
@@ -11,7 +11,8 @@ public class EnumUser {
         CALCOLARE_IL_TOTALE,
         VISUALIZZA_IL_CARRELLO,
         ACQUISTA,
-        FINE;
+        FINE,
+        UNKNOWN
 
     }
-}
+

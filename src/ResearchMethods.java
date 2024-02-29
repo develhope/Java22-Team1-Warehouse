@@ -1,10 +1,19 @@
 import Devices.DeviceClasses;
 
+import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public abstract class ResearchMethods {
+public  class ResearchMethods {
+    private Warehouse warehouse;
+    private Scanner sc;
+
+    public ResearchMethods(Warehouse warehouse, Scanner sc) {
+        this.warehouse = warehouse;
+        this.sc = sc;
+    }
+
     // Stampa i device passati, cambia prezzi con iva se viene passata
     void printDevices(ArrayList<DeviceClasses> devices, boolean iva) {
         DecimalFormat df = new DecimalFormat("#.##");
@@ -22,7 +31,7 @@ public abstract class ResearchMethods {
     }
 
     // Prende un input string e lo valida prima di ritornarlo
-    static String getValidInput(String prompt, int maxLength, Scanner sc) {
+    String getValidInput(String prompt, int maxLength, Scanner sc) {
         String input;
         do {
             System.out.println(prompt);
@@ -38,7 +47,7 @@ public abstract class ResearchMethods {
 
     // Prende un input double e lo valida prima di ritornarlo
 
-    static double getValidDoubleInput(String prompt, Scanner sc) {
+    double getValidDoubleInput(String prompt, Scanner sc) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -54,7 +63,7 @@ public abstract class ResearchMethods {
         } while (true);
     }
 
-    static Long getValidLongInput(String prompt, Scanner sc) {
+    Long getValidLongInput(String prompt, Scanner sc) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -73,7 +82,7 @@ public abstract class ResearchMethods {
     }
 
     // Prende un input integer e lo valida prima di ritornarlo
-    static int getValidIntegerInput(String prompt, Scanner sc) {
+    int getValidIntegerInput(String prompt, Scanner sc) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -91,7 +100,7 @@ public abstract class ResearchMethods {
 
     // Cerca per tipo, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    void searchByType(Warehouse warehouse, Scanner sc, boolean iva) {
+    void searchByType(boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -108,7 +117,7 @@ public abstract class ResearchMethods {
 
     // Cerca per brand, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    void searchByBrand(Warehouse warehouse, Scanner sc, boolean iva) {
+    void searchByBrand(boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -125,7 +134,7 @@ public abstract class ResearchMethods {
 
     // Cerca per modello, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    void searchByModel(Warehouse warehouse, Scanner sc, boolean iva) {
+    void searchByModel(boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -141,7 +150,7 @@ public abstract class ResearchMethods {
 
     // Cerca per prezzo di vendità, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    void searchBySellPrice(Warehouse warehouse, Scanner sc, boolean iva) {
+    void searchBySellPrice(boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -157,7 +166,7 @@ public abstract class ResearchMethods {
     }
 
     // ricerca per range del prezzo di vendita
-    void searchByPriceRange(Warehouse warehouse, Scanner sc, boolean iva) {
+    void searchByPriceRange(boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -181,22 +190,23 @@ public abstract class ResearchMethods {
         }
     }
 
-     static <T extends Enum<T>> T getMenuOptionsByIndex(String input, Class<T> enumClass) {
+  <T extends Enum<T>> MenuOptionsOperator getMenuOptionsByIndex(String input, Class<MenuOptionsOperator> enumClass) {
         int index = Integer.parseInt(input);
         if (index >= 0 && index < enumClass.getEnumConstants().length) {
-            return enumClass.getEnumConstants()[index];
+            return enumClass.getEnumConstants()[index] ;
         } else {
             System.out.println("Opzione non valida. Riprova.");
-            return null;
+            return MenuOptionsOperator.UNKNOWN;
         }
     }
 
-     static <T extends Enum<T>> T getMenuOptionsByString(String input, Class<T> enumClass) {
-        try {
-            return Enum.valueOf(enumClass, input.toUpperCase().replace(" ", "_"));
-        } catch (IllegalArgumentException e) {
+    <T extends Enum<T>> MenuOptionsUser getMenuOptionsByIndexUser(String input, Class<MenuOptionsUser> enumClass) {
+        int index = Integer.parseInt(input);
+        if (index >= 0 && index < enumClass.getEnumConstants().length) {
+            return enumClass.getEnumConstants()[index] ;
+        } else {
             System.out.println("Opzione non valida. Riprova.");
-            return null;
+            return MenuOptionsUser.UNKNOWN;
         }
     }
 }

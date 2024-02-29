@@ -1,5 +1,4 @@
-public class EnumOperatore {
-    enum MenuOptionsOperator {
+ enum MenuOptionsOperator {
         VISUALIZZA_TUTTI_PRODOTTI,
         RICERCA_PER_TIPO_DISPOSITIVO,
         RICERCA_PER_PRODUTTORE,
@@ -10,6 +9,7 @@ public class EnumOperatore {
         RICERCA_SPESA_MEDIA_DISPOSITIVO,
         AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO,
         RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO,
-        FINE;
+        FINE,
+        UNKNOWN
     }
-}
+
