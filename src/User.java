@@ -20,6 +20,12 @@ public class User  {
         boolean partitaIva = getIvaUser(new Scanner(System.in));
         //Menu per scelta Utente
         do {
+            System.out.println("Scegli un'opzione:");
+            for (MenuOptionsUser option : MenuOptionsUser.values()) {
+                String optionName = option.name().replace("_", " ").toLowerCase();
+                optionName = optionName.substring(0, 1).toUpperCase() + optionName.substring(1);
+                System.out.println(option.ordinal() + ") " + optionName + ": ");
+            }
             String input = sc.nextLine();
 
                 sceltaUser = researchMethods.getMenuOptionsByIndexUser(input, MenuOptionsUser.class);
