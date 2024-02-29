@@ -31,7 +31,7 @@ public  class ResearchMethods {
     }
 
     // Prende un input string e lo valida prima di ritornarlo
-    String getValidInput(String prompt, int maxLength, Scanner sc) {
+    String getValidInput(String prompt, int maxLength) {
         String input;
         do {
             System.out.println(prompt);
@@ -47,7 +47,7 @@ public  class ResearchMethods {
 
     // Prende un input double e lo valida prima di ritornarlo
 
-    double getValidDoubleInput(String prompt, Scanner sc) {
+    double getValidDoubleInput(String prompt) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -63,7 +63,7 @@ public  class ResearchMethods {
         } while (true);
     }
 
-    Long getValidLongInput(String prompt, Scanner sc) {
+    Long getValidLongInput(String prompt) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -82,7 +82,7 @@ public  class ResearchMethods {
     }
 
     // Prende un input integer e lo valida prima di ritornarlo
-    int getValidIntegerInput(String prompt, Scanner sc) {
+    int getValidIntegerInput(String prompt) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -105,7 +105,7 @@ public  class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        String sceltaDisp = getValidInput("Inserisci il nome del tipo di dispositivo", 15, sc);
+        String sceltaDisp = getValidInput("Inserisci il nome del tipo di dispositivo", 15);
         ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
         if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
@@ -122,7 +122,7 @@ public  class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        String sceltaBrand = getValidInput("Inserisci il nome del brand del dispositivo:", 15, sc);
+        String sceltaBrand = getValidInput("Inserisci il nome del brand del dispositivo:", 15);
         ArrayList<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
         if (brandCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
@@ -139,7 +139,7 @@ public  class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        String scelta = getValidInput("Inserisci il nome del modello del dispositivo:", 15, sc);
+        String scelta = getValidInput("Inserisci il nome del modello del dispositivo:", 15);
         ArrayList<DeviceClasses> modelCompatibili = warehouse.getCompatibles(scelta, "model");
         if (modelCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
@@ -155,7 +155,7 @@ public  class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        int price = getValidIntegerInput("Inserisci il prezzo:", sc);
+        int price = getValidIntegerInput("Inserisci il prezzo:");
         int searchedPrice = iva ? (int) (price / 1.22) : price;
         ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(searchedPrice);
         if (priceCompatibili.isEmpty()) {
@@ -171,8 +171,8 @@ public  class ResearchMethods {
             System.out.println("Il magazzino e' vuoto!");
             return;
         }
-        int minPrice = getValidIntegerInput("Inserisci il prezzo minimo:", sc);
-        int maxPrice = getValidIntegerInput("Inserisci il prezzo massimo:", sc);
+        int minPrice = getValidIntegerInput("Inserisci il prezzo minimo:");
+        int maxPrice = getValidIntegerInput("Inserisci il prezzo massimo:");
 
         int minSearchedPrice = iva ? (int) (minPrice / 1.22) : minPrice;
         int maxSearchedPrice = iva ? (int) (maxPrice / 1.22) : maxPrice;

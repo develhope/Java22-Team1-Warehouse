@@ -5,8 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
-
-public class User  {
+public class User {
     private Warehouse warehouse;
     private Cart cart;
     private Scanner sc;
@@ -21,7 +20,7 @@ public class User  {
         ResearchMethods researchMethods = new ResearchMethods(warehouse, sc);
         MenuOptionsUser sceltaUser;
 
-        boolean partitaIva = getIvaUser(sc);
+        boolean partitaIva = getIvaUser();
         //Menu per scelta Utente
         do {
             System.out.println("Scegli un'opzione:");
@@ -30,85 +29,86 @@ public class User  {
                 optionName = optionName.substring(0, 1).toUpperCase() + optionName.substring(1);
                 System.out.println(option.ordinal() + ") " + optionName + ": ");
             }
+            sc.nextLine();
             String input = sc.nextLine();
 
-                sceltaUser = researchMethods.getMenuOptionsByIndexUser(input, MenuOptionsUser.class);
+            sceltaUser = researchMethods.getMenuOptionsByIndexUser(input, MenuOptionsUser.class);
 
 
-                switch (sceltaUser) {
+            switch (sceltaUser) {
 
-                    case VISUALIZZA_TUTTI_PRODOTTI:
-                        if (warehouse.isEmpty()) {
-                            System.out.println("Il magazzino è vuoto.");
-                            continue;
-                        }
-                        warehouse.printAllDevices(partitaIva, false);
+                case VISUALIZZA_TUTTI_PRODOTTI:
+                    if (warehouse.isEmpty()) {
+                        System.out.println("Il magazzino è vuoto.");
+                        continue;
+                    }
+                    warehouse.printAllDevices(partitaIva, false);
+                    break;
+                case RICERCA_PER_TIPO_DISPOSITIVO:
+                    researchMethods.searchByType(partitaIva);
+                    break;
+                case RICERCA_PER_PRODUTTORE:
+                    researchMethods.searchByBrand(partitaIva);
+                    break;
+                case RICERCA_PER_MODELLO:
+                    researchMethods.searchByModel(partitaIva);
+                    break;
+                case RICERCA_PER_PREZZO_DI_VENDITA:
+                    researchMethods.searchBySellPrice(partitaIva);
+                    break;
+                case RICERCA_PER_RANGE_DI_VENDITA:
+                    researchMethods.searchByPriceRange(partitaIva);
+                    break;
+                case AGGIUNGI_AL_CARRELLO:
+                    addToCartById(partitaIva);
+                    break;
+                case RIMUOVI_DAL_CARRELLO:
+                    removeFromCartById(partitaIva);
+                    break;
+                case CALCOLARE_IL_TOTALE:
+                    if (cart.isEmpty()) {
+                        System.out.println("Il carrello è vuoto.");
                         break;
-                    case RICERCA_PER_TIPO_DISPOSITIVO:
-                        researchMethods.searchByType(partitaIva);
+                    }
+                    System.out.println("Il prezzo finale del carrello è:");
+                    if (!partitaIva) {
+                        System.out.println(cart.getFinalPrice());
+                    } else {
+                        System.out.println(cart.getFinalPrice() * 1.22);
+                    }
+                    break;
+                case VISUALIZZA_IL_CARRELLO:
+                    cart.printAllDevices(partitaIva);
+                    break;
+                case ACQUISTA:
+                    if (cart.isEmpty()) {
+                        System.out.println("Il carrello è vuoto.");
                         break;
-                    case RICERCA_PER_PRODUTTORE:
-                        researchMethods.searchByBrand(partitaIva);
-                        break;
-                    case RICERCA_PER_MODELLO:
-                        researchMethods.searchByModel(partitaIva);
-                        break;
-                    case RICERCA_PER_PREZZO_DI_VENDITA:
-                        researchMethods.searchBySellPrice(partitaIva);
-                        break;
-                    case RICERCA_PER_RANGE_DI_VENDITA:
-                        researchMethods.searchByPriceRange(partitaIva);
-                        break;
-                    case AGGIUNGI_AL_CARRELLO:
-                        addToCartById(sc, partitaIva);
-                        break;
-                    case RIMUOVI_DAL_CARRELLO:
-                        removeFromCartById(sc, partitaIva);
-                        break;
-                    case CALCOLARE_IL_TOTALE:
-                        if (cart.isEmpty()) {
-                            System.out.println("Il carrello è vuoto.");
-                            break;
-                        }
-                        System.out.println("Il prezzo finale del carrello è:");
-                        if (!partitaIva) {
-                            System.out.println(cart.getFinalPrice());
-                        } else {
-                            System.out.println(cart.getFinalPrice() * 1.22);
-                        }
-                        break;
-                    case VISUALIZZA_IL_CARRELLO:
-                        cart.printAllDevices(partitaIva);
-                        break;
-                    case ACQUISTA:
-                        if (cart.isEmpty()) {
-                            System.out.println("Il carrello è vuoto.");
-                            break;
-                        }
-                        System.out.println("1) Per procedere all'acquisto.");
-                        System.out.println("2) Per tornare al menu principale.");
-                        String sceltaFinale = sc.next();
+                    }
+                    System.out.println("1) Per procedere all'acquisto.");
+                    System.out.println("2) Per tornare al menu principale.");
+                    String sceltaFinale = sc.next();
 
-                        if (sceltaFinale.equals("1")) {
-                            System.out.println(finalizeSale(cart, partitaIva));
-                            System.out.println("Grazie per l'acquisto, speriamo di rivederti presto.");
-                            sc.nextLine();
-                            break;
-                        } else if (sceltaFinale.equals("2")) {
-                            sc.nextLine();
-                            break;
-                        } else {
-                            System.out.println("Scelta non consentita.");
-                            sc.nextLine();
-                        }
+                    if (sceltaFinale.equals("1")) {
+                        System.out.println(finalizeSale(partitaIva));
+                        System.out.println("Grazie per l'acquisto, speriamo di rivederti presto.");
+                        sc.nextLine();
                         break;
-                    case FINE:
-                        System.out.println("Arrivederci!");
+                    } else if (sceltaFinale.equals("2")) {
+                        sc.nextLine();
                         break;
-                    case UNKNOWN:
-                        break;
+                    } else {
+                        System.out.println("Scelta non consentita.");
+                        sc.nextLine();
+                    }
+                    break;
+                case FINE:
+                    System.out.println("Arrivederci!");
+                    break;
+                case UNKNOWN:
+                    break;
 
-                }
+            }
 
         } while (sceltaUser != MenuOptionsUser.FINE);
     }
@@ -128,7 +128,7 @@ public class User  {
     }
 
     //Metodo che finalizza l' acquisto
-    public static String finalizeSale(Cart cart, boolean iva) {
+    public String finalizeSale(boolean iva) {
         double finalPrice;
         if (iva) {
             finalPrice = cart.getFinalPrice() * 1.22;
@@ -140,7 +140,7 @@ public class User  {
     }
 
     //Metodo che gestisce se l' utente e' un privato o possiede una partita iva
-    public static boolean getIvaUser(Scanner sc) {
+    public boolean getIvaUser() {
         while (true) {
             System.out.println("Seleziona il tipo di utente:");
             System.out.println("1) Utente SENZA partita IVA.");
@@ -164,7 +164,7 @@ public class User  {
     }
 
     //Metodo per aggiungere i prodotti al carrello tramite un ID
-    private void addToCartById(Scanner sc, boolean iva) {
+    private void addToCartById(boolean iva) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto.");
             return;
@@ -186,7 +186,7 @@ public class User  {
     }
 
     //Metodo per rimuovere i prodotti dal carrello tramite ID
-    private void removeFromCartById(Scanner sc, boolean iva) {
+    private void removeFromCartById(boolean iva) {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
             return;
