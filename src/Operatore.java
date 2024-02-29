@@ -9,15 +9,18 @@ import java.util.Scanner;
 
 public class Operatore {
 private Warehouse warehouse;
+private Scanner sc;
+
+    public Operatore(Warehouse warehouse, Scanner sc) {
+        this.warehouse = warehouse;
+        this.sc = sc;
+    }
+
     // menu con tutti i controlli dell'operatore
-    public void operatorMenu(Warehouse warehouse) {
-        Scanner sc = new Scanner(System.in);
+    public void operatorMenu() {
         MenuOptionsOperator sceltaUser;
         ResearchMethods researchMethods = new ResearchMethods(warehouse, sc);
-        this.warehouse = warehouse;
-
         do {
-
             String input = sc.nextLine();
 
                 sceltaUser = researchMethods.getMenuOptionsByIndex(input, MenuOptionsOperator.class);

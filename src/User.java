@@ -9,15 +9,19 @@ import java.util.Scanner;
 public class User  {
     private Warehouse warehouse;
     private Cart cart;
-    public void userMenu(Cart cart, Warehouse warehouse) {
-        Scanner sc = new Scanner(System.in);
+    private Scanner sc;
+
+    public User(Warehouse warehouse, Cart cart, Scanner sc) {
         this.warehouse = warehouse;
         this.cart = cart;
-        ResearchMethods researchMethods = new ResearchMethods(warehouse, sc);
+        this.sc = sc;
+    }
 
+    public void userMenu() {
+        ResearchMethods researchMethods = new ResearchMethods(warehouse, sc);
         MenuOptionsUser sceltaUser;
 
-        boolean partitaIva = getIvaUser(new Scanner(System.in));
+        boolean partitaIva = getIvaUser(sc);
         //Menu per scelta Utente
         do {
             System.out.println("Scegli un'opzione:");
