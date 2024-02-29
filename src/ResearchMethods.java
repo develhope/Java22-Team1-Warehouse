@@ -2,7 +2,7 @@ import Devices.DeviceClasses;
 
 import java.awt.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ResearchMethods {
@@ -15,7 +15,7 @@ public class ResearchMethods {
     }
 
     // Stampa i device passati, cambia prezzi con iva se viene passata
-    void printDevices(ArrayList<DeviceClasses> devices, boolean iva) {
+    void printDevices(List<DeviceClasses> devices, boolean iva) {
         DecimalFormat df = new DecimalFormat("#.##");
         for (DeviceClasses device : devices) {
             double price = iva ? device.getPriceWithIVA() : device.getSale();
@@ -106,7 +106,7 @@ public class ResearchMethods {
             return;
         }
         String sceltaDisp = getValidInput("Inserisci il nome del tipo di dispositivo", 15);
-        ArrayList<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
+        List<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
         if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
@@ -123,7 +123,7 @@ public class ResearchMethods {
             return;
         }
         String sceltaBrand = getValidInput("Inserisci il nome del brand del dispositivo:", 15);
-        ArrayList<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
+        List<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
         if (brandCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
@@ -140,7 +140,7 @@ public class ResearchMethods {
             return;
         }
         String scelta = getValidInput("Inserisci il nome del modello del dispositivo:", 15);
-        ArrayList<DeviceClasses> modelCompatibili = warehouse.getCompatibles(scelta, "model");
+        List<DeviceClasses> modelCompatibili = warehouse.getCompatibles(scelta, "model");
         if (modelCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
@@ -157,7 +157,7 @@ public class ResearchMethods {
         }
         int price = getValidIntegerInput("Inserisci il prezzo:");
         int searchedPrice = iva ? (int) (price / 1.22) : price;
-        ArrayList<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(searchedPrice);
+        List<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(searchedPrice);
         if (priceCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
@@ -182,7 +182,7 @@ public class ResearchMethods {
             return;
         }
 
-        ArrayList<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(minSearchedPrice, maxSearchedPrice);
+        List<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(minSearchedPrice, maxSearchedPrice);
         if (rangeCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo in range trovato");
         } else {

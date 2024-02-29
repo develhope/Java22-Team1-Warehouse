@@ -1,6 +1,6 @@
 import Devices.DeviceClasses;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
@@ -135,7 +135,7 @@ public class Operatore {
             return;
         }
         int scelta = researchMethods.getValidIntegerInput("Inserisci il prezzo:");
-        ArrayList<DeviceClasses> priceBuyCompatibili = warehouse.getByPurchasePrice(scelta);
+        List<DeviceClasses> priceBuyCompatibili = warehouse.getByPurchasePrice(scelta);
         if (priceBuyCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {

@@ -1,6 +1,6 @@
 import Devices.DeviceClasses;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
