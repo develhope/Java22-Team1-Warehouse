@@ -24,12 +24,12 @@ public class Main {
         switch (scelta) {
             case "1":
                 Cart cart = new Cart();
-                User user = new User();
-                user.userMenu(cart, warehouse);
+                User user = new User(warehouse, cart, sc);
+                user.userMenu();
                 break;
             case "2":
-                Operatore operator = new Operatore();
-                operator.operatorMenu(warehouse);
+                Operatore operator = new Operatore(warehouse, sc);
+                operator.operatorMenu();
                 break;
             case "0":
                 break;
