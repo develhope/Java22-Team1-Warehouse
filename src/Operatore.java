@@ -6,10 +6,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-
 public class Operatore {
-private Warehouse warehouse;
-private Scanner sc;
+    private Warehouse warehouse;
+    private Scanner sc;
 
     public Operatore(Warehouse warehouse, Scanner sc) {
         this.warehouse = warehouse;
@@ -20,11 +19,17 @@ private Scanner sc;
     public void operatorMenu() {
         MenuOptionsOperator sceltaUser;
         ResearchMethods researchMethods = new ResearchMethods(warehouse, sc);
+        sc.nextLine();
         do {
-            sc.nextLine();
+            System.out.println("Scegli un'opzione:");
+            for (int i = 0; i < MenuOptionsOperator.values().length - 1; i++) {
+                String optionName = MenuOptionsOperator.values()[i].name().replace("_", " ").toLowerCase();
+                optionName = optionName.substring(0, 1).toUpperCase() + optionName.substring(1);
+                System.out.println(MenuOptionsOperator.values()[i].ordinal() + ") " + optionName + ": ");
+            }
             String input = sc.nextLine();
 
-            if(input.matches("\\d+")) {
+            if (input.matches("\\d+")) {
                 sceltaUser = researchMethods.getMenuOptionsByIndex(input, MenuOptionsOperator.class);
             } else {
                 sceltaUser = MenuOptionsOperator.UNKNOWN;
@@ -70,6 +75,7 @@ private Scanner sc;
                     System.out.println("Arrivederci!");
                     break;
                 case UNKNOWN:
+                    System.out.println("Opzione non valida. Riprova.");
                     break;
 
             }
@@ -154,7 +160,7 @@ private Scanner sc;
     }
 
 
-    private void removeFromWarehouseById(ResearchMethods researchMethods,Scanner sc) {
+    private void removeFromWarehouseById(ResearchMethods researchMethods, Scanner sc) {
         try {
             if (warehouse.isEmpty()) {
                 System.out.println("Il magazzino e' vuoto!");

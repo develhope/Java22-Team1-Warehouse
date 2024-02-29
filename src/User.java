@@ -21,18 +21,20 @@ public class User {
         MenuOptionsUser sceltaUser;
 
         boolean partitaIva = getIvaUser();
+
         //Menu per scelta Utente
+        sc.nextLine();
         do {
             System.out.println("Scegli un'opzione:");
-            for (MenuOptionsUser option : MenuOptionsUser.values()) {
-                String optionName = option.name().replace("_", " ").toLowerCase();
+            for (int i = 0; i < MenuOptionsUser.values().length - 1; i++) {
+                String optionName = MenuOptionsUser.values()[i].name().replace("_", " ").toLowerCase();
                 optionName = optionName.substring(0, 1).toUpperCase() + optionName.substring(1);
-                System.out.println(option.ordinal() + ") " + optionName + ": ");
+                System.out.println(MenuOptionsUser.values()[i].ordinal() + ") " + optionName + ": ");
             }
-            sc.nextLine();
+
             String input = sc.nextLine();
 
-            if(input.matches("\\d+")) {
+            if (input.matches("\\d+")) {
                 sceltaUser = researchMethods.getMenuOptionsByIndexUser(input, MenuOptionsUser.class);
             } else {
                 sceltaUser = MenuOptionsUser.UNKNOWN;
@@ -110,6 +112,7 @@ public class User {
                     System.out.println("Arrivederci!");
                     break;
                 case UNKNOWN:
+                    System.out.println("Opzione non valida. Riprova.");
                     break;
 
             }
