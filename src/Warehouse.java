@@ -10,6 +10,10 @@ import java.util.Random;
 public class Warehouse {
     private ArrayList<DeviceClasses> devices = new ArrayList<>();
 
+    public ArrayList<DeviceClasses> getDevices() {
+        return devices;
+    }
+
     public Warehouse() {
         fillWarehouse();
     }
