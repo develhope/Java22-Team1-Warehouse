@@ -11,12 +11,11 @@ import java.util.Random;
 public class Warehouse {
     private List<DeviceClasses> devices = new ArrayList<>();
 
-    public ArrayList<DeviceClasses> getDevices() {
+    public List<DeviceClasses> getDevices() {
         return devices;
     }
 
     public Warehouse() {
-        fillWarehouse();
     }
 
     public void addDevice(DeviceClasses device) {
