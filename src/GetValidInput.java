@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class GetValidInput {
     private static Scanner sc = new Scanner(System.in);
+
     public static String getString(String prompt, int maxLength) {
         String input;
         do {
@@ -15,9 +16,7 @@ public class GetValidInput {
         } while (true);
     }
 
-
     // Prende un input double e lo valida prima di ritornarlo
-
     public static double getDouble(String prompt) {
         do {
             System.out.println(prompt);
@@ -67,5 +66,25 @@ public class GetValidInput {
                 System.out.println("Input non valido. Inserisci un numero intero valido.");
             }
         } while (true);
+    }
+
+
+    // Enum inputs
+    static <T extends Enum<T>> MenuOptionsOperator getMenuOptionsByIndex(String input) {
+        int index = Integer.parseInt(input);
+        if (index >= 0 && index < MenuOptionsOperator.class.getEnumConstants().length - 1) {
+            return MenuOptionsOperator.class.getEnumConstants()[index];
+        } else {
+            return MenuOptionsOperator.UNKNOWN;
+        }
+    }
+
+    static <T extends Enum<T>> MenuOptionsUser getMenuOptionsByIndexUser(String input) {
+        int index = Integer.parseInt(input);
+        if (index >= 0 && index < MenuOptionsUser.class.getEnumConstants().length - 1) {
+            return MenuOptionsUser.class.getEnumConstants()[index];
+        } else {
+            return MenuOptionsUser.UNKNOWN;
+        }
     }
 }

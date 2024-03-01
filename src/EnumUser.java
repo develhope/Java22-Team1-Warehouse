@@ -5,7 +5,7 @@ enum MenuOptionsUser {
     RICERCA_PER_PRODUTTORE("Ricerca per produttore"),
     RICERCA_PER_MODELLO("Ricerca per modello"),
     RICERCA_PER_PREZZO_DI_VENDITA("Ricerca per prezzo di vendita"),
-    RICERCA_PER_RANGE_DI_VENDITA("Ricerca per rannge di vendita"),
+    RICERCA_PER_RANGE_DI_VENDITA("Ricerca per range di vendita"),
     AGGIUNGI_AL_CARRELLO("Aggiungi al carrello"),
     RIMUOVI_DAL_CARRELLO("Rimuovi dal carrello"),
     CALCOLARE_IL_TOTALE("Calcola il totale"),

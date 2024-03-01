@@ -23,11 +23,13 @@ public class Main {
         }
         switch (scelta) {
             case "1":
+                warehouse.fillWarehouse();
                 Cart cart = new Cart();
                 User user = new User(warehouse, cart, sc);
                 user.userMenu();
                 break;
             case "2":
+                warehouse.fillWarehouse();
                 Operatore operator = new Operatore(warehouse, sc);
                 operator.operatorMenu();
                 break;

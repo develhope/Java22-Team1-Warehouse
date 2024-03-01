@@ -1,23 +1,25 @@
 import Devices.DeviceClasses;
 
-import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Scanner;
 
 public class ResearchMethods {
-    private Warehouse warehouse;
-    private Scanner sc;
+    private final Warehouse warehouse;
 
-    public ResearchMethods(Warehouse warehouse, Scanner sc) {
+    public ResearchMethods(Warehouse warehouse) {
         this.warehouse = warehouse;
-        this.sc = sc;
     }
 
     // Stampa i device passati, cambia prezzi con iva se viene passata
-    void printDevices(List<DeviceClasses> devices, boolean iva) {
+    void printDevices(List<DeviceClasses> devices, boolean iva, boolean includePurchasePrice) {
+        if (devices.isEmpty()) {
+            String message = !includePurchasePrice ? "Il carrello è vuoto." : "Il magazzino è vuoto.";
+            System.out.println(message);
+            return;
+        }
         DecimalFormat df = new DecimalFormat("#.##");
         for (DeviceClasses device : devices) {
+            String purchasePrice = includePurchasePrice ? ", Prezzo di acquisto: " + df.format(device.getPurchase()) : "";
             double price = iva ? device.getPriceWithIVA() : device.getSale();
             System.out.println("Id: " + device.getId() +
                     ", Dispositivo: " + device.getDevice() +
@@ -26,15 +28,11 @@ public class ResearchMethods {
                     ", Descrizione: " + device.getDescription() +
                     ", Display: " + df.format(device.getDisplay()) +
                     ", Archiviazione: " + df.format(device.getStorage()) +
-                    ", Prezzo: " + df.format(price));
+                    ", Prezzo di vendità: " + df.format(price)+ "€" + purchasePrice + "€");
         }
     }
 
-    // Prende un input string e lo valida prima di ritornarlo
-    
-    // Cerca per tipo, ritorna i dispositivi trovati con prezzi dipendenti da iva
-
-    void searchByType(boolean iva) {
+    void searchByType(boolean iva, boolean includePurchasePrice) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -44,14 +42,13 @@ public class ResearchMethods {
         if (devicesCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            printDevices(devicesCompatibili, iva);
-
+            printDevices(devicesCompatibili, iva, includePurchasePrice);
         }
     }
 
     // Cerca per brand, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    void searchByBrand(boolean iva) {
+    void searchByBrand(boolean iva, boolean includePurchasePrice) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -61,14 +58,14 @@ public class ResearchMethods {
         if (brandCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            printDevices(brandCompatibili, iva);
+            printDevices(brandCompatibili, iva, includePurchasePrice);
 
         }
     }
 
     // Cerca per modello, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    void searchByModel(boolean iva) {
+    void searchByModel(boolean iva, boolean includePurchasePrice) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -78,13 +75,13 @@ public class ResearchMethods {
         if (modelCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            printDevices(modelCompatibili, iva);
+            printDevices(modelCompatibili, iva, includePurchasePrice);
         }
     }
 
     // Cerca per prezzo di vendità, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    void searchBySellPrice(boolean iva) {
+    void searchBySellPrice(boolean iva, boolean includePurchasePrice) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -95,12 +92,12 @@ public class ResearchMethods {
         if (priceCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            printDevices(priceCompatibili, iva);
+            printDevices(priceCompatibili, iva, includePurchasePrice);
         }
     }
 
     // ricerca per range del prezzo di vendita
-    void searchByPriceRange(boolean iva) {
+    void searchByPriceRange(boolean iva, boolean includePurchasePrice) {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -120,25 +117,9 @@ public class ResearchMethods {
         if (rangeCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo in range trovato");
         } else {
-            printDevices(rangeCompatibili, iva);
+            printDevices(rangeCompatibili, iva, includePurchasePrice);
         }
     }
 
-    <T extends Enum<T>> MenuOptionsOperator getMenuOptionsByIndex(String input, Class<MenuOptionsOperator> enumClass) {
-        int index = Integer.parseInt(input);
-        if (index >= 0 && index < enumClass.getEnumConstants().length - 1) {
-            return enumClass.getEnumConstants()[index];
-        } else {
-            return MenuOptionsOperator.UNKNOWN;
-        }
-    }
 
-    <T extends Enum<T>> MenuOptionsUser getMenuOptionsByIndexUser(String input, Class<MenuOptionsUser> enumClass) {
-        int index = Integer.parseInt(input);
-        if (index >= 0 && index < enumClass.getEnumConstants().length - 1) {
-            return enumClass.getEnumConstants()[index];
-        } else {
-            return MenuOptionsUser.UNKNOWN;
-        }
-    }
 }

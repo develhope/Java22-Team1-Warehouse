@@ -7,8 +7,9 @@ import java.util.Scanner;
 
 
 public class Operatore {
-    private Warehouse warehouse;
-    private Scanner sc;
+    private final Warehouse warehouse;
+    private final Scanner sc;
+    private ResearchMethods researchMethods;
 
     public Operatore(Warehouse warehouse, Scanner sc) {
         this.warehouse = warehouse;
@@ -17,9 +18,11 @@ public class Operatore {
 
     // menu con tutti i controlli dell'operatore
     public void operatorMenu() {
+        this.researchMethods = new ResearchMethods(warehouse);
+
         MenuOptionsOperator sceltaUser;
-        ResearchMethods researchMethods = new ResearchMethods(warehouse, sc);
         sc.nextLine();
+
         do {
             System.out.println("Scegli un'opzione:");
             for (int i = 0; i < MenuOptionsOperator.values().length - 1; i++) {
@@ -28,46 +31,42 @@ public class Operatore {
             String input = sc.nextLine();
 
             if (input.matches("\\d+")) {
-                sceltaUser = researchMethods.getMenuOptionsByIndex(input, MenuOptionsOperator.class);
+                sceltaUser = GetValidInput.getMenuOptionsByIndex(input);
             } else {
                 sceltaUser = MenuOptionsOperator.UNKNOWN;
             }
 
             switch (sceltaUser) {
                 case VISUALIZZA_TUTTI_PRODOTTI:
-                    if (warehouse.isEmpty()) {
-                        System.out.println("Il magazzino e' vuoto!");
-                        continue;
-                    }
-                    warehouse.printAllDevices(false, true);
+                    researchMethods.printDevices(warehouse.getDevices(), false, true);
                     break;
                 case RICERCA_PER_TIPO_DISPOSITIVO:
-                    researchMethods.searchByType(false);
+                    researchMethods.searchByType(false, true);
                     break;
                 case RICERCA_PER_PRODUTTORE:
-                    researchMethods.searchByBrand(false);
+                    researchMethods.searchByBrand(false, true);
                     break;
                 case RICERCA_PER_MODELLO:
-                    researchMethods.searchByModel(false);
+                    researchMethods.searchByModel(false, true);
                     break;
                 case RICERCA_PER_PREZZO_DI_VENDITA:
-                    researchMethods.searchBySellPrice(false);
+                    researchMethods.searchBySellPrice(false, true);
                     break;
                 case RICERCA_PER_PREZZO_DI_ACQUISTO:
-                    searchByPurchasePrice(researchMethods, sc);
+                    searchByPurchasePrice();
                     break;
                 case RICERCA_PER_RANGE_DI_ACQUISTO:
-                    researchMethods.searchByPriceRange(false);
+                    researchMethods.searchByPriceRange(false, true);
                     break;
                 case RICERCA_SPESA_MEDIA_DISPOSITIVO:
-                    searchByAverageDevicePrice(researchMethods, sc);
+                    searchByAverageDevicePrice();
                     break;
                 case AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO:
-                    DeviceClasses newDevice = addNewDevice(sc, researchMethods);
-                    setIdAddDeviceInWarehouse(warehouse, newDevice);
+                    DeviceClasses newDevice = addNewDevice();
+                    setIdAddDeviceInWarehouse(newDevice);
                     break;
                 case RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO:
-                    removeFromWarehouseById(researchMethods, sc);
+                    removeFromWarehouseById();
                     break;
                 case FINE:
                     System.out.println("Arrivederci!");
@@ -82,16 +81,16 @@ public class Operatore {
     }
 
     // set ID del device utilizzando un Random e aggiunge il device al magazzino
-    private static void setIdAddDeviceInWarehouse(Warehouse warehouse, DeviceClasses device) {
+    private void setIdAddDeviceInWarehouse(DeviceClasses device) {
         Random rand = new Random();
         warehouse.addDevice(device);
         device.setId(rand.nextLong(999999999));
     }
 
     // aggiunge un nuovo device al magazzino
-    private static DeviceClasses addNewDevice(Scanner sc, ResearchMethods researchMethods) {
+    private DeviceClasses addNewDevice() {
 
-        String device = switchDevice(sc);
+        String device = switchDevice();
         String brand = GetValidInput.getString("Brand:", 15);
         String model = GetValidInput.getString("Modello:", 15);
         String description = GetValidInput.getString("Descrizione:", 20);
@@ -104,7 +103,7 @@ public class Operatore {
     }
 
     // aggiunge un device scegliendo soltanto tra le opzioni disponibili
-    private static String switchDevice(Scanner sc) {
+    private String switchDevice() {
         String scelta;
         do {
             System.out.println("Scegli che tipo di dispositivo aggiungere");
@@ -127,27 +126,19 @@ public class Operatore {
     }
 
     // ricerca per prezzo di acquisto
-    private void searchByPurchasePrice(ResearchMethods researchMethods, Scanner sc) {
-        if (warehouse.isEmpty()) {
-            System.out.println("Il magazzino e' vuoto!");
-            return;
-        }
+    private void searchByPurchasePrice() {
         int scelta = GetValidInput.getInteger("Inserisci il prezzo:");
         List<DeviceClasses> priceBuyCompatibili = warehouse.getByPurchasePrice(scelta);
         if (priceBuyCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            researchMethods.printDevices(priceBuyCompatibili, false);
+            researchMethods.printDevices(priceBuyCompatibili, false, true);
         }
     }
 
 
     // ricerca per prezzo medio del device
-    private void searchByAverageDevicePrice(ResearchMethods researchMethods, Scanner sc) {
-        if (warehouse.isEmpty()) {
-            System.out.println("Il magazzino e' vuoto!");
-            return;
-        }
+    private void searchByAverageDevicePrice() {
         String scelta = GetValidInput.getString("Inserisci il tipo di device di cui vuoi sapere il prezzo medio:", 20);
         double averagePrice = warehouse.getAverageDevicePrice(scelta);
         if (!Double.isNaN(averagePrice) && averagePrice != 0) {
@@ -158,7 +149,7 @@ public class Operatore {
     }
 
 
-    private void removeFromWarehouseById(ResearchMethods researchMethods, Scanner sc) {
+    private void removeFromWarehouseById() {
         try {
             if (warehouse.isEmpty()) {
                 System.out.println("Il magazzino e' vuoto!");
