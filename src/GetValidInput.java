@@ -1,3 +1,6 @@
+import UserAndOperatorEnums.MenuOptionsOperator;
+import UserAndOperatorEnums.MenuOptionsUser;
+
 import java.util.Scanner;
 
 public class GetValidInput {

@@ -1,5 +1,6 @@
+package UserAndOperatorEnums;
 
-enum MenuOptionsUser {
+public enum MenuOptionsUser {
     VISUALIZZA_TUTTI_PRODOTTI("Visualizza tutti i prodotti"),
     RICERCA_PER_TIPO_DISPOSITIVO("Ricerca per tipo di dispositivo"),
     RICERCA_PER_PRODUTTORE("Ricerca per produttore"),
