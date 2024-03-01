@@ -8,7 +8,7 @@ public class ResearchMethods {
     private boolean iva;
     private boolean includePurchasePrice;
 
-    public ResearchMethods(Warehouse warehouse, boolean iva, boolean incincludePurchasePrice) {
+    public ResearchMethods(Warehouse warehouse, boolean iva, boolean includePurchasePrice) {
         this.warehouse = warehouse;
         this.iva = iva;
         this.includePurchasePrice = includePurchasePrice;
