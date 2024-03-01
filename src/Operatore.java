@@ -18,7 +18,7 @@ public class Operatore {
 
     // menu con tutti i controlli dell'operatore
     public void operatorMenu() {
-        this.researchMethods = new ResearchMethods(warehouse);
+        this.researchMethods = new ResearchMethods(warehouse, false, true);
 
         MenuOptionsOperator sceltaUser;
         sc.nextLine();
@@ -38,25 +38,25 @@ public class Operatore {
 
             switch (sceltaUser) {
                 case VISUALIZZA_TUTTI_PRODOTTI:
-                    researchMethods.printDevices(warehouse.getDevices(), false, true);
+                    researchMethods.printDevices(warehouse.getDevices());
                     break;
                 case RICERCA_PER_TIPO_DISPOSITIVO:
-                    researchMethods.searchByType(false, true);
+                    researchMethods.searchByType();
                     break;
                 case RICERCA_PER_PRODUTTORE:
-                    researchMethods.searchByBrand(false, true);
+                    researchMethods.searchByBrand();
                     break;
                 case RICERCA_PER_MODELLO:
-                    researchMethods.searchByModel(false, true);
+                    researchMethods.searchByModel();
                     break;
                 case RICERCA_PER_PREZZO_DI_VENDITA:
-                    researchMethods.searchBySellPrice(false, true);
+                    researchMethods.searchBySellPrice();
                     break;
                 case RICERCA_PER_PREZZO_DI_ACQUISTO:
                     searchByPurchasePrice();
                     break;
                 case RICERCA_PER_RANGE_DI_ACQUISTO:
-                    researchMethods.searchByPriceRange(false, true);
+                    researchMethods.searchByPriceRange();
                     break;
                 case RICERCA_SPESA_MEDIA_DISPOSITIVO:
                     searchByAverageDevicePrice();
@@ -132,10 +132,9 @@ public class Operatore {
         if (priceBuyCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            researchMethods.printDevices(priceBuyCompatibili, false, true);
+            researchMethods.printDevices(priceBuyCompatibili);
         }
     }
-
 
     // ricerca per prezzo medio del device
     private void searchByAverageDevicePrice() {
@@ -147,7 +146,6 @@ public class Operatore {
             System.out.println("Errore: inserisci un device valido!");
         }
     }
-
 
     private void removeFromWarehouseById() {
         try {

@@ -17,8 +17,9 @@ public class User {
 
     public void userMenu() {
         MenuOptionsUser sceltaUser;
-        this.researchMethods = new ResearchMethods(warehouse);
+
         this.iva = getIvaUser();
+        this.researchMethods = new ResearchMethods(warehouse, iva, false);
 
         //Menu per scelta Utente
         sc.nextLine();
@@ -40,22 +41,22 @@ public class User {
             switch (sceltaUser) {
 
                 case VISUALIZZA_TUTTI_PRODOTTI:
-                    researchMethods.printDevices(warehouse.getDevices(), iva, false);
+                    researchMethods.printDevices(warehouse.getDevices());
                     break;
                 case RICERCA_PER_TIPO_DISPOSITIVO:
-                    researchMethods.searchByType(iva, false);
+                    researchMethods.searchByType();
                     break;
                 case RICERCA_PER_PRODUTTORE:
-                    researchMethods.searchByBrand(iva, false);
+                    researchMethods.searchByBrand();
                     break;
                 case RICERCA_PER_MODELLO:
-                    researchMethods.searchByModel(iva, false);
+                    researchMethods.searchByModel();
                     break;
                 case RICERCA_PER_PREZZO_DI_VENDITA:
-                    researchMethods.searchBySellPrice(iva, false);
+                    researchMethods.searchBySellPrice();
                     break;
                 case RICERCA_PER_RANGE_DI_VENDITA:
-                    researchMethods.searchByPriceRange(iva, false);
+                    researchMethods.searchByPriceRange();
                     break;
                 case AGGIUNGI_AL_CARRELLO:
                     addToCartById();
@@ -67,7 +68,7 @@ public class User {
                     calcAndPrintTotal();
                     break;
                 case VISUALIZZA_IL_CARRELLO:
-                    researchMethods.printDevices(cart.getDevices(), iva, false);
+                    researchMethods.printDevices(cart.getDevices());
                     break;
                 case ACQUISTA:
                     finalizeSaleMenu();
@@ -88,14 +89,14 @@ public class User {
     private void fromWarehouseToCart(long id) {
         cart.addDevice(warehouse.getDeviceById(id));
         warehouse.removeDeviceById(id);
-        researchMethods.printDevices(cart.getDevices(), iva, false);
+        researchMethods.printDevices(cart.getDevices());
     }
 
     //Metodo per aggiungere prodotti dal carrello al magazzino
     private void fromCartToWarehouse(long id) {
         warehouse.addDevice(cart.getDeviceById(id));
         cart.removeDeviceById(id);
-        researchMethods.printDevices(cart.getDevices(), iva, false);
+        researchMethods.printDevices(cart.getDevices());
     }
 
     //Metodo che finalizza l' acquisto
