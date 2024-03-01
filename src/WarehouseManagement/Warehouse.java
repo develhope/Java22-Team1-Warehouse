@@ -1,3 +1,5 @@
+package WarehouseManagement;
+
 import Devices.DeviceClasses;
 import Devices.Notebook;
 import Devices.Smartphone;

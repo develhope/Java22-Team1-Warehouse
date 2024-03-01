@@ -1,4 +1,8 @@
+package WarehouseManagement;
+
 import Devices.DeviceClasses;
+import Utils.GetValidInput;
+import WarehouseManagement.Warehouse;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -15,7 +19,7 @@ public class ResearchMethods {
     }
 
     // Stampa i device passati, cambia prezzi con iva se viene passata
-    void printDevices(List<DeviceClasses> devices) {
+    public void printDevices(List<DeviceClasses> devices) {
         if (devices.isEmpty()) {
             String message = !includePurchasePrice ? "Il carrello è vuoto." : "Il magazzino è vuoto.";
             System.out.println(message);
@@ -36,7 +40,7 @@ public class ResearchMethods {
         }
     }
 
-    void searchByType() {
+    public void searchByType() {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -52,7 +56,7 @@ public class ResearchMethods {
 
     // Cerca per brand, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    void searchByBrand() {
+    public void searchByBrand() {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -69,7 +73,7 @@ public class ResearchMethods {
 
     // Cerca per modello, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    void searchByModel() {
+    public void searchByModel() {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -85,7 +89,7 @@ public class ResearchMethods {
 
     // Cerca per prezzo di vendità, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    void searchBySellPrice() {
+    public void searchBySellPrice() {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;
@@ -101,7 +105,7 @@ public class ResearchMethods {
     }
 
     // ricerca per range del prezzo di vendita
-    void searchByPriceRange() {
+    public void searchByPriceRange() {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
             return;

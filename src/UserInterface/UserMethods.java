@@ -1,108 +1,47 @@
-import UserAndOperatorEnums.MenuOptionsUser;
+package UserInterface;
 
+
+import Devices.DeviceClasses;
+import WarehouseManagement.Cart;
+import WarehouseManagement.ResearchMethods;
+import WarehouseManagement.Warehouse;
+
+import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Scanner;
 
+public class UserMethods {
+    private static Warehouse warehouse;
+    private static Cart cart;
+    private static Scanner sc;
+    private static boolean iva;
 
-public class User {
-    private final Warehouse warehouse;
-    private final Cart cart;
-    private final Scanner sc;
-    private boolean iva;
-    private ResearchMethods researchMethods;
-
-    public User(Warehouse warehouse, Cart cart, Scanner sc) {
-        this.warehouse = warehouse;
-        this.cart = cart;
-        this.sc = sc;
+    public static void setIva(boolean iva) {
+        UserMethods.iva = iva;
     }
 
-
-    public void userMenu() {
-        MenuOptionsUser sceltaUser;
-
-        this.iva = getIvaUser();
-        this.researchMethods = new ResearchMethods(warehouse, iva, false);
-
-        //Menu per scelta Utente
-        sc.nextLine();
-        do {
-            System.out.println("Scegli un'opzione:");
-            for (int i = 0; i < MenuOptionsUser.values().length - 1; i++) {
-                System.out.println(MenuOptionsUser.values()[i].ordinal() + ") " + MenuOptionsUser.values()[i].getStringa() + ": ");
-            }
-
-            String input = sc.nextLine();
-
-            if (input.matches("\\d+")) {
-                sceltaUser = GetValidInput.getMenuOptionsByIndexUser(input);
-            } else {
-                sceltaUser = MenuOptionsUser.UNKNOWN;
-            }
-
-
-            switch (sceltaUser) {
-
-                case VISUALIZZA_TUTTI_PRODOTTI:
-                    researchMethods.printDevices(warehouse.getDevices());
-                    break;
-                case RICERCA_PER_TIPO_DISPOSITIVO:
-                    researchMethods.searchByType();
-                    break;
-                case RICERCA_PER_PRODUTTORE:
-                    researchMethods.searchByBrand();
-                    break;
-                case RICERCA_PER_MODELLO:
-                    researchMethods.searchByModel();
-                    break;
-                case RICERCA_PER_PREZZO_DI_VENDITA:
-                    researchMethods.searchBySellPrice();
-                    break;
-                case RICERCA_PER_RANGE_DI_VENDITA:
-                    researchMethods.searchByPriceRange();
-                    break;
-                case AGGIUNGI_AL_CARRELLO:
-                    addToCartById();
-                    break;
-                case RIMUOVI_DAL_CARRELLO:
-                    removeFromCartById();
-                    break;
-                case CALCOLARE_IL_TOTALE:
-                    calcAndPrintTotal();
-                    break;
-                case VISUALIZZA_IL_CARRELLO:
-                    researchMethods.printDevices(cart.getDevices());
-                    break;
-                case ACQUISTA:
-                    finalizeSaleMenu();
-                    break;
-                case FINE:
-                    System.out.println("Arrivederci!");
-                    break;
-                case UNKNOWN:
-                    System.out.println("Opzione non valida. Riprova.");
-                    break;
-
-            }
-
-        } while (sceltaUser != MenuOptionsUser.FINE);
+    public UserMethods(Warehouse warehouse, Cart cart, Scanner sc) {
+        UserMethods.warehouse = warehouse;
+        UserMethods.cart = cart;
+        UserMethods.sc = sc;
     }
 
     //Metodo per aggiungere prodotti dal magazzino al carrello
-    private void fromWarehouseToCart(long id) {
+    private static void fromWarehouseToCart(long id) {
         cart.addDevice(warehouse.getDeviceById(id));
         warehouse.removeDeviceById(id);
-        researchMethods.printDevices(cart.getDevices());
+        printDevices(cart.getDevices());
     }
 
     //Metodo per aggiungere prodotti dal carrello al magazzino
-    private void fromCartToWarehouse(long id) {
+    private static void fromCartToWarehouse(long id) {
         warehouse.addDevice(cart.getDeviceById(id));
         cart.removeDeviceById(id);
-        researchMethods.printDevices(cart.getDevices());
+        printDevices(cart.getDevices());
     }
 
     //Metodo che finalizza l' acquisto
-    private String finalizeSale() {
+    private static String finalizeSale() {
         double finalPrice;
         if (iva) {
             finalPrice = cart.getFinalPrice() * 1.22;
@@ -113,7 +52,7 @@ public class User {
         return "Questo è il tuo prezzo finale: " + finalPrice;
     }
 
-    private void finalizeSaleMenu() {
+    static void finalizeSaleMenu() {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
             return;
@@ -134,7 +73,7 @@ public class User {
         }
     }
 
-    private void calcAndPrintTotal() {
+    static void calcAndPrintTotal() {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
             return;
@@ -148,7 +87,7 @@ public class User {
     }
 
     //Metodo che gestisce se l' utente e' un privato o possiede una partita iva
-    private boolean getIvaUser() {
+    static boolean getIvaUser() {
         while (true) {
             System.out.println("Seleziona il tipo di utente:");
             System.out.println("1) Utente SENZA partita IVA.");
@@ -172,7 +111,7 @@ public class User {
     }
 
     //Metodo per aggiungere i prodotti al carrello tramite un ID
-    private void addToCartById() {
+    static void addToCartById() {
         System.out.println("Digita un id per aggiungere al carrello:");
         try {
             long sceltaId = Long.parseLong(sc.next());
@@ -190,7 +129,7 @@ public class User {
     }
 
     //Metodo per rimuovere i prodotti dal carrello tramite ID
-    private void removeFromCartById() {
+    static void removeFromCartById() {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
             return;
@@ -207,6 +146,21 @@ public class User {
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
             sc.nextLine();
+        }
+    }
+
+    public static void printDevices(List<DeviceClasses> devices) {
+        DecimalFormat df = new DecimalFormat("#.##");
+        for (DeviceClasses device : devices) {
+            double price = iva ? device.getPriceWithIVA() : device.getSale();
+            System.out.println("Id: " + device.getId() +
+                    ", Dispositivo: " + device.getDevice() +
+                    ", Brand: " + device.getBrand() +
+                    ", Modello: " + device.getModel() +
+                    ", Descrizione: " + device.getDescription() +
+                    ", Display: " + df.format(device.getDisplay()) +
+                    ", Archiviazione: " + df.format(device.getStorage()) +
+                    ", Prezzo di vendità: " + df.format(price)+ "€");
         }
     }
 }

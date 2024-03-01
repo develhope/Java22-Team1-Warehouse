@@ -1,95 +1,32 @@
-import Devices.DeviceClasses;
-import UserAndOperatorEnums.MenuOptionsOperator;
+package UserInterface;
 
+import Devices.DeviceClasses;
+import Utils.GetValidInput;
+import WarehouseManagement.Warehouse;
+
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.InputMismatchException;
 import java.util.Random;
-import java.util.Scanner;
+
+import static Utils.GetValidInput.sc;
 
 
-public class Operatore {
-    private final Warehouse warehouse;
-    private final Scanner sc;
-    private ResearchMethods researchMethods;
-
-    public Operatore(Warehouse warehouse, Scanner sc) {
-        this.warehouse = warehouse;
-        this.sc = sc;
-    }
-
-    // menu con tutti i controlli dell'operatore
-    public void operatorMenu() {
-        this.researchMethods = new ResearchMethods(warehouse, false, true);
-
-        MenuOptionsOperator sceltaUser;
-        sc.nextLine();
-
-        do {
-            System.out.println("Scegli un'opzione:");
-            for (int i = 0; i < MenuOptionsOperator.values().length - 1; i++) {
-                System.out.println(MenuOptionsOperator.values()[i].ordinal() + ") " + MenuOptionsOperator.values()[i].getStringa() + ": ");
-            }
-            String input = sc.nextLine();
-
-            if (input.matches("\\d+")) {
-                sceltaUser = GetValidInput.getMenuOptionsByIndex(input);
-            } else {
-                sceltaUser = MenuOptionsOperator.UNKNOWN;
-            }
-
-            switch (sceltaUser) {
-                case VISUALIZZA_TUTTI_PRODOTTI:
-                    researchMethods.printDevices(warehouse.getDevices());
-                    break;
-                case RICERCA_PER_TIPO_DISPOSITIVO:
-                    researchMethods.searchByType();
-                    break;
-                case RICERCA_PER_PRODUTTORE:
-                    researchMethods.searchByBrand();
-                    break;
-                case RICERCA_PER_MODELLO:
-                    researchMethods.searchByModel();
-                    break;
-                case RICERCA_PER_PREZZO_DI_VENDITA:
-                    researchMethods.searchBySellPrice();
-                    break;
-                case RICERCA_PER_PREZZO_DI_ACQUISTO:
-                    searchByPurchasePrice();
-                    break;
-                case RICERCA_PER_RANGE_DI_ACQUISTO:
-                    researchMethods.searchByPriceRange();
-                    break;
-                case RICERCA_SPESA_MEDIA_DISPOSITIVO:
-                    searchByAverageDevicePrice();
-                    break;
-                case AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO:
-                    DeviceClasses newDevice = addNewDevice();
-                    setIdAddDeviceInWarehouse(newDevice);
-                    break;
-                case RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO:
-                    removeFromWarehouseById();
-                    break;
-                case FINE:
-                    System.out.println("Arrivederci!");
-                    break;
-                case UNKNOWN:
-                    System.out.println("Opzione non valida. Riprova.");
-                    break;
-
-            }
-
-        } while (sceltaUser != MenuOptionsOperator.FINE);
+public class OperatorMethods {
+    private static Warehouse warehouse;
+    public static void setWarehouse(Warehouse warehouse) {
+        OperatorMethods.warehouse = warehouse;
     }
 
     // set ID del device utilizzando un Random e aggiunge il device al magazzino
-    private void setIdAddDeviceInWarehouse(DeviceClasses device) {
+    static void setIdAddDeviceInWarehouse(DeviceClasses device) {
         Random rand = new Random();
         warehouse.addDevice(device);
         device.setId(rand.nextLong(999999999));
     }
 
     // aggiunge un nuovo device al magazzino
-    private DeviceClasses addNewDevice() {
+    static DeviceClasses addNewDevice() {
 
         String device = switchDevice();
         String brand = GetValidInput.getString("Brand:", 15);
@@ -104,7 +41,7 @@ public class Operatore {
     }
 
     // aggiunge un device scegliendo soltanto tra le opzioni disponibili
-    private String switchDevice() {
+    private static String switchDevice() {
         String scelta;
         do {
             System.out.println("Scegli che tipo di dispositivo aggiungere");
@@ -127,18 +64,18 @@ public class Operatore {
     }
 
     // ricerca per prezzo di acquisto
-    private void searchByPurchasePrice() {
+    static void searchByPurchasePrice() {
         int scelta = GetValidInput.getInteger("Inserisci il prezzo:");
         List<DeviceClasses> priceBuyCompatibili = warehouse.getByPurchasePrice(scelta);
         if (priceBuyCompatibili.isEmpty()) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
-            researchMethods.printDevices(priceBuyCompatibili);
+            printDevices(priceBuyCompatibili);
         }
     }
 
     // ricerca per prezzo medio del device
-    private void searchByAverageDevicePrice() {
+    static void searchByAverageDevicePrice() {
         String scelta = GetValidInput.getString("Inserisci il tipo di device di cui vuoi sapere il prezzo medio:", 20);
         double averagePrice = warehouse.getAverageDevicePrice(scelta);
         if (!Double.isNaN(averagePrice) && averagePrice != 0) {
@@ -148,7 +85,7 @@ public class Operatore {
         }
     }
 
-    private void removeFromWarehouseById() {
+    static void removeFromWarehouseById() {
         try {
             if (warehouse.isEmpty()) {
                 System.out.println("Il magazzino e' vuoto!");
@@ -166,6 +103,20 @@ public class Operatore {
             warehouse.removeDeviceById(sceltaId2);
         } catch (InputMismatchException e) {
             System.out.println("Input non valido, assicurati di inserire un ID corretto");
+        }
+    }
+
+    public static void printDevices(List<DeviceClasses> devices) {
+        DecimalFormat df = new DecimalFormat("#.##");
+        for (DeviceClasses device : devices) {
+            System.out.println("Id: " + device.getId() +
+                    ", Dispositivo: " + device.getDevice() +
+                    ", Brand: " + device.getBrand() +
+                    ", Modello: " + device.getModel() +
+                    ", Descrizione: " + device.getDescription() +
+                    ", Display: " + df.format(device.getDisplay()) +
+                    ", Archiviazione: " + df.format(device.getStorage()) +
+                    ", Prezzo di vendità: " + df.format(device.getSale())+ "€" + df.format(device.getPurchase()) + "€");
         }
     }
 }

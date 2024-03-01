@@ -1,3 +1,9 @@
+import UserInterface.OperatorMenu;
+import UserInterface.UserMenu;
+import UserInterface.UserMethods;
+import WarehouseManagement.Cart;
+import WarehouseManagement.Warehouse;
+
 import java.util.Scanner;
 
 public class Main {
@@ -25,13 +31,14 @@ public class Main {
             case "1":
                 warehouse.fillWarehouse();
                 Cart cart = new Cart();
-                User user = new User(warehouse, cart, sc);
-                user.userMenu();
+                UserMenu user = new UserMenu(warehouse, cart, sc);
+                user.menu();
                 break;
             case "2":
                 warehouse.fillWarehouse();
-                Operatore operator = new Operatore(warehouse, sc);
-                operator.operatorMenu();
+                OperatorMenu operator = new OperatorMenu(warehouse, sc);
+                operator.menu();
+
                 break;
             case "0":
                 break;

@@ -1,10 +1,12 @@
+package Utils;
+
 import UserAndOperatorEnums.MenuOptionsOperator;
 import UserAndOperatorEnums.MenuOptionsUser;
 
 import java.util.Scanner;
 
 public class GetValidInput {
-    private static Scanner sc = new Scanner(System.in);
+    public static Scanner sc = new Scanner(System.in);
 
     public static String getString(String prompt, int maxLength) {
         String input;
@@ -73,7 +75,7 @@ public class GetValidInput {
 
 
     // Enum inputs
-    static <T extends Enum<T>> MenuOptionsOperator getMenuOptionsByIndex(String input) {
+    public static <T extends Enum<T>> MenuOptionsOperator getMenuOptionsByIndex(String input) {
         int index = Integer.parseInt(input);
         if (index >= 0 && index < MenuOptionsOperator.class.getEnumConstants().length - 1) {
             return MenuOptionsOperator.class.getEnumConstants()[index];
@@ -82,7 +84,7 @@ public class GetValidInput {
         }
     }
 
-    static <T extends Enum<T>> MenuOptionsUser getMenuOptionsByIndexUser(String input) {
+    public static <T extends Enum<T>> MenuOptionsUser getMenuOptionsByIndexUser(String input) {
         int index = Integer.parseInt(input);
         if (index >= 0 && index < MenuOptionsUser.class.getEnumConstants().length - 1) {
             return MenuOptionsUser.class.getEnumConstants()[index];
