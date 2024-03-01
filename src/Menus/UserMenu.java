@@ -1,9 +1,10 @@
-package UserInterface;
+package Menus;
 
+import MenusMethods.ResearchMethods;
+import MenusMethods.UserMethods;
 import UserAndOperatorEnums.MenuOptionsUser;
 import Utils.GetValidInput;
 import WarehouseManagement.Cart;
-import WarehouseManagement.ResearchMethods;
 import WarehouseManagement.Warehouse;
 
 import java.util.Scanner;
@@ -21,7 +22,7 @@ public class UserMenu {
     public void menu() {
         MenuOptionsUser sceltaUser;
         boolean iva = UserMethods.getIvaUser();
-        UserMethods.setIva(iva);
+        UserMethods userMethods = new UserMethods(warehouse, cart, iva);
         ResearchMethods researchMethods = new ResearchMethods(warehouse, iva, false);
 
 
@@ -44,7 +45,7 @@ public class UserMenu {
             switch (sceltaUser) {
 
                 case VISUALIZZA_TUTTI_PRODOTTI:
-                    UserMethods.printDevices(warehouse.getDevices());
+                    userMethods.printDevices(warehouse.getDevices());
                     break;
                 case RICERCA_PER_TIPO_DISPOSITIVO:
                     researchMethods.searchByType();
@@ -62,19 +63,19 @@ public class UserMenu {
                     researchMethods.searchByPriceRange();
                     break;
                 case AGGIUNGI_AL_CARRELLO:
-                    UserMethods.addToCartById();
+                    userMethods.addToCartById();
                     break;
                 case RIMUOVI_DAL_CARRELLO:
-                    UserMethods.removeFromCartById();
+                    userMethods.removeFromCartById();
                     break;
                 case CALCOLARE_IL_TOTALE:
-                    UserMethods.calcAndPrintTotal();
+                    userMethods.calcAndPrintTotal();
                     break;
                 case VISUALIZZA_IL_CARRELLO:
-                    researchMethods.printDevices(cart.getDevices());
+                    userMethods.printDevices(cart.getDevices());
                     break;
                 case ACQUISTA:
-                    UserMethods.finalizeSaleMenu();
+                    userMethods.finalizeSaleMenu();
                     break;
                 case FINE:
                     System.out.println("Arrivederci!");

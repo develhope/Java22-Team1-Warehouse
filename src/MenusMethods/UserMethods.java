@@ -1,47 +1,42 @@
-package UserInterface;
-
+package MenusMethods;
 
 import Devices.DeviceClasses;
 import WarehouseManagement.Cart;
-import WarehouseManagement.ResearchMethods;
 import WarehouseManagement.Warehouse;
+import static Utils.GetValidInput.sc;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Scanner;
 
 public class UserMethods {
-    private static Warehouse warehouse;
-    private static Cart cart;
-    private static Scanner sc;
-    private static boolean iva;
+    private final Warehouse warehouse;
+    private final Cart cart;
+    private final boolean iva;
 
-    public static void setIva(boolean iva) {
-        UserMethods.iva = iva;
-    }
 
-    public UserMethods(Warehouse warehouse, Cart cart, Scanner sc) {
-        UserMethods.warehouse = warehouse;
-        UserMethods.cart = cart;
-        UserMethods.sc = sc;
+
+    public UserMethods(Warehouse warehouse, Cart cart, boolean iva) {
+        this.warehouse = warehouse;
+        this.cart = cart;
+        this.iva = iva;
     }
 
     //Metodo per aggiungere prodotti dal magazzino al carrello
-    private static void fromWarehouseToCart(long id) {
+    private  void fromWarehouseToCart(long id) {
         cart.addDevice(warehouse.getDeviceById(id));
         warehouse.removeDeviceById(id);
         printDevices(cart.getDevices());
     }
 
     //Metodo per aggiungere prodotti dal carrello al magazzino
-    private static void fromCartToWarehouse(long id) {
+    private  void fromCartToWarehouse(long id) {
         warehouse.addDevice(cart.getDeviceById(id));
         cart.removeDeviceById(id);
         printDevices(cart.getDevices());
     }
 
     //Metodo che finalizza l' acquisto
-    private static String finalizeSale() {
+    private  String finalizeSale() {
         double finalPrice;
         if (iva) {
             finalPrice = cart.getFinalPrice() * 1.22;
@@ -52,7 +47,7 @@ public class UserMethods {
         return "Questo è il tuo prezzo finale: " + finalPrice;
     }
 
-    static void finalizeSaleMenu() {
+     public void finalizeSaleMenu() {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
             return;
@@ -73,7 +68,7 @@ public class UserMethods {
         }
     }
 
-    static void calcAndPrintTotal() {
+     public void calcAndPrintTotal() {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
             return;
@@ -87,7 +82,7 @@ public class UserMethods {
     }
 
     //Metodo che gestisce se l' utente e' un privato o possiede una partita iva
-    static boolean getIvaUser() {
+    public static boolean getIvaUser() {
         while (true) {
             System.out.println("Seleziona il tipo di utente:");
             System.out.println("1) Utente SENZA partita IVA.");
@@ -111,7 +106,7 @@ public class UserMethods {
     }
 
     //Metodo per aggiungere i prodotti al carrello tramite un ID
-    static void addToCartById() {
+    public void addToCartById() {
         System.out.println("Digita un id per aggiungere al carrello:");
         try {
             long sceltaId = Long.parseLong(sc.next());
@@ -129,7 +124,7 @@ public class UserMethods {
     }
 
     //Metodo per rimuovere i prodotti dal carrello tramite ID
-    static void removeFromCartById() {
+    public void removeFromCartById() {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
             return;
@@ -149,7 +144,11 @@ public class UserMethods {
         }
     }
 
-    public static void printDevices(List<DeviceClasses> devices) {
+    public  void printDevices(List<DeviceClasses> devices) {
+        if(devices.isEmpty()) {
+            System.out.println("Il carrello e' vuoto.");
+            return;
+        }
         DecimalFormat df = new DecimalFormat("#.##");
         for (DeviceClasses device : devices) {
             double price = iva ? device.getPriceWithIVA() : device.getSale();

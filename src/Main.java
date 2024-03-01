@@ -1,6 +1,5 @@
-import UserInterface.OperatorMenu;
-import UserInterface.UserMenu;
-import UserInterface.UserMethods;
+import Menus.OperatorMenu;
+import Menus.UserMenu;
 import WarehouseManagement.Cart;
 import WarehouseManagement.Warehouse;
 

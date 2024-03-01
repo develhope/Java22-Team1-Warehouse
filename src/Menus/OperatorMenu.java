@@ -1,9 +1,10 @@
-package UserInterface;
+package Menus;
 
 import Devices.DeviceClasses;
+import MenusMethods.OperatorMethods;
+import MenusMethods.ResearchMethods;
 import UserAndOperatorEnums.MenuOptionsOperator;
 import Utils.GetValidInput;
-import WarehouseManagement.ResearchMethods;
 import WarehouseManagement.Warehouse;
 
 import java.util.Scanner;
@@ -11,16 +12,15 @@ import java.util.Scanner;
 public class OperatorMenu {
     private final Warehouse warehouse;
     private final Scanner sc;
-    private final ResearchMethods researchMethods;
 
     public OperatorMenu(Warehouse warehouse, Scanner sc) {
         this.warehouse = warehouse;
         this.sc = sc;
-        this.researchMethods = new ResearchMethods(warehouse, false, false);
     }
 
     public void menu() {
-        OperatorMethods.setWarehouse(warehouse);
+        OperatorMethods operatorMethods = new OperatorMethods(warehouse);
+        ResearchMethods researchMethods = new ResearchMethods(warehouse, false, false);
         MenuOptionsOperator sceltaUser;
         sc.nextLine();
 
@@ -39,7 +39,7 @@ public class OperatorMenu {
 
             switch (sceltaUser) {
                 case VISUALIZZA_TUTTI_PRODOTTI:
-                    researchMethods.printDevices(warehouse.getDevices());
+                    operatorMethods.printDevices(warehouse.getDevices());
                     break;
                 case RICERCA_PER_TIPO_DISPOSITIVO:
                     researchMethods.searchByType();
@@ -54,20 +54,20 @@ public class OperatorMenu {
                     researchMethods.searchBySellPrice();
                     break;
                 case RICERCA_PER_PREZZO_DI_ACQUISTO:
-                    OperatorMethods.searchByPurchasePrice();
+                    operatorMethods.searchByPurchasePrice();
                     break;
                 case RICERCA_PER_RANGE_DI_ACQUISTO:
                     researchMethods.searchByPriceRange();
                     break;
                 case RICERCA_SPESA_MEDIA_DISPOSITIVO:
-                    OperatorMethods.searchByAverageDevicePrice();
+                    operatorMethods.searchByAverageDevicePrice();
                     break;
                 case AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO:
-                    DeviceClasses newDevice = OperatorMethods.addNewDevice();
-                    OperatorMethods.setIdAddDeviceInWarehouse(newDevice);
+                    DeviceClasses newDevice = operatorMethods.addNewDevice();
+                    operatorMethods.setIdAddDeviceInWarehouse(newDevice);
                     break;
                 case RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO:
-                    OperatorMethods.removeFromWarehouseById();
+                    operatorMethods.removeFromWarehouseById();
                     break;
                 case FINE:
                     System.out.println("Arrivederci!");

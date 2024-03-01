@@ -1,4 +1,4 @@
-package UserInterface;
+package MenusMethods;
 
 import Devices.DeviceClasses;
 import Utils.GetValidInput;
@@ -13,20 +13,21 @@ import static Utils.GetValidInput.sc;
 
 
 public class OperatorMethods {
-    private static Warehouse warehouse;
-    public static void setWarehouse(Warehouse warehouse) {
-        OperatorMethods.warehouse = warehouse;
-    }
+    private final Warehouse warehouse;
+
+   public OperatorMethods(Warehouse warehouse) {
+       this.warehouse = warehouse;
+   }
 
     // set ID del device utilizzando un Random e aggiunge il device al magazzino
-    static void setIdAddDeviceInWarehouse(DeviceClasses device) {
+    public void setIdAddDeviceInWarehouse(DeviceClasses device) {
         Random rand = new Random();
         warehouse.addDevice(device);
         device.setId(rand.nextLong(999999999));
     }
 
     // aggiunge un nuovo device al magazzino
-    static DeviceClasses addNewDevice() {
+    public DeviceClasses addNewDevice() {
 
         String device = switchDevice();
         String brand = GetValidInput.getString("Brand:", 15);
@@ -41,7 +42,7 @@ public class OperatorMethods {
     }
 
     // aggiunge un device scegliendo soltanto tra le opzioni disponibili
-    private static String switchDevice() {
+    public String switchDevice() {
         String scelta;
         do {
             System.out.println("Scegli che tipo di dispositivo aggiungere");
@@ -64,7 +65,7 @@ public class OperatorMethods {
     }
 
     // ricerca per prezzo di acquisto
-    static void searchByPurchasePrice() {
+    public void searchByPurchasePrice() {
         int scelta = GetValidInput.getInteger("Inserisci il prezzo:");
         List<DeviceClasses> priceBuyCompatibili = warehouse.getByPurchasePrice(scelta);
         if (priceBuyCompatibili.isEmpty()) {
@@ -75,7 +76,7 @@ public class OperatorMethods {
     }
 
     // ricerca per prezzo medio del device
-    static void searchByAverageDevicePrice() {
+    public void searchByAverageDevicePrice() {
         String scelta = GetValidInput.getString("Inserisci il tipo di device di cui vuoi sapere il prezzo medio:", 20);
         double averagePrice = warehouse.getAverageDevicePrice(scelta);
         if (!Double.isNaN(averagePrice) && averagePrice != 0) {
@@ -85,7 +86,7 @@ public class OperatorMethods {
         }
     }
 
-    static void removeFromWarehouseById() {
+    public void removeFromWarehouseById() {
         try {
             if (warehouse.isEmpty()) {
                 System.out.println("Il magazzino e' vuoto!");
@@ -106,7 +107,7 @@ public class OperatorMethods {
         }
     }
 
-    public static void printDevices(List<DeviceClasses> devices) {
+    public void printDevices(List<DeviceClasses> devices) {
         DecimalFormat df = new DecimalFormat("#.##");
         for (DeviceClasses device : devices) {
             System.out.println("Id: " + device.getId() +
@@ -116,7 +117,7 @@ public class OperatorMethods {
                     ", Descrizione: " + device.getDescription() +
                     ", Display: " + df.format(device.getDisplay()) +
                     ", Archiviazione: " + df.format(device.getStorage()) +
-                    ", Prezzo di vendità: " + df.format(device.getSale())+ "€" + df.format(device.getPurchase()) + "€");
+                    ", Prezzo di vendità: " + df.format(device.getSale()) + "€" + df.format(device.getPurchase()) + "€");
         }
     }
 }

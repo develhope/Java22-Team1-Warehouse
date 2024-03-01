@@ -1,4 +1,4 @@
-package WarehouseManagement;
+package MenusMethods;
 
 import Devices.DeviceClasses;
 import Utils.GetValidInput;
@@ -9,8 +9,8 @@ import java.util.List;
 
 public class ResearchMethods {
     private final Warehouse warehouse;
-    private boolean iva;
-    private boolean includePurchasePrice;
+    private final boolean iva;
+    private final boolean includePurchasePrice;
 
     public ResearchMethods(Warehouse warehouse, boolean iva, boolean includePurchasePrice) {
         this.warehouse = warehouse;
