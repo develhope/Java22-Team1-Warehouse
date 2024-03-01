@@ -15,10 +15,10 @@ public class OperatorMethods {
     private final Warehouse warehouse;
     private final Scanner sc;
 
-   public OperatorMethods(Warehouse warehouse, Scanner sc) {
-       this.sc = sc;
-       this.warehouse = warehouse;
-   }
+    public OperatorMethods(Warehouse warehouse, Scanner sc) {
+        this.sc = sc;
+        this.warehouse = warehouse;
+    }
 
     // set ID del device utilizzando un Random e aggiunge il device al magazzino
     public void setIdAddDeviceInWarehouse(DeviceClasses device) {

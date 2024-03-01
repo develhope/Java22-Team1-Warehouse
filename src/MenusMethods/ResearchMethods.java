@@ -27,7 +27,7 @@ public class ResearchMethods {
         }
         DecimalFormat df = new DecimalFormat("#.##");
         for (DeviceClasses device : devices) {
-            String purchasePrice = includePurchasePrice ? ", Prezzo di acquisto: " + df.format(device.getPurchase()) : "";
+            String purchasePrice = includePurchasePrice ? ", Prezzo di acquisto: " + df.format(device.getPurchase()) + "€" : "";
             double price = iva ? device.getPriceWithIVA() : device.getSale();
             System.out.println("Id: " + device.getId() +
                     ", Dispositivo: " + device.getDevice() +
@@ -36,7 +36,7 @@ public class ResearchMethods {
                     ", Descrizione: " + device.getDescription() +
                     ", Display: " + df.format(device.getDisplay()) +
                     ", Archiviazione: " + df.format(device.getStorage()) +
-                    ", Prezzo di vendità: " + df.format(price)+ "€" + purchasePrice + "€");
+                    ", Prezzo di vendità: " + df.format(price) + "€" + purchasePrice);
         }
     }
 
