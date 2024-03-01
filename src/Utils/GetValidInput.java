@@ -6,7 +6,7 @@ import UserAndOperatorEnums.MenuOptionsUser;
 import java.util.Scanner;
 
 public class GetValidInput {
-    public static Scanner sc = new Scanner(System.in);
+    private static Scanner sc = new Scanner(System.in);
 
     public static String getString(String prompt, int maxLength) {
         String input;
@@ -38,7 +38,7 @@ public class GetValidInput {
         } while (true);
     }
 
-    public static Long getLong(String prompt) {
+    public static long getLong(String prompt) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -50,10 +50,8 @@ public class GetValidInput {
                 }
             } else {
                 System.out.println("Input non valido. Inserisci un numero valido.");
-                break;
             }
         } while (true);
-        return null;
     }
 
     // Prende un input integer e lo valida prima di ritornarlo

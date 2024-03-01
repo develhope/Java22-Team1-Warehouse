@@ -19,7 +19,7 @@ public class OperatorMenu {
     }
 
     public void menu() {
-        OperatorMethods operatorMethods = new OperatorMethods(warehouse);
+        OperatorMethods operatorMethods = new OperatorMethods(warehouse, sc);
         ResearchMethods researchMethods = new ResearchMethods(warehouse, false, false);
         MenuOptionsOperator sceltaUser;
         sc.nextLine();

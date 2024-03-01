@@ -5,17 +5,18 @@ import Utils.GetValidInput;
 import WarehouseManagement.Warehouse;
 
 import java.text.DecimalFormat;
-import java.util.List;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Random;
-
-import static Utils.GetValidInput.sc;
+import java.util.Scanner;
 
 
 public class OperatorMethods {
     private final Warehouse warehouse;
+    private final Scanner sc;
 
-   public OperatorMethods(Warehouse warehouse) {
+   public OperatorMethods(Warehouse warehouse, Scanner sc) {
+       this.sc = sc;
        this.warehouse = warehouse;
    }
 

@@ -11,7 +11,7 @@ public enum MenuOptionsUser {
     RIMUOVI_DAL_CARRELLO("Rimuovi dal carrello"),
     CALCOLARE_IL_TOTALE("Calcola il totale"),
     VISUALIZZA_IL_CARRELLO("Visualizza il carrello"),
-    ACQUISTA("Acquista un prodotto"),
+    ACQUISTA("Acquista"),
     FINE("Fine"),
     UNKNOWN("");
 

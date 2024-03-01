@@ -19,10 +19,11 @@ public class UserMenu {
         this.cart = cart;
         this.sc = sc;
     }
+
     public void menu() {
         MenuOptionsUser sceltaUser;
         boolean iva = UserMethods.getIvaUser();
-        UserMethods userMethods = new UserMethods(warehouse, cart, iva);
+        UserMethods userMethods = new UserMethods(warehouse, cart, iva, sc);
         ResearchMethods researchMethods = new ResearchMethods(warehouse, iva, false);
 
 
