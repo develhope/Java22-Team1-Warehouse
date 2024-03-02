@@ -35,14 +35,14 @@ public class Warehouse {
     }
 
     // rimuovere il dispositivo tramite id
-    public void removeDeviceById(long id) {
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getId() == id) {
-                devices.remove(i);
-                break;
+        public void removeDeviceById(long id) {
+            for (int i = 0; i < devices.size(); i++) {
+                if (devices.get(i).getId() == id) {
+                    devices.remove(i);
+                    break;
+                }
             }
         }
-    }
 
     // Controlla se l'id esiste
     public boolean containsDeviceById(long id) {

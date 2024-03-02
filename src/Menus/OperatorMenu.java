@@ -21,6 +21,7 @@ public class OperatorMenu {
     public void menu() {
         OperatorMethods operatorMethods = new OperatorMethods(warehouse, sc);
         ResearchMethods researchMethods = new ResearchMethods(warehouse, false, false);
+        GetValidInput getValidInput = new GetValidInput();
         MenuOptionsOperator sceltaUser;
         sc.nextLine();
 
@@ -32,7 +33,7 @@ public class OperatorMenu {
             String input = sc.nextLine();
 
             if (input.matches("\\d+")) {
-                sceltaUser = GetValidInput.getMenuOptionsByIndex(input);
+                sceltaUser = getValidInput.getMenuOptionsByIndex(input);
             } else {
                 sceltaUser = MenuOptionsOperator.UNKNOWN;
             }
@@ -54,13 +55,13 @@ public class OperatorMenu {
                     researchMethods.searchBySellPrice();
                     break;
                 case RICERCA_PER_PREZZO_DI_ACQUISTO:
-                    operatorMethods.searchByPurchasePrice();
+                    operatorMethods.printDevices(operatorMethods.searchByPurchasePrice());
                     break;
                 case RICERCA_PER_RANGE_DI_ACQUISTO:
                     researchMethods.searchByPriceRange();
                     break;
                 case RICERCA_SPESA_MEDIA_DISPOSITIVO:
-                    operatorMethods.searchByAverageDevicePrice();
+                    System.out.println(operatorMethods.searchByAverageDevicePrice());
                     break;
                 case AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO:
                     DeviceClasses newDevice = operatorMethods.addNewDevice();
