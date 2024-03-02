@@ -14,14 +14,14 @@ public enum MenuOptionsOperator {
     FINE("Fine"),
     UNKNOWN("");
 
-    private String stringa;
+    private String string;
 
     MenuOptionsOperator(String s) {
-        this.stringa = s;
+        this.string = s;
     }
 
     public String getStringa() {
-        return stringa;
+        return string;
     }
 }
 

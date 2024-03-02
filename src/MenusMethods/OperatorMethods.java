@@ -44,20 +44,19 @@ public class OperatorMethods {
 
     // aggiunge un device scegliendo soltanto tra le opzioni disponibili
     public String switchDevice() {
-        String scelta;
+        int scelta;
         do {
-            System.out.println("Scegli che tipo di dispositivo aggiungere");
-            System.out.println("1) Smartphone");
-            System.out.println("2) Tablet");
-            System.out.println("3) Notebook");
-            scelta = sc.nextLine();
+            scelta = GetValidInput.getInteger("Scegli che tipo di dispositivo aggiungere\n" +
+                    "1) Smartphone\n" +
+                    "2) Tablet\n" +
+                    "3) Notebook");
 
             switch (scelta) {
-                case "1":
+                case 1:
                     return "Smartphone";
-                case "2":
+                case 2:
                     return "Tablet";
-                case "3":
+                case 3:
                     return "Notebook";
                 default:
                     System.out.println("Scelta non valida");
@@ -93,10 +92,7 @@ public class OperatorMethods {
                 System.out.println("Il magazzino e' vuoto!");
                 return;
             }
-            Long sceltaId2 = GetValidInput.getLong("Digita un id per rimuovere al magazzino:");
-            if (sceltaId2 == null) {
-                return;
-            }
+            long sceltaId2 = GetValidInput.getLong("Digita un id per rimuovere al magazzino:");
 
             if (!warehouse.containsDeviceById(sceltaId2)) {
                 System.out.println("Non è stato trovato alcun dispositivo con questo ID");
