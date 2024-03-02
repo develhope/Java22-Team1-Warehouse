@@ -1,3 +1,8 @@
+import Menus.OperatorMenu;
+import Menus.UserMenu;
+import WarehouseManagement.Cart;
+import WarehouseManagement.Warehouse;
+
 import java.util.Scanner;
 
 public class Main {
@@ -23,13 +28,16 @@ public class Main {
         }
         switch (scelta) {
             case "1":
+                warehouse.fillWarehouse();
                 Cart cart = new Cart();
-                User user = new User(warehouse, cart, sc);
-                user.userMenu();
+                UserMenu user = new UserMenu(warehouse, cart, sc);
+                user.menu();
                 break;
             case "2":
-                Operatore operator = new Operatore(warehouse, sc);
-                operator.operatorMenu();
+                warehouse.fillWarehouse();
+                OperatorMenu operator = new OperatorMenu(warehouse, sc);
+                operator.menu();
+
                 break;
             case "0":
                 break;

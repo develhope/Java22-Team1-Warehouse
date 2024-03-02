@@ -1,3 +1,5 @@
+package WarehouseManagement;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +8,7 @@ import Devices.DeviceClasses;
 
 public class Cart {
 
-    private List<DeviceClasses> devices = new ArrayList<>();
+    private final List<DeviceClasses> devices;
 
     public Cart() {
         this.devices = new ArrayList<>();
@@ -52,30 +54,8 @@ public class Cart {
         return devices.isEmpty();
     }
 
-    // Stampare elementi nel cart
-    public void printAllDevices(boolean iva) {
-        if (devices.isEmpty()) {
-            System.out.println("Il carrelo è vuoto.");
-            return;
-        }
-
-        DecimalFormat df = new DecimalFormat("#.##");
-
-        for (DeviceClasses device : devices) {
-            double priceWithIVA = !iva ? device.getSale() : device.getPriceWithIVA();
-            String formattedPrice = df.format(priceWithIVA);
-
-
-            System.out.println("Id: " + device.getId() +
-                    ", Dispositivo: " + device.getDevice() +
-                    ", Brand: " + device.getBrand() +
-                    ", Modello: " + device.getModel() +
-                    ", Descrizione: " + device.getDescription() +
-                    ", Display: " + device.getDisplay() +
-                    ", Archiviazione: " + device.getStorage() +
-                    ", Prezzo: " + formattedPrice);
-
-        }
+    public List<DeviceClasses> getDevices() {
+        return devices;
     }
 
     // Calcolare prezzo finale
