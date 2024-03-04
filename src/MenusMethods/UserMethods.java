@@ -39,7 +39,10 @@ public class UserMethods {
     }
 
     //Metodo che finalizza l' acquisto
-    private String finalizeSale() {
+    public String finalizeSale() {
+        if (cart.isEmpty()){
+            return "Il carrello è vuoto.";
+        }
         double finalPrice;
         if (iva) {
             finalPrice = cart.getFinalPrice() * 1.22;
