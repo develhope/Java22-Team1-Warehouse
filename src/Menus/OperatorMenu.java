@@ -23,7 +23,6 @@ public class OperatorMenu {
         ResearchMethods researchMethods = new ResearchMethods(warehouse, false, false);
         GetValidInput getValidInput = new GetValidInput();
         MenuOptionsOperator sceltaUser;
-        sc.nextLine();
 
         do {
             System.out.println("Scegli un'opzione:");

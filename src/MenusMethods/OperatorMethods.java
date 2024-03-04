@@ -32,10 +32,6 @@ public class OperatorMethods {
     public DeviceClasses addNewDevice() {
 
         String device = switchDevice();
-        while(device.equals("Scelta non valida")) {
-            System.out.println(device);
-            device = switchDevice();
-        }
         String brand = getValidInput.getString("Brand:", 15);
         String model = getValidInput.getString("Modello:", 15);
         String description = getValidInput.getString("Descrizione:", 20);
@@ -50,23 +46,28 @@ public class OperatorMethods {
     // aggiunge un device scegliendo soltanto tra le opzioni disponibili
     public String switchDevice() {
         int scelta;
+        String sceltaString = null;
         do {
-            scelta = getValidInput.getInteger("Scegli che tipo di dispositivo aggiungere\n" +
+            scelta = getValidInput.getInteger("Scegli che tipo di dispositivo aggiungere: \n" +
                     "1) Smartphone\n" +
                     "2) Tablet\n" +
                     "3) Notebook");
 
             switch (scelta) {
                 case 1:
-                    return "Smartphone";
+                    sceltaString = "Smartphone";
+                    break;
                 case 2:
-                    return "Tablet";
+                    sceltaString = "Tablet";
+                    break;
                 case 3:
-                    return "Notebook";
+                    sceltaString = "Notebook";
+                    break;
                 default:
-                    return "Scelta non valida";
+                    System.out.println("Scelta non valida.");
             }
-        } while (true);
+        } while (scelta != 1 && scelta != 2 && scelta != 3 );
+        return sceltaString;
     }
 
     // ricerca per prezzo di acquisto

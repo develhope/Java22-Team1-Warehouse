@@ -16,7 +16,7 @@ public class Main {
         System.out.println("1) Digitare 1 per profilo utente:");
         System.out.println("2) Digitare 2 per profilo operatore:");
         System.out.println("0) Digitare 0 per uscire dal programma");
-        String scelta = sc.next();
+        String scelta = sc.nextLine();
 
         while (!scelta.equals("1") && !scelta.equals("2") && !scelta.equals("0")) {
             System.out.println("Scelta non disponiblie");
@@ -24,7 +24,7 @@ public class Main {
             System.out.println("2) Digitare 2 per profilo operatore:");
             System.out.println("0) Digitare 0 per uscire dal programma");
 
-            scelta = sc.next();
+            scelta = sc.nextLine();
         }
         switch (scelta) {
             case "1":

@@ -27,7 +27,6 @@ public class UserMenu {
         ResearchMethods researchMethods = new ResearchMethods(warehouse, iva, false);
         GetValidInput getValidInput = new GetValidInput();
 
-        sc.nextLine();
         do {
             System.out.println("Scegli un'opzione:");
             for (int i = 0; i < MenuOptionsUser.values().length - 1; i++) {

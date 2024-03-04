@@ -98,7 +98,6 @@ public class UserMethods {
                     return false;
                 default:
                     System.out.println("Opzione non valida, riprova.");
-                    break;
             }
         }
     }
