@@ -25,9 +25,8 @@ public class UserMenu {
         boolean iva = UserMethods.getIvaUser();
         UserMethods userMethods = new UserMethods(warehouse, cart, iva, sc);
         ResearchMethods researchMethods = new ResearchMethods(warehouse, iva, false);
+        GetValidInput getValidInput = new GetValidInput();
 
-
-        sc.nextLine();
         do {
             System.out.println("Scegli un'opzione:");
             for (int i = 0; i < MenuOptionsUser.values().length - 1; i++) {
@@ -37,7 +36,7 @@ public class UserMenu {
             String input = sc.nextLine();
 
             if (input.matches("\\d+")) {
-                sceltaUser = GetValidInput.getMenuOptionsByIndexUser(input);
+                sceltaUser = getValidInput.getMenuOptionsByIndexUser(input);
             } else {
                 sceltaUser = MenuOptionsUser.UNKNOWN;
             }

@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 
 public class OperatorMethods {
+    private final GetValidInput getValidInput = new GetValidInput();
     private final Warehouse warehouse;
     private final Scanner sc;
 
@@ -31,59 +32,58 @@ public class OperatorMethods {
     public DeviceClasses addNewDevice() {
 
         String device = switchDevice();
-        String brand = GetValidInput.getString("Brand:", 15);
-        String model = GetValidInput.getString("Modello:", 15);
-        String description = GetValidInput.getString("Descrizione:", 20);
-        double display = GetValidInput.getDouble("Display:");
-        int storage = GetValidInput.getInteger("Memoria di archiviazione:");
-        double purchase = GetValidInput.getDouble("Prezzo di acquisto:");
-        double sale = GetValidInput.getDouble("Prezzo di vendita:");
+        String brand = getValidInput.getString("Brand:", 15);
+        String model = getValidInput.getString("Modello:", 15);
+        String description = getValidInput.getString("Descrizione:", 20);
+        double display = getValidInput.getDouble("Display:");
+        int storage = getValidInput.getInteger("Memoria di archiviazione:");
+        double purchase = getValidInput.getDouble("Prezzo di acquisto:");
+        double sale = getValidInput.getDouble("Prezzo di vendita:");
 
         return new DeviceClasses(sale, device, brand, model, description, display, storage, purchase);
     }
 
     // aggiunge un device scegliendo soltanto tra le opzioni disponibili
     public String switchDevice() {
-        String scelta;
+        int scelta;
+        String sceltaString = null;
         do {
-            System.out.println("Scegli che tipo di dispositivo aggiungere");
-            System.out.println("1) Smartphone");
-            System.out.println("2) Tablet");
-            System.out.println("3) Notebook");
-            scelta = sc.nextLine();
+            scelta = getValidInput.getInteger("Scegli che tipo di dispositivo aggiungere: \n" +
+                    "1) Smartphone\n" +
+                    "2) Tablet\n" +
+                    "3) Notebook");
 
             switch (scelta) {
-                case "1":
-                    return "Smartphone";
-                case "2":
-                    return "Tablet";
-                case "3":
-                    return "Notebook";
+                case 1:
+                    sceltaString = "Smartphone";
+                    break;
+                case 2:
+                    sceltaString = "Tablet";
+                    break;
+                case 3:
+                    sceltaString = "Notebook";
+                    break;
                 default:
-                    System.out.println("Scelta non valida");
+                    System.out.println("Scelta non valida.");
             }
-        } while (true);
+        } while (scelta != 1 && scelta != 2 && scelta != 3 );
+        return sceltaString;
     }
 
     // ricerca per prezzo di acquisto
-    public void searchByPurchasePrice() {
-        int scelta = GetValidInput.getInteger("Inserisci il prezzo:");
-        List<DeviceClasses> priceBuyCompatibili = warehouse.getByPurchasePrice(scelta);
-        if (priceBuyCompatibili.isEmpty()) {
-            System.out.println("Nessun dispositivo compatibile trovato.");
-        } else {
-            printDevices(priceBuyCompatibili);
-        }
+    public List<DeviceClasses> searchByPurchasePrice() {
+        int scelta = getValidInput.getInteger("Inserisci il prezzo:");
+        return warehouse.getByPurchasePrice(scelta);
     }
 
     // ricerca per prezzo medio del device
-    public void searchByAverageDevicePrice() {
-        String scelta = GetValidInput.getString("Inserisci il tipo di device di cui vuoi sapere il prezzo medio:", 20);
+    public String searchByAverageDevicePrice() {
+        String scelta = getValidInput.getString("Inserisci il tipo di device di cui vuoi sapere il prezzo medio:", 20);
         double averagePrice = warehouse.getAverageDevicePrice(scelta);
         if (!Double.isNaN(averagePrice) && averagePrice != 0) {
-            System.out.println("Il prezzo medio per " + scelta + " è: " + averagePrice);
+            return "Il prezzo medio per " + scelta + " è: " + averagePrice;
         } else {
-            System.out.println("Errore: inserisci un device valido!");
+            return "Errore: inserisci un device valido!";
         }
     }
 
@@ -93,10 +93,7 @@ public class OperatorMethods {
                 System.out.println("Il magazzino e' vuoto!");
                 return;
             }
-            Long sceltaId2 = GetValidInput.getLong("Digita un id per rimuovere al magazzino:");
-            if (sceltaId2 == null) {
-                return;
-            }
+            long sceltaId2 = getValidInput.getLong("Digita un id per rimuovere al magazzino:");
 
             if (!warehouse.containsDeviceById(sceltaId2)) {
                 System.out.println("Non è stato trovato alcun dispositivo con questo ID");
@@ -108,7 +105,12 @@ public class OperatorMethods {
         }
     }
 
+
     public void printDevices(List<DeviceClasses> devices) {
+        if(devices.isEmpty()) {
+            System.out.println("Nessun dispositivo compatibile trovato.");
+            return;
+        }
         DecimalFormat df = new DecimalFormat("#.##");
         for (DeviceClasses device : devices) {
             System.out.println("Id: " + device.getId() +

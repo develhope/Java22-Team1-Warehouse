@@ -15,6 +15,7 @@ public class UserMethods {
     private final boolean iva;
 
     private final Scanner sc;
+    private static final GetValidInput getValidInput = new GetValidInput();
 
     public UserMethods(Warehouse warehouse, Cart cart, boolean iva, Scanner sc) {
         this.warehouse = warehouse;
@@ -54,7 +55,7 @@ public class UserMethods {
             return "Il carrello è vuoto.";
         }
         while (true) {
-            int sceltaFinale = GetValidInput.getInteger("1) Per procedere all'acquisto.\n" +
+            int sceltaFinale = getValidInput.getInteger("1) Per procedere all'acquisto.\n" +
                     "2) Per tornare al menu principale.");
             switch (sceltaFinale) {
                 case 1:
@@ -83,7 +84,7 @@ public class UserMethods {
     //Metodo che gestisce se l' utente e' un privato o possiede una partita iva
     public static boolean getIvaUser() {
         while (true) {
-            int sceltaUser = GetValidInput.getInteger("Seleziona il tipo di utente:\n" +
+            int sceltaUser = getValidInput.getInteger("Seleziona il tipo di utente:\n" +
                     "1) Utente SENZA partita IVA.\n" +
                     "2) Utente CON partita IVA.");
             switch (sceltaUser) {
@@ -93,7 +94,6 @@ public class UserMethods {
                     return false;
                 default:
                     System.out.println("Opzione non valida, riprova.");
-                    break;
             }
         }
     }
@@ -103,7 +103,7 @@ public class UserMethods {
     public void addToCartById() {
 
         try {
-            long sceltaId = GetValidInput.getLong("Digita un id per aggiungere al carrello:");
+            long sceltaId = getValidInput.getLong("Digita un id per aggiungere al carrello:");
             if (!warehouse.containsDeviceById(sceltaId)) {
                 System.out.println("Non è stato trovato alcun dispositivo con questo ID");
                 return;
@@ -123,7 +123,7 @@ public class UserMethods {
             return;
         }
         try {
-            long sceltaId2 = GetValidInput.getLong("Digita un id per rimuovere al carrello:");
+            long sceltaId2 = getValidInput.getLong("Digita un id per rimuovere al carrello:");
             if (!cart.containsDeviceById(sceltaId2)) {
                 System.out.println("Non è stato trovato alcun dispositivo con questo ID.");
                 return;
