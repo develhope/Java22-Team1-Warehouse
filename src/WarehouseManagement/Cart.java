@@ -1,10 +1,9 @@
 package WarehouseManagement;
 
-import java.text.DecimalFormat;
+import Devices.DeviceClasses;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import Devices.DeviceClasses;
 
 public class Cart {
 
@@ -16,6 +15,9 @@ public class Cart {
 
     // Aggiungere al cart
     public void addDevice(DeviceClasses dispositivo) {
+        if (dispositivo == null){
+            return;
+        }
         devices.add(dispositivo);
     }
 

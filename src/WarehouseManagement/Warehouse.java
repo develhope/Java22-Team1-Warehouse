@@ -16,6 +16,9 @@ public class Warehouse {
     }
 
     public void addDevice(DeviceClasses device) {
+        if (device == null){
+            return;
+        }
         devices.add(device);
     }
 

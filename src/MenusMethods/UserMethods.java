@@ -24,14 +24,14 @@ public class UserMethods {
     }
 
     //Metodo per aggiungere prodotti dal magazzino al carrello
-    private void fromWarehouseToCart(long id) {
-        cart.addDevice(warehouse.getDeviceById(id));
-        warehouse.removeDeviceById(id);
-        printDevices(cart.getDevices());
+    public void fromWarehouseToCart(long id) {
+            cart.addDevice(warehouse.getDeviceById(id));
+            warehouse.removeDeviceById(id);
+            printDevices(cart.getDevices());
     }
 
     //Metodo per aggiungere prodotti dal carrello al magazzino
-    private void fromCartToWarehouse(long id) {
+    public void fromCartToWarehouse(long id) {
         warehouse.addDevice(cart.getDeviceById(id));
         cart.removeDeviceById(id);
         printDevices(cart.getDevices());
@@ -49,10 +49,9 @@ public class UserMethods {
         return "Questo è il tuo prezzo finale: " + finalPrice;
     }
 
-    public void finalizeSaleMenu() {
+    public String finalizeSaleMenu() {
         if (cart.isEmpty()) {
-            System.out.println("Il carrello è vuoto.");
-            return;
+            return "Il carrello è vuoto.";
         }
         while (true) {
             int sceltaFinale = GetValidInput.getInteger("1) Per procedere all'acquisto.\n" +
@@ -60,27 +59,24 @@ public class UserMethods {
             switch (sceltaFinale) {
                 case 1:
                     System.out.println(finalizeSale());
-                    System.out.println("Grazie per l'acquisto, speriamo di rivederti presto.");
-                    return;
+                    return "Grazie per l'acquisto, speriamo di rivederti presto.";
                 case 2:
-                    return;
+                    return null;
                 default:
                     System.out.println("Scelta non consentita.");
-                    break;
             }
         }
     }
 
-    public void calcAndPrintTotal() {
+    public String calcAndPrintTotal() {
         if (cart.isEmpty()) {
-            System.out.println("Il carrello è vuoto.");
-            return;
+            return "Il carrello è vuoto.";
         }
         System.out.println("Il prezzo finale del carrello è:");
         if (!iva) {
-            System.out.println(cart.getFinalPrice());
+            return "" + cart.getFinalPrice();
         } else {
-            System.out.println(cart.getFinalPrice() * 1.22);
+            return "" + cart.getFinalPrice() * 1.22;
         }
     }
 
