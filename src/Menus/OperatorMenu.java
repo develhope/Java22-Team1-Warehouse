@@ -42,22 +42,22 @@ public class OperatorMenu {
                     operatorMethods.printDevices(warehouse.getDevices());
                     break;
                 case RICERCA_PER_TIPO_DISPOSITIVO:
-                    researchMethods.searchByType();
+                    operatorMethods.printDevices(researchMethods.searchByType());
                     break;
                 case RICERCA_PER_PRODUTTORE:
-                    researchMethods.searchByBrand();
+                    operatorMethods.printDevices(researchMethods.searchByBrand());
                     break;
                 case RICERCA_PER_MODELLO:
-                    researchMethods.searchByModel();
+                    operatorMethods.printDevices(researchMethods.searchByModel());
                     break;
                 case RICERCA_PER_PREZZO_DI_VENDITA:
-                    researchMethods.searchBySellPrice();
+                    operatorMethods.printDevices(researchMethods.searchBySellPrice());
                     break;
                 case RICERCA_PER_PREZZO_DI_ACQUISTO:
                     operatorMethods.printDevices(operatorMethods.searchByPurchasePrice());
                     break;
                 case RICERCA_PER_RANGE_DI_ACQUISTO:
-                    researchMethods.searchByPriceRange();
+                    operatorMethods.printDevices(researchMethods.searchByPriceRange());
                     break;
                 case RICERCA_SPESA_MEDIA_DISPOSITIVO:
                     System.out.println(operatorMethods.searchByAverageDevicePrice());

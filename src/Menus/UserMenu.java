@@ -69,7 +69,11 @@ public class UserMenu {
                     userMethods.removeFromCartById();
                     break;
                 case CALCOLARE_IL_TOTALE:
-                    userMethods.calcAndPrintTotal();
+                    if(userMethods.calcAndPrintTotal() == 0.0) {
+                        System.out.println("Il carrello e vuoto");
+                    } else {
+                        System.out.println("Questo e il tuo totale: " + userMethods.calcAndPrintTotal());
+                    }
                     break;
                 case VISUALIZZA_IL_CARRELLO:
                     userMethods.printDevices(cart.getDevices());
