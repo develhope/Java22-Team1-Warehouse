@@ -34,8 +34,9 @@ public class Cart {
         }
         for (int i = 0; i < devices.size(); i++) {
             if (devices.get(i).getId() == id) {
-                devices.remove(i);
-                return true;
+                 devices.remove(i);
+                 return true;
+
             }
         }
         return false;

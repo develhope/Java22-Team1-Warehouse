@@ -1,6 +1,5 @@
 package Menus;
 
-import Devices.DeviceClasses;
 import MenusMethods.OperatorMethods;
 import MenusMethods.ResearchMethods;
 import UserAndOperatorEnums.MenuOptionsOperator;
@@ -20,7 +19,7 @@ public class OperatorMenu {
 
     public void menu() {
         OperatorMethods operatorMethods = new OperatorMethods(warehouse, sc);
-        ResearchMethods researchMethods = new ResearchMethods(warehouse, false, false);
+        ResearchMethods researchMethods = new ResearchMethods(warehouse, false);
         GetValidInput getValidInput = new GetValidInput();
         MenuOptionsOperator sceltaUser;
 
@@ -63,8 +62,7 @@ public class OperatorMenu {
                     System.out.println(operatorMethods.searchByAverageDevicePrice());
                     break;
                 case AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO:
-                    DeviceClasses newDevice = operatorMethods.addNewDevice();
-                    operatorMethods.setIdAddDeviceInWarehouse(newDevice);
+                    operatorMethods.setIdAddDeviceInWarehouse(operatorMethods.addNewDevice());
                     break;
                 case RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO:
                     operatorMethods.removeFromWarehouseById();

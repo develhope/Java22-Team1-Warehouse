@@ -9,13 +9,11 @@ import java.util.List;
 public class ResearchMethods {
     private final Warehouse warehouse;
     private final boolean iva;
-    private final boolean includePurchasePrice;
     private final GetValidInput getValidInput = new GetValidInput();
 
-    public ResearchMethods(Warehouse warehouse, boolean iva, boolean includePurchasePrice) {
+    public ResearchMethods(Warehouse warehouse, boolean iva) {
         this.warehouse = warehouse;
         this.iva = iva;
-        this.includePurchasePrice = includePurchasePrice;
     }
 
 
@@ -37,9 +35,8 @@ public class ResearchMethods {
             return null;
         }
         String sceltaBrand = getValidInput.getString("Inserisci il nome del brand del dispositivo:", 15);
-        List<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
 
-       return brandCompatibili;
+        return warehouse.getCompatibles(sceltaBrand, "brand");
     }
 
     // Cerca per modello, ritorna i dispositivi trovati con prezzi dipendenti da iva
