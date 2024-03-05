@@ -130,9 +130,9 @@ public class UserMethods {
             long sceltaId2 = getValidInput.getLong("Digita un id per rimuovere al carrello:");
             if (!cart.containsDeviceById(sceltaId2)) {
                 System.out.println("Non è stato trovato alcun dispositivo con questo ID.");
-                return;
+            } else {
+                fromCartToWarehouse(sceltaId2);
             }
-            fromCartToWarehouse(sceltaId2);
         } catch (NumberFormatException e) {
             System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
             sc.nextLine();

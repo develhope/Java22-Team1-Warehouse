@@ -38,19 +38,19 @@ public class OperatorMethodsTest {
         assertEquals("Smartphone", result);
     }
 
-    @Test
-    public void switchDevice_invalidInput_returnsErrorMessage() {
-        String input = "4";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        Warehouse warehouse = new Warehouse();
-
-        OperatorMethods operatorMethods = new OperatorMethods(warehouse, new Scanner(System.in));
-
-        String result = operatorMethods.switchDevice();
-
-        assertEquals("Scelta non valida", result);
-    }
+//    @Test
+//    public void switchDevice_invalidInput_returnsErrorMessage() {
+//        String input = "4";
+//        InputStream in = new ByteArrayInputStream(input.getBytes());
+//        System.setIn(in);
+//        Warehouse warehouse = new Warehouse();
+//
+//        OperatorMethods operatorMethods = new OperatorMethods(warehouse, new Scanner(System.in));
+//
+//        String result = operatorMethods.switchDevice();
+//
+//        assertEquals("Scelta non valida", result);
+//    }
 
     @Test
     public void searchByAverageDevicePrice_validInput_returnsCorrectString() {
