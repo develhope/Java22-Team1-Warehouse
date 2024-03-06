@@ -32,9 +32,9 @@ public class Cart {
         if (id == null) {
             return false;
         }
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getId() == id) {
-                 devices.remove(i);
+        for (DeviceClasses device : devices) {
+            if (device.getId() == id) {
+                 devices.remove(device);
                  return true;
 
             }
