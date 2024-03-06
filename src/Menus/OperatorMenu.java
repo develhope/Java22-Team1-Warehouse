@@ -18,7 +18,7 @@ public class OperatorMenu {
     }
 
     public void menu() {
-        OperatorMethods operatorMethods = new OperatorMethods(warehouse, sc);
+        OperatorMethods operatorMethods = new OperatorMethods(warehouse);
         ResearchMethods researchMethods = new ResearchMethods(warehouse, false);
         GetValidInput getValidInput = new GetValidInput();
         MenuOptionsOperator sceltaUser;

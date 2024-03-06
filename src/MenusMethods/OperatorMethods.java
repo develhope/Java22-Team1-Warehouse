@@ -8,16 +8,13 @@ import java.text.DecimalFormat;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 
 public class OperatorMethods {
     private final GetValidInput getValidInput = new GetValidInput();
     private final Warehouse warehouse;
-    private final Scanner sc;
 
-    public OperatorMethods(Warehouse warehouse, Scanner sc) {
-        this.sc = sc;
+    public OperatorMethods(Warehouse warehouse) {
         this.warehouse = warehouse;
     }
 
