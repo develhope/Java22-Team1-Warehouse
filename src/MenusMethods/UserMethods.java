@@ -15,6 +15,7 @@ public class UserMethods {
     private final boolean iva;
 
     private final Scanner sc;
+    private static final GetValidInput getValidInput = new GetValidInput();
 
     public UserMethods(Warehouse warehouse, Cart cart, boolean iva, Scanner sc) {
         this.warehouse = warehouse;
@@ -24,21 +25,29 @@ public class UserMethods {
     }
 
     //Metodo per aggiungere prodotti dal magazzino al carrello
-    private void fromWarehouseToCart(long id) {
-        cart.addDevice(warehouse.getDeviceById(id));
-        warehouse.removeDeviceById(id);
-        printDevices(cart.getDevices());
+    private boolean fromWarehouseToCart(long id) {
+        if (warehouse.containsDeviceById(id)) {
+            cart.addDevice(warehouse.getDeviceById(id));
+            warehouse.removeDeviceById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //Metodo per aggiungere prodotti dal carrello al magazzino
-    private void fromCartToWarehouse(long id) {
-        warehouse.addDevice(cart.getDeviceById(id));
-        cart.removeDeviceById(id);
-        printDevices(cart.getDevices());
+    private boolean fromCartToWarehouse(long id) {
+        if (cart.containsDeviceById(id)) {
+            warehouse.addDevice(cart.getDeviceById(id));
+            cart.removeDeviceById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //Metodo che finalizza l' acquisto
-    private String finalizeSale() {
+    private double finalizeSale() {
         double finalPrice;
         if (iva) {
             finalPrice = cart.getFinalPrice() * 1.22;
@@ -46,48 +55,39 @@ public class UserMethods {
             finalPrice = cart.getFinalPrice();
         }
         cart.emptyList();
-        return "Questo è il tuo prezzo finale: " + finalPrice;
+        return finalPrice;
     }
 
-    public void finalizeSaleMenu() {
-        if (cart.isEmpty()) {
-            System.out.println("Il carrello è vuoto.");
-            return;
-        }
-        while (true) {
-            int sceltaFinale = GetValidInput.getInteger("1) Per procedere all'acquisto.\n" +
-                    "2) Per tornare al menu principale.");
-            switch (sceltaFinale) {
-                case 1:
-                    System.out.println(finalizeSale());
-                    System.out.println("Grazie per l'acquisto, speriamo di rivederti presto.");
-                    return;
-                case 2:
-                    return;
-                default:
-                    System.out.println("Scelta non consentita.");
-                    break;
-            }
+    public String finalizeSaleMenu() {
+            while (true) {
+                int sceltaFinale = getValidInput.getInteger("1) Per procedere all'acquisto.\n" +
+                        "2) Per tornare al menu principale.");
+                switch (sceltaFinale) {
+                    case 1:
+                        return "Questo è il tuo prezzo finale:\"" + finalizeSale() + "\n Grazie per l'acquisto, speriamo di rivederti presto.";
+                    case 2:
+                        return "";
+                    default:
+                        System.out.println("Scelta non consentita.");
+                }
         }
     }
 
-    public void calcAndPrintTotal() {
+    public double calcAndPrintTotal() {
         if (cart.isEmpty()) {
-            System.out.println("Il carrello è vuoto.");
-            return;
+            return 0.0;
         }
-        System.out.println("Il prezzo finale del carrello è:");
         if (!iva) {
-            System.out.println(cart.getFinalPrice());
+            return cart.getFinalPrice();
         } else {
-            System.out.println(cart.getFinalPrice() * 1.22);
+            return cart.getFinalPrice() * 1.22;
         }
     }
 
     //Metodo che gestisce se l' utente e' un privato o possiede una partita iva
     public static boolean getIvaUser() {
         while (true) {
-            int sceltaUser = GetValidInput.getInteger("Seleziona il tipo di utente:\n" +
+            int sceltaUser = getValidInput.getInteger("Seleziona il tipo di utente:\n" +
                     "1) Utente SENZA partita IVA.\n" +
                     "2) Utente CON partita IVA.");
             switch (sceltaUser) {
@@ -97,64 +97,67 @@ public class UserMethods {
                     return false;
                 default:
                     System.out.println("Opzione non valida, riprova.");
-                    break;
             }
         }
     }
 
 
     //Metodo per aggiungere i prodotti al carrello tramite un ID
-    public void addToCartById() {
+    public List<DeviceClasses> addToCartById() {
 
-        try {
-            long sceltaId = GetValidInput.getLong("Digita un id per aggiungere al carrello:");
-            if (!warehouse.containsDeviceById(sceltaId)) {
-                System.out.println("Non è stato trovato alcun dispositivo con questo ID");
-                return;
-            }
+        long sceltaId = getValidInput.getLong("Digita un id per aggiungere al carrello:");
+        if (!fromWarehouseToCart(sceltaId)) {
+            System.out.println("Non è stato trovato alcun dispositivo con questo ID");
+            return null;
+        } else {
             System.out.println("Questo è il carrello: ");
-            fromWarehouseToCart(sceltaId);
-        } catch (NumberFormatException e) {
-            System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
-            sc.nextLine();
+            return cart.getDevices();
         }
+
     }
 
     //Metodo per rimuovere i prodotti dal carrello tramite ID
-    public void removeFromCartById() {
+    public List<DeviceClasses> removeFromCartById() {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
-            return;
+            return null;
         }
-        try {
-            long sceltaId2 = GetValidInput.getLong("Digita un id per rimuovere al carrello:");
-            if (!cart.containsDeviceById(sceltaId2)) {
-                System.out.println("Non è stato trovato alcun dispositivo con questo ID.");
-                return;
+
+        long sceltaId2 = getValidInput.getLong("Digita un id per rimuovere al carrello:");
+        if (!fromCartToWarehouse(sceltaId2)) {
+            System.out.println("Non è stato trovato alcun dispositivo con questo ID.");
+            return null;
+        } else {
+            List<DeviceClasses> updatedCartDevices = cart.getDevices();
+            if(updatedCartDevices.isEmpty()) {
+                System.out.println("Il carrello è vuoto.");
+                return null;
+            } else {
+                return updatedCartDevices;
             }
-            fromCartToWarehouse(sceltaId2);
-        } catch (NumberFormatException e) {
-            System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
-            sc.nextLine();
         }
     }
 
     public void printDevices(List<DeviceClasses> devices) {
-        if (devices.isEmpty()) {
-            System.out.println("Il carrello e' vuoto.");
+        if (devices == null) {
             return;
         }
-        DecimalFormat df = new DecimalFormat("#.##");
-        for (DeviceClasses device : devices) {
-            double price = iva ? device.getPriceWithIVA() : device.getSale();
-            System.out.println("Id: " + device.getId() +
-                    ", Dispositivo: " + device.getDevice() +
-                    ", Brand: " + device.getBrand() +
-                    ", Modello: " + device.getModel() +
-                    ", Descrizione: " + device.getDescription() +
-                    ", Display: " + df.format(device.getDisplay()) +
-                    ", Archiviazione: " + df.format(device.getStorage()) +
-                    ", Prezzo di vendità: " + df.format(price) + "€");
+
+        if (devices.isEmpty()) {
+            System.out.println("Nessun dispositivo compatibile trovato.");
+        } else {
+            DecimalFormat df = new DecimalFormat("#.##");
+            for (DeviceClasses device : devices) {
+                double price = iva ? device.getPriceWithIVA() : device.getSale();
+                System.out.println("Id: " + device.getId() +
+                        ", Dispositivo: " + device.getDevice() +
+                        ", Brand: " + device.getBrand() +
+                        ", Modello: " + device.getModel() +
+                        ", Descrizione: " + device.getDescription() +
+                        ", Display: " + df.format(device.getDisplay()) +
+                        ", Archiviazione: " + df.format(device.getStorage()) +
+                        ", Prezzo di vendità: " + df.format(price) + "€");
+            }
         }
     }
 }

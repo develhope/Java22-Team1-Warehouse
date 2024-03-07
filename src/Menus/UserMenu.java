@@ -24,10 +24,9 @@ public class UserMenu {
         MenuOptionsUser sceltaUser;
         boolean iva = UserMethods.getIvaUser();
         UserMethods userMethods = new UserMethods(warehouse, cart, iva, sc);
-        ResearchMethods researchMethods = new ResearchMethods(warehouse, iva, false);
+        ResearchMethods researchMethods = new ResearchMethods(warehouse, iva);
+        GetValidInput getValidInput = new GetValidInput();
 
-
-        sc.nextLine();
         do {
             System.out.println("Scegli un'opzione:");
             for (int i = 0; i < MenuOptionsUser.values().length - 1; i++) {
@@ -37,7 +36,7 @@ public class UserMenu {
             String input = sc.nextLine();
 
             if (input.matches("\\d+")) {
-                sceltaUser = GetValidInput.getMenuOptionsByIndexUser(input);
+                sceltaUser = getValidInput.getMenuOptionsByIndexUser(input);
             } else {
                 sceltaUser = MenuOptionsUser.UNKNOWN;
             }
@@ -49,34 +48,46 @@ public class UserMenu {
                     userMethods.printDevices(warehouse.getDevices());
                     break;
                 case RICERCA_PER_TIPO_DISPOSITIVO:
-                    researchMethods.searchByType();
+                    userMethods.printDevices(researchMethods.searchByType());
                     break;
                 case RICERCA_PER_PRODUTTORE:
-                    researchMethods.searchByBrand();
+                    userMethods.printDevices(researchMethods.searchByBrand());
                     break;
                 case RICERCA_PER_MODELLO:
-                    researchMethods.searchByModel();
+                    userMethods.printDevices(researchMethods.searchByModel());
                     break;
                 case RICERCA_PER_PREZZO_DI_VENDITA:
-                    researchMethods.searchBySellPrice();
+                    userMethods.printDevices(researchMethods.searchBySellPrice());
                     break;
                 case RICERCA_PER_RANGE_DI_VENDITA:
-                    researchMethods.searchByPriceRange();
+                    userMethods.printDevices(researchMethods.searchByPriceRange());
                     break;
                 case AGGIUNGI_AL_CARRELLO:
-                    userMethods.addToCartById();
+                    userMethods.printDevices(userMethods.addToCartById());
                     break;
                 case RIMUOVI_DAL_CARRELLO:
-                    userMethods.removeFromCartById();
+                    userMethods.printDevices(userMethods.removeFromCartById());
                     break;
                 case CALCOLARE_IL_TOTALE:
-                    userMethods.calcAndPrintTotal();
+                    if (userMethods.calcAndPrintTotal() == 0.0) {
+                        System.out.println("Il carrello e vuoto");
+                    } else {
+                        System.out.println("Questo e il tuo totale: " + userMethods.calcAndPrintTotal());
+                    }
                     break;
                 case VISUALIZZA_IL_CARRELLO:
-                    userMethods.printDevices(cart.getDevices());
+                    if(cart.isEmpty()) {
+                        System.out.println("Il carrello e vuoto");
+                    } else {
+                        userMethods.printDevices(cart.getDevices());
+                    }
                     break;
                 case ACQUISTA:
-                    userMethods.finalizeSaleMenu();
+                    if (cart.isEmpty()) {
+                        System.out.println("Il carrello è vuoto.");
+                    } else {
+                        System.out.println(userMethods.finalizeSaleMenu());
+                    }
                     break;
                 case FINE:
                     System.out.println("Arrivederci!");
@@ -84,7 +95,6 @@ public class UserMenu {
                 case UNKNOWN:
                     System.out.println("Opzione non valida. Riprova.");
                     break;
-
             }
 
         } while (sceltaUser != MenuOptionsUser.FINE);

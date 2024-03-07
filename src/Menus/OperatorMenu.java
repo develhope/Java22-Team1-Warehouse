@@ -1,6 +1,5 @@
 package Menus;
 
-import Devices.DeviceClasses;
 import MenusMethods.OperatorMethods;
 import MenusMethods.ResearchMethods;
 import UserAndOperatorEnums.MenuOptionsOperator;
@@ -19,10 +18,10 @@ public class OperatorMenu {
     }
 
     public void menu() {
-        OperatorMethods operatorMethods = new OperatorMethods(warehouse, sc);
-        ResearchMethods researchMethods = new ResearchMethods(warehouse, false, false);
+        OperatorMethods operatorMethods = new OperatorMethods(warehouse);
+        ResearchMethods researchMethods = new ResearchMethods(warehouse, false);
+        GetValidInput getValidInput = new GetValidInput();
         MenuOptionsOperator sceltaUser;
-        sc.nextLine();
 
         do {
             System.out.println("Scegli un'opzione:");
@@ -32,7 +31,7 @@ public class OperatorMenu {
             String input = sc.nextLine();
 
             if (input.matches("\\d+")) {
-                sceltaUser = GetValidInput.getMenuOptionsByIndex(input);
+                sceltaUser = getValidInput.getMenuOptionsByIndex(input);
             } else {
                 sceltaUser = MenuOptionsOperator.UNKNOWN;
             }
@@ -42,29 +41,28 @@ public class OperatorMenu {
                     operatorMethods.printDevices(warehouse.getDevices());
                     break;
                 case RICERCA_PER_TIPO_DISPOSITIVO:
-                    researchMethods.searchByType();
+                    operatorMethods.printDevices(researchMethods.searchByType());
                     break;
                 case RICERCA_PER_PRODUTTORE:
-                    researchMethods.searchByBrand();
+                    operatorMethods.printDevices(researchMethods.searchByBrand());
                     break;
                 case RICERCA_PER_MODELLO:
-                    researchMethods.searchByModel();
+                    operatorMethods.printDevices(researchMethods.searchByModel());
                     break;
                 case RICERCA_PER_PREZZO_DI_VENDITA:
-                    researchMethods.searchBySellPrice();
+                    operatorMethods.printDevices(researchMethods.searchBySellPrice());
                     break;
                 case RICERCA_PER_PREZZO_DI_ACQUISTO:
-                    operatorMethods.searchByPurchasePrice();
+                    operatorMethods.printDevices(operatorMethods.searchByPurchasePrice());
                     break;
                 case RICERCA_PER_RANGE_DI_ACQUISTO:
-                    researchMethods.searchByPriceRange();
+                    operatorMethods.printDevices(researchMethods.searchByPriceRange());
                     break;
                 case RICERCA_SPESA_MEDIA_DISPOSITIVO:
-                    operatorMethods.searchByAverageDevicePrice();
+                    System.out.println(operatorMethods.searchByAverageDevicePrice());
                     break;
                 case AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO:
-                    DeviceClasses newDevice = operatorMethods.addNewDevice();
-                    operatorMethods.setIdAddDeviceInWarehouse(newDevice);
+                    operatorMethods.setIdAddDeviceInWarehouse(operatorMethods.addNewDevice());
                     break;
                 case RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO:
                     operatorMethods.removeFromWarehouseById();

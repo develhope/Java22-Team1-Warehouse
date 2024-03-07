@@ -6,9 +6,9 @@ import UserAndOperatorEnums.MenuOptionsUser;
 import java.util.Scanner;
 
 public class GetValidInput {
-    private static Scanner sc = new Scanner(System.in);
+    private Scanner sc = new Scanner(System.in);
 
-    public static String getString(String prompt, int maxLength) {
+    public String getString(String prompt, int maxLength) {
         String input;
         do {
             System.out.println(prompt);
@@ -22,7 +22,7 @@ public class GetValidInput {
     }
 
     // Prende un input double e lo valida prima di ritornarlo
-    public static double getDouble(String prompt) {
+    public double getDouble(String prompt) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -38,7 +38,7 @@ public class GetValidInput {
         } while (true);
     }
 
-    public static long getLong(String prompt) {
+    public long getLong(String prompt) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -55,7 +55,7 @@ public class GetValidInput {
     }
 
     // Prende un input integer e lo valida prima di ritornarlo
-    public static int getInteger(String prompt) {
+    public int getInteger(String prompt) {
         do {
             System.out.println(prompt);
             String input = sc.nextLine().trim();
@@ -73,7 +73,7 @@ public class GetValidInput {
 
 
     // Enum inputs
-    public static <T extends Enum<T>> MenuOptionsOperator getMenuOptionsByIndex(String input) {
+    public <T extends Enum<T>> MenuOptionsOperator getMenuOptionsByIndex(String input) {
         int index = Integer.parseInt(input);
         if (index >= 0 && index < MenuOptionsOperator.class.getEnumConstants().length - 1) {
             return MenuOptionsOperator.class.getEnumConstants()[index];
@@ -82,7 +82,7 @@ public class GetValidInput {
         }
     }
 
-    public static <T extends Enum<T>> MenuOptionsUser getMenuOptionsByIndexUser(String input) {
+    public <T extends Enum<T>> MenuOptionsUser getMenuOptionsByIndexUser(String input) {
         int index = Integer.parseInt(input);
         if (index >= 0 && index < MenuOptionsUser.class.getEnumConstants().length - 1) {
             return MenuOptionsUser.class.getEnumConstants()[index];

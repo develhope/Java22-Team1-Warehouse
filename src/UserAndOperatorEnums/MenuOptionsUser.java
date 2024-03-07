@@ -15,13 +15,13 @@ public enum MenuOptionsUser {
     FINE("Fine"),
     UNKNOWN("");
 
-    private String stringa;
+    private String string;
 
     MenuOptionsUser(String s) {
-        this.stringa = s;
+        this.string = s;
     }
 
     public String getStringa() {
-        return stringa;
+        return string;
     }
 }

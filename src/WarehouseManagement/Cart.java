@@ -1,10 +1,9 @@
 package WarehouseManagement;
 
-import java.text.DecimalFormat;
+import Devices.DeviceClasses;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import Devices.DeviceClasses;
 
 public class Cart {
 
@@ -15,22 +14,39 @@ public class Cart {
     }
 
     // Aggiungere al cart
-    public void addDevice(DeviceClasses dispositivo) {
-        devices.add(dispositivo);
+    public boolean addDevice(DeviceClasses device) {
+        for (DeviceClasses dev : devices) {
+            if (dev.getId() == device.getId()) {
+                return false;
+            }
+        }
+        if (device == null) {
+            return false;
+        }
+        devices.add(device);
+        return true;
     }
 
     // Rimuove dal carrello tramite ID
-    public void removeDeviceById(long id) {
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getId() == id) {
-                devices.remove(i);
-                break;
+    public boolean removeDeviceById(Long id) {
+        if (id == null) {
+            return false;
+        }
+        for (DeviceClasses device : devices) {
+            if (device.getId() == id) {
+                 devices.remove(device);
+                 return true;
+
             }
         }
+        return false;
     }
 
     //Ottieni prodotto da ID
-    public DeviceClasses getDeviceById(long id) {
+    public DeviceClasses getDeviceById(Long id) {
+        if(id == null) {
+            return null;
+        }
         for (DeviceClasses device : devices) {
             if (device.getId() == id) {
                 return device;

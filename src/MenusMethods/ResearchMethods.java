@@ -4,128 +4,84 @@ import Devices.DeviceClasses;
 import Utils.GetValidInput;
 import WarehouseManagement.Warehouse;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class ResearchMethods {
     private final Warehouse warehouse;
     private final boolean iva;
-    private final boolean includePurchasePrice;
+    private final GetValidInput getValidInput = new GetValidInput();
 
-    public ResearchMethods(Warehouse warehouse, boolean iva, boolean includePurchasePrice) {
+    public ResearchMethods(Warehouse warehouse, boolean iva) {
         this.warehouse = warehouse;
         this.iva = iva;
-        this.includePurchasePrice = includePurchasePrice;
     }
 
-    // Stampa i device passati, cambia prezzi con iva se viene passata
-    public void printDevices(List<DeviceClasses> devices) {
-        if (devices.isEmpty()) {
-            String message = !includePurchasePrice ? "Il carrello è vuoto." : "Il magazzino è vuoto.";
-            System.out.println(message);
-            return;
-        }
-        DecimalFormat df = new DecimalFormat("#.##");
-        for (DeviceClasses device : devices) {
-            String purchasePrice = includePurchasePrice ? ", Prezzo di acquisto: " + df.format(device.getPurchase()) + "€" : "";
-            double price = iva ? device.getPriceWithIVA() : device.getSale();
-            System.out.println("Id: " + device.getId() +
-                    ", Dispositivo: " + device.getDevice() +
-                    ", Brand: " + device.getBrand() +
-                    ", Modello: " + device.getModel() +
-                    ", Descrizione: " + device.getDescription() +
-                    ", Display: " + df.format(device.getDisplay()) +
-                    ", Archiviazione: " + df.format(device.getStorage()) +
-                    ", Prezzo di vendità: " + df.format(price) + "€" + purchasePrice);
-        }
-    }
 
-    public void searchByType() {
+    public List<DeviceClasses> searchByType() {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
-            return;
+            return null;
         }
-        String sceltaDisp = GetValidInput.getString("Inserisci il nome del tipo di dispositivo", 15);
-        List<DeviceClasses> devicesCompatibili = warehouse.getCompatibles(sceltaDisp, "device");
-        if (devicesCompatibili.isEmpty()) {
-            System.out.println("Nessun dispositivo compatibile trovato.");
-        } else {
-            printDevices(devicesCompatibili);
-        }
+        String sceltaDisp = getValidInput.getString("Inserisci il nome del tipo di dispositivo", 15);
+
+        return warehouse.getCompatibles(sceltaDisp, "device");
     }
 
     // Cerca per brand, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    public void searchByBrand() {
+    public List<DeviceClasses> searchByBrand() {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
-            return;
+            return null;
         }
-        String sceltaBrand = GetValidInput.getString("Inserisci il nome del brand del dispositivo:", 15);
-        List<DeviceClasses> brandCompatibili = warehouse.getCompatibles(sceltaBrand, "brand");
-        if (brandCompatibili.isEmpty()) {
-            System.out.println("Nessun dispositivo compatibile trovato.");
-        } else {
-            printDevices(brandCompatibili);
+        String sceltaBrand = getValidInput.getString("Inserisci il nome del brand del dispositivo:", 15);
 
-        }
+        return warehouse.getCompatibles(sceltaBrand, "brand");
     }
 
     // Cerca per modello, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    public void searchByModel() {
+    public List<DeviceClasses> searchByModel() {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
-            return;
+            return null;
         }
-        String scelta = GetValidInput.getString("Inserisci il nome del modello del dispositivo:", 15);
-        List<DeviceClasses> modelCompatibili = warehouse.getCompatibles(scelta, "model");
-        if (modelCompatibili.isEmpty()) {
-            System.out.println("Nessun dispositivo compatibile trovato.");
-        } else {
-            printDevices(modelCompatibili);
-        }
+        String scelta = getValidInput.getString("Inserisci il nome del modello del dispositivo:", 15);
+
+        return warehouse.getCompatibles(scelta, "model");
     }
 
     // Cerca per prezzo di vendità, ritorna i dispositivi trovati con prezzi dipendenti da iva
 
-    public void searchBySellPrice() {
+    public List<DeviceClasses> searchBySellPrice() {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
-            return;
+            return null;
         }
-        int price = GetValidInput.getInteger("Inserisci il prezzo:");
+        int price = getValidInput.getInteger("Inserisci il prezzo:");
         int searchedPrice = iva ? (int) (price / 1.22) : price;
-        List<DeviceClasses> priceCompatibili = warehouse.getBySellPrice(searchedPrice);
-        if (priceCompatibili.isEmpty()) {
-            System.out.println("Nessun dispositivo compatibile trovato.");
-        } else {
-            printDevices(priceCompatibili);
-        }
+
+       return warehouse.getBySellPrice(searchedPrice);
+
     }
 
     // ricerca per range del prezzo di vendita
-    public void searchByPriceRange() {
+    public List<DeviceClasses> searchByPriceRange() {
         if (warehouse.isEmpty()) {
             System.out.println("Il magazzino e' vuoto!");
-            return;
+            return null;
         }
-        int minPrice = GetValidInput.getInteger("Inserisci il prezzo minimo:");
-        int maxPrice = GetValidInput.getInteger("Inserisci il prezzo massimo:");
+        int minPrice = getValidInput.getInteger("Inserisci il prezzo minimo:");
+        int maxPrice = getValidInput.getInteger("Inserisci il prezzo massimo:");
 
         int minSearchedPrice = iva ? (int) (minPrice / 1.22) : minPrice;
         int maxSearchedPrice = iva ? (int) (maxPrice / 1.22) : maxPrice;
 
         if (minSearchedPrice > maxSearchedPrice) {
             System.out.println("Il prezzo minimo non può essere maggiore del prezzo massimo.");
-            return;
+            return null;
         }
 
-        List<DeviceClasses> rangeCompatibili = warehouse.getRangeSale(minSearchedPrice, maxSearchedPrice);
-        if (rangeCompatibili.isEmpty()) {
-            System.out.println("Nessun dispositivo in range trovato");
-        } else {
-            printDevices(rangeCompatibili);
-        }
+       return warehouse.getRangeSale(minSearchedPrice, maxSearchedPrice);
     }
 }
