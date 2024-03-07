@@ -1,15 +1,16 @@
+package WarehouseManagement;
+
 import Devices.DeviceClasses;
 import Devices.Notebook;
 import Devices.Smartphone;
 import Devices.Tablet;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Warehouse {
-    private List<DeviceClasses> devices = new ArrayList<>();
+    private final List<DeviceClasses> devices = new ArrayList<>();
 
     public List<DeviceClasses> getDevices() {
         return devices;
@@ -20,6 +21,10 @@ public class Warehouse {
 
     public void addDevice(DeviceClasses device) {
         devices.add(device);
+    }
+
+    public List<DeviceClasses> getDevices() {
+        return devices;
     }
 
     // ottenere il dispositivo tramite id
@@ -34,13 +39,18 @@ public class Warehouse {
     }
 
     // rimuovere il dispositivo tramite id
-    public void removeDeviceById(long id) {
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getId() == id) {
-                devices.remove(i);
-                break;
+    public boolean removeDeviceById(Long id) {
+        if (id == null) {
+            return false;
+        }
+        for (DeviceClasses device : devices) {
+            if (device.getId() == id) {
+                devices.remove(device);
+                return true;
+
             }
         }
+        return false;
     }
 
     // Controlla se l'id esiste
@@ -51,24 +61,6 @@ public class Warehouse {
             }
         }
         return false;
-    }
-
-    public void printAllDevices(boolean iva, boolean includePurchasePrice) {
-        DecimalFormat df = new DecimalFormat("#.##");
-
-        for (DeviceClasses device : devices) {
-            double priceWithIVA = !iva ? device.getSale() : device.getPriceWithIVA();
-            String purchasePrice = includePurchasePrice ? ", Prezzo di acquisto: " + df.format(device.getPurchase()) : "";
-
-            System.out.println("Id: " + device.getId() +
-                    ", Dispositivo: " + device.getDevice() +
-                    ", Brand: " + device.getBrand() +
-                    ", Modello: " + device.getModel() +
-                    ", Descrizione: " + device.getDescription() +
-                    ", Display: " + df.format(device.getDisplay()) +
-                    ", Archiviazione: " + df.format(device.getStorage()) +
-                    ", Prezzo di vendità: " + df.format(priceWithIVA) + purchasePrice);
-        }
     }
 
     public List<DeviceClasses> getCompatibles(String input, String researchType) {
