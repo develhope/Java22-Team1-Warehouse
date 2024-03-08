@@ -64,7 +64,7 @@ public class UserMethods {
                         "2) Per tornare al menu principale.");
                 switch (sceltaFinale) {
                     case 1:
-                        return "Questo è il tuo prezzo finale:\"" + finalizeSale() + "\n Grazie per l'acquisto, speriamo di rivederti presto.";
+                        return "Questo è il tuo prezzo finale: " + finalizeSale() + "\nGrazie per l'acquisto, speriamo di rivederti presto.";
                     case 2:
                         return "";
                     default:
@@ -156,7 +156,7 @@ public class UserMethods {
                         ", Descrizione: " + device.getDescription() +
                         ", Display: " + df.format(device.getDisplay()) +
                         ", Archiviazione: " + df.format(device.getStorage()) +
-                        ", Prezzo di vendità: " + df.format(price) + "€");
+                        ", Prezzo di vendita: " + df.format(price) + "€");
             }
         }
     }
