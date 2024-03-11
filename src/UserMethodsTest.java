@@ -29,7 +29,7 @@ public class UserMethodsTest {
         UserMethods userMethods = new UserMethods(warehouse,cart,false,new Scanner(System.in));
         DeviceClasses device = new DeviceClasses(1500, "Notebook", "Samsung", "Galaxy Book 3", "Gaming computer", 15.6, 1000, 799);
         warehouse.addDevice(device);
-        userMethods.fromWarehouseToCart(-2);
+        userMethods.fromWarehouseToCart(-2L);
         assertEquals(0,cart.getDevices().size());
         assertEquals(1,warehouse.getDevices().size());
     }
@@ -51,7 +51,7 @@ public class UserMethodsTest {
         UserMethods userMethods = new UserMethods(warehouse,cart,false,new Scanner(System.in));
         DeviceClasses device = new DeviceClasses(1500, "Notebook", "Samsung", "Galaxy Book 3", "Gaming computer", 15.6, 1000, 799);
         cart.addDevice(device);
-        userMethods.fromCartToWarehouse(-2);
+        userMethods.fromCartToWarehouse(-2L);
         assertEquals(1,cart.getDevices().size());
         assertEquals(0,warehouse.getDevices().size());
     }
@@ -62,8 +62,8 @@ public class UserMethodsTest {
         UserMethods userMethods = new UserMethods(warehouse,cart,false,new Scanner(System.in));
         DeviceClasses device = new DeviceClasses(1500, "Notebook", "Samsung", "Galaxy Book 3", "Gaming computer", 15.6, 1000, 799);
         cart.addDevice(device);
-        String result = userMethods.finalizeSale();
-        assertEquals("Questo è il tuo prezzo finale: " + device.getSale(), result);
+        Double result = userMethods.finalizeSale();
+        assertEquals(device.getSale(), result);
         assertEquals(0,cart.getDevices().size());
     }
     @Test
@@ -71,8 +71,8 @@ public class UserMethodsTest {
         Warehouse warehouse = new Warehouse();
         Cart cart = new Cart();
         UserMethods userMethods = new UserMethods(warehouse,cart,false,new Scanner(System.in));
-        String result = userMethods.finalizeSale();
-        assertEquals("Il carrello è vuoto.", result);
+        double result =userMethods.finalizeSale();
+        assertEquals(0.0, result,0.0);
     }
     @Test
     public void finalizeSaleMenu() {
@@ -85,7 +85,7 @@ public class UserMethodsTest {
         cart.addDevice(device);
         UserMethods userMethods = new UserMethods(warehouse,cart,false,new Scanner(System.in));
         String result = userMethods.finalizeSaleMenu();
-        String expected = "Grazie per l'acquisto, speriamo di rivederti presto.";
+        String expected = "Questo è il tuo prezzo finale:\"" + device.getSale() + "\n Grazie per l'acquisto, speriamo di rivederti presto.";
         assertEquals(expected,result);
     }
 }

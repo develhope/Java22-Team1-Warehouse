@@ -25,7 +25,7 @@ public class UserMethods {
     }
 
     //Metodo per aggiungere prodotti dal magazzino al carrello
-    private boolean fromWarehouseToCart(Long id) {
+    public boolean fromWarehouseToCart(Long id) {
         if (warehouse.containsDeviceById(id) && id != null) {
             cart.addDevice(warehouse.getDeviceById(id));
             warehouse.removeDeviceById(id);
@@ -36,7 +36,7 @@ public class UserMethods {
     }
 
     //Metodo per aggiungere prodotti dal carrello al magazzino
-    private boolean fromCartToWarehouse(Long id) {
+    public boolean fromCartToWarehouse(Long id) {
         if (cart.containsDeviceById(id) && id != null) {
             warehouse.addDevice(cart.getDeviceById(id));
             cart.removeDeviceById(id);
@@ -47,7 +47,7 @@ public class UserMethods {
     }
 
     //Metodo che finalizza l' acquisto
-    private double finalizeSale() {
+    public Double finalizeSale() {
         double finalPrice;
         if (iva) {
             finalPrice = cart.getFinalPrice() * 1.22;

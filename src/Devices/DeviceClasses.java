@@ -98,7 +98,7 @@ public class DeviceClasses {
         return purchase;
     }
 
-    public double getSale() {
+    public Double getSale() {
         return sale;
     }
 
