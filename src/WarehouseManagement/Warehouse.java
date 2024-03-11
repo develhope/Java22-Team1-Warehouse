@@ -14,12 +14,8 @@ public class Warehouse {
 
     public Warehouse() {
     }
-
-    public void addDevice(DeviceClasses device) {
-        if (device == null) {
-            return;
-        }
-        devices.add(device);
+    public boolean addDevice(DeviceClasses device) {
+       return devices.add(device);
     }
 
     public List<DeviceClasses> getDevices() {
@@ -28,13 +24,9 @@ public class Warehouse {
 
     // ottenere il dispositivo tramite id
     public DeviceClasses getDeviceById(Long id) {
-        if (id == null) {
-            return null;
-        }
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
+            if (id != null && device.getId().equals(id)) {
                 return device;
-
             }
         }
         return null;
@@ -42,14 +34,10 @@ public class Warehouse {
 
     // rimuovere il dispositivo tramite id
     public boolean removeDeviceById(Long id) {
-        if (id == null) {
-            return false;
-        }
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
+            if (id != null && device.getId().equals(id)) {
                 devices.remove(device);
                 return true;
-
             }
         }
         return false;
@@ -57,11 +45,8 @@ public class Warehouse {
 
     // Controlla se l'id esiste
     public boolean containsDeviceById(Long id) {
-        if (id == null) {
-            return false;
-        }
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
+            if (id != null && device.getId().equals(id)) {
                 return true;
             }
         }
@@ -187,10 +172,10 @@ public class Warehouse {
         Notebook notebook1 = new Notebook(629, "Notebook", "HP", "15S-FQ5073NL", "Argento", 15.6, 512, 249);
         addDevice(setId(notebook1));
     }
-
-    public DeviceClasses setId(DeviceClasses device) {
+    public boolean setIdAddDeviceInWarehouse(DeviceClasses device) {
         Random rand = new Random();
         device.setId(rand.nextLong(999999999));
-        return device;
+        return devices.add(device);
     }
+
 }

@@ -19,10 +19,10 @@ public class OperatorMethods {
     }
 
     // set ID del device utilizzando un Random e aggiunge il device al magazzino
-    public void setIdAddDeviceInWarehouse(DeviceClasses device) {
+    public boolean setIdAddDeviceInWarehouse(DeviceClasses device) {
         Random rand = new Random();
-        warehouse.addDevice(device);
         device.setId(rand.nextLong(999999999));
+        return warehouse.addDevice(device);
     }
 
     // aggiunge un nuovo device al magazzino
@@ -104,10 +104,7 @@ public class OperatorMethods {
 
 
     public void printDevices(List<DeviceClasses> devices) {
-        if (devices == null) {
-            return;
-        }
-        if (devices.isEmpty()) {
+        if (devices.isEmpty() || devices == null) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
             DecimalFormat df = new DecimalFormat("#.##");
