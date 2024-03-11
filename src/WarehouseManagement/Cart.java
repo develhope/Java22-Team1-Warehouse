@@ -4,6 +4,7 @@ import Devices.DeviceClasses;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cart {
 
@@ -29,29 +30,39 @@ public class Cart {
 
     // Rimuove dal carrello tramite ID
     public boolean removeDeviceById(Long id) {
-        if (id == null) {
-            return false;
-        }
+        boolean removed = false;
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
-                 devices.remove(device);
-                 return true;
-
+            if (!(id == null) && device.getId().equals(id)) {
+                removed = devices.remove(device);
+            } else {
+                removed = false;
             }
         }
-        return false;
+        return removed;
+    }
+
+    public boolean removeDeviceById2(Long id) {
+        DeviceClasses deviceToRemove = devices
+                .stream()
+                .filter(device-> device.getId().equals(id))
+                .collect(Collectors.toList())
+                .removeFirst();
+
+        if(deviceToRemove != null) return devices.remove(deviceToRemove); else return false;
     }
 
     //Ottieni prodotto da ID
     public DeviceClasses getDeviceById(Long id) {
-        if(id == null) {
+        if (id == null) {
             return null;
         }
+
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
+            if (device.getId().equals(id)) {
                 return device;
             }
         }
+
         return null;
     }
 

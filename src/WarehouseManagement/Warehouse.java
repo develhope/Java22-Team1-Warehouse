@@ -15,8 +15,8 @@ public class Warehouse {
     public Warehouse() {
     }
 
-    public void addDevice(DeviceClasses device) {
-        devices.add(device);
+    public boolean addDevice(DeviceClasses device) {
+       return devices.add(device);
     }
 
     public List<DeviceClasses> getDevices() {
@@ -157,9 +157,10 @@ public class Warehouse {
         setIdAddDeviceInWarehouse(notebook1);
     }
 
-    public void setIdAddDeviceInWarehouse(DeviceClasses device) {
+    public boolean setIdAddDeviceInWarehouse(DeviceClasses device) {
         Random rand = new Random();
-        devices.add(device);
         device.setId(rand.nextLong(999999999));
+        return devices.add(device);
     }
+
 }

@@ -1,11 +1,13 @@
 package Menus;
 
+import Devices.DeviceClasses;
 import MenusMethods.OperatorMethods;
 import MenusMethods.ResearchMethods;
 import UserAndOperatorEnums.MenuOptionsOperator;
 import Utils.GetValidInput;
 import WarehouseManagement.Warehouse;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class OperatorMenu {
@@ -62,7 +64,20 @@ public class OperatorMenu {
                     System.out.println(operatorMethods.searchByAverageDevicePrice());
                     break;
                 case AGGIUNGI_DISPOSITIVO_AL_MAGAZZINO:
-                    operatorMethods.setIdAddDeviceInWarehouse(operatorMethods.addNewDevice());
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    DeviceClasses device = operatorMethods.addNewDevice();
+                    if (operatorMethods.setIdAddDeviceInWarehouse(device)) {
+                        System.out.println("Il dispositivo:\n" + "Id: " + device.getId() +
+                                ", Dispositivo: " + device.getDevice() +
+                                ", Brand: " + device.getBrand() +
+                                ", Modello: " + device.getModel() +
+                                ", Descrizione: " + device.getDescription() +
+                                ", Display: " + df.format(device.getDisplay()) +
+                                ", Archiviazione: " + df.format(device.getStorage()) +
+                                ", Prezzo di vendità: " + df.format(device.getSale()) + "€" + ", Prezzo di acquisto: " + df.format(device.getPurchase()) + "€\n" + "è stato aggiunto con successo.");
+                    } else {
+                        System.out.println("Si è verificato un errore...");
+                    }
                     break;
                 case RIMUOVI_DISPOSITIVO_DAL_MAGAZZINO:
                     operatorMethods.removeFromWarehouseById();
