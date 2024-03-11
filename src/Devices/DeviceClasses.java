@@ -1,7 +1,5 @@
 package Devices;
 
-import java.util.Objects;
-
 public class DeviceClasses {
     private String device;
     private String brand;
@@ -32,7 +30,7 @@ public class DeviceClasses {
         this.sale = sale;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -108,17 +106,5 @@ public class DeviceClasses {
         return this.getSale() * 1.22;
     }
 
-    @Override
-    public String toString() {
-        return
-                "Id: " + id +
-                        ", Dispositivo: " + device +
-                        ", Brand: " + brand +
-                        ", Model: " + model +
-                        ", Description: " + description +
-                        ", Display: " + display +
-                        ", Storage: " + storage +
-                        ", Purchase " + purchase +
-                        ", Sale: " + sale + "\n";
-    }
+
 }

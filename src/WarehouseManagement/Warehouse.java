@@ -15,11 +15,8 @@ public class Warehouse {
     public Warehouse() {
     }
 
-    public void addDevice(DeviceClasses device) {
-        if (device == null){
-            return;
-        }
-        devices.add(device);
+    public boolean addDevice(DeviceClasses device) {
+       return devices.add(device);
     }
 
     public List<DeviceClasses> getDevices() {
@@ -27,30 +24,31 @@ public class Warehouse {
     }
 
     // ottenere il dispositivo tramite id
-    public DeviceClasses getDeviceById(long id) {
+    public DeviceClasses getDeviceById(Long id) {
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
+            if (id != null && device.getId() == id) {
                 return device;
-
             }
         }
         return null;
     }
 
     // rimuovere il dispositivo tramite id
-        public void removeDeviceById(long id) {
-            for (int i = 0; i < devices.size(); i++) {
-                if (devices.get(i).getId() == id) {
-                    devices.remove(i);
-                    break;
-                }
+    public boolean removeDeviceById(Long id) {
+        for (DeviceClasses device : devices) {
+            if (id != null && device.getId() == id) {
+                devices.remove(device);
+                return true;
+
             }
         }
+        return false;
+    }
 
     // Controlla se l'id esiste
-    public boolean containsDeviceById(long id) {
+    public boolean containsDeviceById(Long id) {
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
+            if (id != null && device.getId() == id) {
                 return true;
             }
         }
@@ -155,9 +153,10 @@ public class Warehouse {
         setIdAddDeviceInWarehouse(notebook1);
     }
 
-    public void setIdAddDeviceInWarehouse(DeviceClasses device) {
+    public boolean setIdAddDeviceInWarehouse(DeviceClasses device) {
         Random rand = new Random();
-        devices.add(device);
         device.setId(rand.nextLong(999999999));
+        return devices.add(device);
     }
+
 }

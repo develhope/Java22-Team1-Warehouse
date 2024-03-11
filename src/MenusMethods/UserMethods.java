@@ -25,24 +25,29 @@ public class UserMethods {
     }
 
     //Metodo per aggiungere prodotti dal magazzino al carrello
-    public void fromWarehouseToCart(long id) {
+    private boolean fromWarehouseToCart(Long id) {
+        if (warehouse.containsDeviceById(id) && id != null) {
             cart.addDevice(warehouse.getDeviceById(id));
             warehouse.removeDeviceById(id);
-            printDevices(cart.getDevices());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //Metodo per aggiungere prodotti dal carrello al magazzino
-    public void fromCartToWarehouse(long id) {
-        warehouse.addDevice(cart.getDeviceById(id));
-        cart.removeDeviceById(id);
-        printDevices(cart.getDevices());
+    private boolean fromCartToWarehouse(Long id) {
+        if (cart.containsDeviceById(id) && id != null) {
+            warehouse.addDevice(cart.getDeviceById(id));
+            cart.removeDeviceById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //Metodo che finalizza l' acquisto
-    public String finalizeSale() {
-        if (cart.isEmpty()){
-            return "Il carrello è vuoto.";
-        }
+    private double finalizeSale() {
         double finalPrice;
         if (iva) {
             finalPrice = cart.getFinalPrice() * 1.22;
@@ -50,37 +55,33 @@ public class UserMethods {
             finalPrice = cart.getFinalPrice();
         }
         cart.emptyList();
-        return "Questo è il tuo prezzo finale: " + finalPrice;
+        return finalPrice;
     }
 
     public String finalizeSaleMenu() {
-        if (cart.isEmpty()) {
-            return "Il carrello è vuoto.";
-        }
         while (true) {
             int sceltaFinale = getValidInput.getInteger("1) Per procedere all'acquisto.\n" +
                     "2) Per tornare al menu principale.");
             switch (sceltaFinale) {
                 case 1:
-                    System.out.println(finalizeSale());
-                    return "Grazie per l'acquisto, speriamo di rivederti presto.";
+                    return "Questo è il tuo prezzo finale:\"" + finalizeSale() + "\n Grazie per l'acquisto, speriamo di rivederti presto.";
                 case 2:
-                    return null;
+                    return "";
                 default:
                     System.out.println("Scelta non consentita.");
             }
         }
     }
 
-    public String calcAndPrintTotal() {
+    public double calcAndPrintTotal() {
         if (cart.isEmpty()) {
-            return "Il carrello è vuoto.";
-        }
-        System.out.println("Il prezzo finale del carrello è:");
-        if (!iva) {
-            return "" + cart.getFinalPrice();
+            return 0.0;
         } else {
-            return "" + cart.getFinalPrice() * 1.22;
+            if (!iva) {
+                return cart.getFinalPrice();
+            } else {
+                return cart.getFinalPrice() * 1.22;
+            }
         }
     }
 
@@ -103,57 +104,57 @@ public class UserMethods {
 
 
     //Metodo per aggiungere i prodotti al carrello tramite un ID
-    public void addToCartById() {
+    public List<DeviceClasses> addToCartById() {
 
-        try {
-            long sceltaId = getValidInput.getLong("Digita un id per aggiungere al carrello:");
-            if (!warehouse.containsDeviceById(sceltaId)) {
-                System.out.println("Non è stato trovato alcun dispositivo con questo ID");
-                return;
-            }
+        long sceltaId = getValidInput.getLong("Digita un id per aggiungere al carrello:");
+        if (!fromWarehouseToCart(sceltaId)) {
+            System.out.println("Non è stato trovato alcun dispositivo con questo ID");
+            return null;
+        } else {
             System.out.println("Questo è il carrello: ");
-            fromWarehouseToCart(sceltaId);
-        } catch (NumberFormatException e) {
-            System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
-            sc.nextLine();
+            return cart.getDevices();
         }
+
     }
 
     //Metodo per rimuovere i prodotti dal carrello tramite ID
-    public void removeFromCartById() {
+    public List<DeviceClasses> removeFromCartById() {
         if (cart.isEmpty()) {
             System.out.println("Il carrello è vuoto.");
-            return;
+            return null;
         }
-        try {
-            long sceltaId2 = getValidInput.getLong("Digita un id per rimuovere al carrello:");
-            if (!cart.containsDeviceById(sceltaId2)) {
-                System.out.println("Non è stato trovato alcun dispositivo con questo ID.");
-                return;
+
+        long sceltaId2 = getValidInput.getLong("Digita un id per rimuovere al carrello:");
+        if (!fromCartToWarehouse(sceltaId2)) {
+            System.out.println("Non è stato trovato alcun dispositivo con questo ID.");
+            return null;
+        } else {
+            List<DeviceClasses> updatedCartDevices = cart.getDevices();
+            if (updatedCartDevices.isEmpty()) {
+                System.out.println("Il carrello è vuoto.");
+                return null;
+            } else {
+                return updatedCartDevices;
             }
-            fromCartToWarehouse(sceltaId2);
-        } catch (NumberFormatException e) {
-            System.out.println("Input non valido, assicurati di mettere un formato ID corretto.");
-            sc.nextLine();
         }
     }
 
     public void printDevices(List<DeviceClasses> devices) {
-        if (devices.isEmpty()) {
-            System.out.println("Il carrello e' vuoto.");
-            return;
-        }
-        DecimalFormat df = new DecimalFormat("#.##");
-        for (DeviceClasses device : devices) {
-            double price = iva ? device.getPriceWithIVA() : device.getSale();
-            System.out.println("Id: " + device.getId() +
-                    ", Dispositivo: " + device.getDevice() +
-                    ", Brand: " + device.getBrand() +
-                    ", Modello: " + device.getModel() +
-                    ", Descrizione: " + device.getDescription() +
-                    ", Display: " + df.format(device.getDisplay()) +
-                    ", Archiviazione: " + df.format(device.getStorage()) +
-                    ", Prezzo di vendità: " + df.format(price) + "€");
+        if (devices.isEmpty() || devices == null) {
+            System.out.println("Nessun dispositivo compatibile trovato.");
+        } else {
+            DecimalFormat df = new DecimalFormat("#.##");
+            for (DeviceClasses device : devices) {
+                double price = iva ? device.getPriceWithIVA() : device.getSale();
+                System.out.println("Id: " + device.getId() +
+                        ", Dispositivo: " + device.getDevice() +
+                        ", Brand: " + device.getBrand() +
+                        ", Modello: " + device.getModel() +
+                        ", Descrizione: " + device.getDescription() +
+                        ", Display: " + df.format(device.getDisplay()) +
+                        ", Archiviazione: " + df.format(device.getStorage()) +
+                        ", Prezzo di vendità: " + df.format(price) + "€");
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ import Devices.DeviceClasses;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cart {
 
@@ -14,37 +15,55 @@ public class Cart {
     }
 
     // Aggiungere al cart
-    public void addDevice(DeviceClasses dispositivo) {
-        if (dispositivo == null){
-            return;
+    public boolean addDevice(DeviceClasses device) {
+        for (DeviceClasses dev : devices) {
+            if (device == null || dev.getId() == device.getId()) {
+                return false;
+            }
         }
-        devices.add(dispositivo);
+
+        devices.add(device);
+        return true;
     }
 
     // Rimuove dal carrello tramite ID
-    public void removeDeviceById(long id) {
-        for (int i = 0; i < devices.size(); i++) {
-            if (devices.get(i).getId() == id) {
-                devices.remove(i);
-                break;
+    public boolean removeDeviceById(Long id) {
+        boolean removed = false;
+        for (DeviceClasses device : devices) {
+            if (id != null && device.getId().equals(id)) {
+                removed = devices.remove(device);
+            } else {
+                removed = false;
             }
         }
+        return removed;
+    }
+
+    public boolean removeDeviceById2(Long id) {
+        DeviceClasses deviceToRemove = devices
+                .stream()
+                .filter(device-> device.getId().equals(id))
+                .collect(Collectors.toList())
+                .removeFirst();
+
+        if(deviceToRemove != null) return devices.remove(deviceToRemove); else return false;
     }
 
     //Ottieni prodotto da ID
-    public DeviceClasses getDeviceById(long id) {
+    public DeviceClasses getDeviceById(Long id) {
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
+            if (id != null && device.getId().equals(id)) {
                 return device;
             }
         }
+
         return null;
     }
 
     // Controlla se l'id esiste
-    public boolean containsDeviceById(long id) {
+    public boolean containsDeviceById(Long id) {
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
+            if (id != null && device.getId().equals(id)) {
                 return true;
             }
         }

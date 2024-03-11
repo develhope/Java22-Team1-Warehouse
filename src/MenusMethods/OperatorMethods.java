@@ -8,24 +8,21 @@ import java.text.DecimalFormat;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 
 public class OperatorMethods {
     private final GetValidInput getValidInput = new GetValidInput();
     private final Warehouse warehouse;
-    private final Scanner sc;
 
-    public OperatorMethods(Warehouse warehouse, Scanner sc) {
-        this.sc = sc;
+    public OperatorMethods(Warehouse warehouse) {
         this.warehouse = warehouse;
     }
 
     // set ID del device utilizzando un Random e aggiunge il device al magazzino
-    public void setIdAddDeviceInWarehouse(DeviceClasses device) {
+    public boolean setIdAddDeviceInWarehouse(DeviceClasses device) {
         Random rand = new Random();
-        warehouse.addDevice(device);
         device.setId(rand.nextLong(999999999));
+        return warehouse.addDevice(device);
     }
 
     // aggiunge un nuovo device al magazzino
@@ -66,7 +63,7 @@ public class OperatorMethods {
                 default:
                     System.out.println("Scelta non valida.");
             }
-        } while (scelta != 1 && scelta != 2 && scelta != 3 );
+        } while (scelta != 1 && scelta != 2 && scelta != 3);
         return sceltaString;
     }
 
@@ -91,15 +88,15 @@ public class OperatorMethods {
         try {
             if (warehouse.isEmpty()) {
                 System.out.println("Il magazzino e' vuoto!");
-                return;
-            }
-            long sceltaId2 = getValidInput.getLong("Digita un id per rimuovere al magazzino:");
+            } else {
+                long sceltaId2 = getValidInput.getLong("Digita un id per rimuovere al magazzino:");
 
-            if (!warehouse.containsDeviceById(sceltaId2)) {
-                System.out.println("Non è stato trovato alcun dispositivo con questo ID");
-                return;
+                if (!warehouse.containsDeviceById(sceltaId2)) {
+                    System.out.println("Non è stato trovato alcun dispositivo con questo ID");
+                } else {
+                    warehouse.removeDeviceById(sceltaId2);
+                }
             }
-            warehouse.removeDeviceById(sceltaId2);
         } catch (InputMismatchException e) {
             System.out.println("Input non valido, assicurati di inserire un ID corretto");
         }
@@ -107,20 +104,20 @@ public class OperatorMethods {
 
 
     public void printDevices(List<DeviceClasses> devices) {
-        if(devices.isEmpty()) {
+        if (devices.isEmpty() || devices == null) {
             System.out.println("Nessun dispositivo compatibile trovato.");
-            return;
-        }
-        DecimalFormat df = new DecimalFormat("#.##");
-        for (DeviceClasses device : devices) {
-            System.out.println("Id: " + device.getId() +
-                    ", Dispositivo: " + device.getDevice() +
-                    ", Brand: " + device.getBrand() +
-                    ", Modello: " + device.getModel() +
-                    ", Descrizione: " + device.getDescription() +
-                    ", Display: " + df.format(device.getDisplay()) +
-                    ", Archiviazione: " + df.format(device.getStorage()) +
-                    ", Prezzo di vendità: " + df.format(device.getSale()) + "€" + df.format(device.getPurchase()) + "€");
+        } else {
+            DecimalFormat df = new DecimalFormat("#.##");
+            for (DeviceClasses device : devices) {
+                System.out.println("Id: " + device.getId() +
+                        ", Dispositivo: " + device.getDevice() +
+                        ", Brand: " + device.getBrand() +
+                        ", Modello: " + device.getModel() +
+                        ", Descrizione: " + device.getDescription() +
+                        ", Display: " + df.format(device.getDisplay()) +
+                        ", Archiviazione: " + df.format(device.getStorage()) +
+                        ", Prezzo di vendità: " + df.format(device.getSale()) + "€" + ", Prezzo di acquisto: " + df.format(device.getPurchase()) + "€");
+            }
         }
     }
 }
