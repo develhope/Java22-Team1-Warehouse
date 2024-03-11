@@ -25,8 +25,8 @@ public class UserMethods {
     }
 
     //Metodo per aggiungere prodotti dal magazzino al carrello
-    private boolean fromWarehouseToCart(long id) {
-        if (warehouse.containsDeviceById(id)) {
+    private boolean fromWarehouseToCart(Long id) {
+        if (warehouse.containsDeviceById(id) && id != null) {
             cart.addDevice(warehouse.getDeviceById(id));
             warehouse.removeDeviceById(id);
             return true;
@@ -36,8 +36,8 @@ public class UserMethods {
     }
 
     //Metodo per aggiungere prodotti dal carrello al magazzino
-    private boolean fromCartToWarehouse(long id) {
-        if (cart.containsDeviceById(id)) {
+    private boolean fromCartToWarehouse(Long id) {
+        if (cart.containsDeviceById(id) && id != null) {
             warehouse.addDevice(cart.getDeviceById(id));
             cart.removeDeviceById(id);
             return true;
@@ -59,28 +59,29 @@ public class UserMethods {
     }
 
     public String finalizeSaleMenu() {
-            while (true) {
-                int sceltaFinale = getValidInput.getInteger("1) Per procedere all'acquisto.\n" +
-                        "2) Per tornare al menu principale.");
-                switch (sceltaFinale) {
-                    case 1:
-                        return "Questo è il tuo prezzo finale:\"" + finalizeSale() + "\n Grazie per l'acquisto, speriamo di rivederti presto.";
-                    case 2:
-                        return "";
-                    default:
-                        System.out.println("Scelta non consentita.");
-                }
+        while (true) {
+            int sceltaFinale = getValidInput.getInteger("1) Per procedere all'acquisto.\n" +
+                    "2) Per tornare al menu principale.");
+            switch (sceltaFinale) {
+                case 1:
+                    return "Questo è il tuo prezzo finale:\"" + finalizeSale() + "\n Grazie per l'acquisto, speriamo di rivederti presto.";
+                case 2:
+                    return "";
+                default:
+                    System.out.println("Scelta non consentita.");
+            }
         }
     }
 
     public double calcAndPrintTotal() {
         if (cart.isEmpty()) {
             return 0.0;
-        }
-        if (!iva) {
-            return cart.getFinalPrice();
         } else {
-            return cart.getFinalPrice() * 1.22;
+            if (!iva) {
+                return cart.getFinalPrice();
+            } else {
+                return cart.getFinalPrice() * 1.22;
+            }
         }
     }
 
@@ -129,7 +130,7 @@ public class UserMethods {
             return null;
         } else {
             List<DeviceClasses> updatedCartDevices = cart.getDevices();
-            if(updatedCartDevices.isEmpty()) {
+            if (updatedCartDevices.isEmpty()) {
                 System.out.println("Il carrello è vuoto.");
                 return null;
             } else {
@@ -139,11 +140,7 @@ public class UserMethods {
     }
 
     public void printDevices(List<DeviceClasses> devices) {
-        if (devices == null) {
-            return;
-        }
-
-        if (devices.isEmpty()) {
+        if (devices.isEmpty() || devices == null) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
             DecimalFormat df = new DecimalFormat("#.##");

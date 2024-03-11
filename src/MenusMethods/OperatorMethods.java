@@ -104,10 +104,7 @@ public class OperatorMethods {
 
 
     public void printDevices(List<DeviceClasses> devices) {
-        if (devices == null) {
-            return;
-        }
-        if (devices.isEmpty()) {
+        if (devices.isEmpty() || devices == null) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
             DecimalFormat df = new DecimalFormat("#.##");

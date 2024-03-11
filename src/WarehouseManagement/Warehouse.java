@@ -24,11 +24,10 @@ public class Warehouse {
     }
 
     // ottenere il dispositivo tramite id
-    public DeviceClasses getDeviceById(long id) {
+    public DeviceClasses getDeviceById(Long id) {
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
+            if (id != null && device.getId() == id) {
                 return device;
-
             }
         }
         return null;
@@ -36,11 +35,8 @@ public class Warehouse {
 
     // rimuovere il dispositivo tramite id
     public boolean removeDeviceById(Long id) {
-        if (id == null) {
-            return false;
-        }
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
+            if (id != null && device.getId() == id) {
                 devices.remove(device);
                 return true;
 
@@ -50,9 +46,9 @@ public class Warehouse {
     }
 
     // Controlla se l'id esiste
-    public boolean containsDeviceById(long id) {
+    public boolean containsDeviceById(Long id) {
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
+            if (id != null && device.getId() == id) {
                 return true;
             }
         }

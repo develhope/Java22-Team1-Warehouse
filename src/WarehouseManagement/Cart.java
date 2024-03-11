@@ -17,13 +17,11 @@ public class Cart {
     // Aggiungere al cart
     public boolean addDevice(DeviceClasses device) {
         for (DeviceClasses dev : devices) {
-            if (dev.getId() == device.getId()) {
+            if (device == null || dev.getId() == device.getId()) {
                 return false;
             }
         }
-        if (device == null) {
-            return false;
-        }
+
         devices.add(device);
         return true;
     }
@@ -32,7 +30,7 @@ public class Cart {
     public boolean removeDeviceById(Long id) {
         boolean removed = false;
         for (DeviceClasses device : devices) {
-            if (!(id == null) && device.getId().equals(id)) {
+            if (id != null && device.getId().equals(id)) {
                 removed = devices.remove(device);
             } else {
                 removed = false;
@@ -53,12 +51,8 @@ public class Cart {
 
     //Ottieni prodotto da ID
     public DeviceClasses getDeviceById(Long id) {
-        if (id == null) {
-            return null;
-        }
-
         for (DeviceClasses device : devices) {
-            if (device.getId().equals(id)) {
+            if (id != null && device.getId().equals(id)) {
                 return device;
             }
         }
@@ -67,9 +61,9 @@ public class Cart {
     }
 
     // Controlla se l'id esiste
-    public boolean containsDeviceById(long id) {
+    public boolean containsDeviceById(Long id) {
         for (DeviceClasses device : devices) {
-            if (device.getId() == id) {
+            if (id != null && device.getId().equals(id)) {
                 return true;
             }
         }
