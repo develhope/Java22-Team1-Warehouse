@@ -3,6 +3,7 @@ package WarehouseManagement;
 import Devices.DeviceClasses;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,11 +17,9 @@ public class Cart {
 
     // Aggiungere al cart
     public boolean addDevice(DeviceClasses device) {
-        for (DeviceClasses dev : devices) {
-            if (device == null || dev.getId() == device.getId()) {
+            if (device == null || devices.contains(device)) {
                 return false;
             }
-        }
 
         devices.add(device);
         return true;
@@ -29,13 +28,20 @@ public class Cart {
     // Rimuove dal carrello tramite ID
     public boolean removeDeviceById(Long id) {
         boolean removed = false;
-        for (DeviceClasses device : devices) {
-            if (id != null && device.getId().equals(id)) {
-                removed = devices.remove(device);
-            } else {
-                removed = false;
+        Iterator<DeviceClasses> iterator = devices.iterator();
+
+        while(iterator.hasNext()) {
+            DeviceClasses device = iterator.next();
+
+            if(device.getId().equals(id) && id != null) {
+                iterator.remove();
+                removed = true;
+                break;
             }
         }
+
+
+
         return removed;
     }
 
