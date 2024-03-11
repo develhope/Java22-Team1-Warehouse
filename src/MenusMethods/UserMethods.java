@@ -153,7 +153,7 @@ public class UserMethods {
                         ", Descrizione: " + device.getDescription() +
                         ", Display: " + df.format(device.getDisplay()) +
                         ", Archiviazione: " + df.format(device.getStorage()) +
-                        ", Prezzo di vendità: " + df.format(price) + "€");
+                        ", Prezzo di vendita: " + df.format(price) + "€");
             }
         }
     }

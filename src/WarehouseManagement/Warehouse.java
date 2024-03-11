@@ -14,7 +14,6 @@ public class Warehouse {
 
     public Warehouse() {
     }
-
     public boolean addDevice(DeviceClasses device) {
        return devices.add(device);
     }
@@ -55,6 +54,9 @@ public class Warehouse {
     }
 
     public List<DeviceClasses> getCompatibles(String input, String researchType) {
+        if (input == null) {
+            return null;
+        }
         String inputLowerCase = input.toLowerCase();
         List<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
@@ -90,7 +92,10 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
-    public List<DeviceClasses> getRangeSale(int valLow, int valHigh) {
+    public List<DeviceClasses> getRangeSale(Integer valLow, Integer valHigh) {
+        if (valLow == null || valHigh == null) {
+            return null;
+        }
         List<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (DeviceClasses device : devices) {
@@ -101,7 +106,10 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
-    public List<DeviceClasses> getBySellPrice(int range) {
+    public List<DeviceClasses> getBySellPrice(Integer range) {
+        if (range == null) {
+            return null;
+        }
         List<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (DeviceClasses device : devices) {
@@ -112,7 +120,10 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
-    public List<DeviceClasses> getByPurchasePrice(int range) {
+    public List<DeviceClasses> getByPurchasePrice(Integer range) {
+        if (range == null) {
+            return null;
+        }
         List<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (DeviceClasses device : devices) {
@@ -123,7 +134,17 @@ public class Warehouse {
         return devicesCompatibili;
     }
 
-    public double getAverageDevicePrice(String device) {
+    public Double getAverageDevicePrice(String device) {
+        if (device == null) {
+            return null;
+        }
+        for (DeviceClasses newDevice : devices) {
+            if (newDevice.getDevice().toLowerCase().equals(device.toLowerCase())) {
+                break;
+            } else {
+                return 0.0;
+            }
+        }
         double sum = 0;
         int counter = 0;
         String deviceLowerCase = device.trim().toLowerCase();
@@ -143,15 +164,14 @@ public class Warehouse {
 
     public void fillWarehouse() {
         Notebook notebook = new Notebook(1500, "Notebook", "Samsung", "Galaxy Book 3", "Gaming computer", 15.6, 1000, 799);
-        setIdAddDeviceInWarehouse(notebook);
+        addDevice(setId(notebook));
         Smartphone smartphone = new Smartphone(979, "Smartphone", "Apple", "iPhone 15", "Nero", 6.1, 128, 349);
-        setIdAddDeviceInWarehouse(smartphone);
+        addDevice(setId(smartphone));
         Tablet tablet = new Tablet(1149, "Tablet", "Apple", "iPad Pro", "Grigio Siderale", 11, 256, 549);
-        setIdAddDeviceInWarehouse(tablet);
+        addDevice(setId(tablet));
         Notebook notebook1 = new Notebook(629, "Notebook", "HP", "15S-FQ5073NL", "Argento", 15.6, 512, 249);
-        setIdAddDeviceInWarehouse(notebook1);
+        addDevice(setId(notebook1));
     }
-
     public boolean setIdAddDeviceInWarehouse(DeviceClasses device) {
         Random rand = new Random();
         device.setId(rand.nextLong(999999999));
