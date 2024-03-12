@@ -14,8 +14,12 @@ public class Warehouse {
 
     public Warehouse() {
     }
+
     public boolean addDevice(DeviceClasses device) {
-       return devices.add(device);
+        if (device == null) {
+            return false;
+        }
+        return devices.add(device);
     }
 
     public List<DeviceClasses> getDevices() {
