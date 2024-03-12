@@ -113,7 +113,7 @@ public class Warehouse {
         List<DeviceClasses> devicesCompatibili = new ArrayList<>();
 
         for (DeviceClasses device : devices) {
-            if (device.getSale() == range) {
+            if (device.getSale().equals(Double.valueOf(range))) {
                 devicesCompatibili.add(device);
             }
         }
@@ -172,10 +172,11 @@ public class Warehouse {
         Notebook notebook1 = new Notebook(629, "Notebook", "HP", "15S-FQ5073NL", "Argento", 15.6, 512, 249);
         addDevice(setId(notebook1));
     }
-    public boolean setIdAddDeviceInWarehouse(DeviceClasses device) {
+
+    public DeviceClasses setId(DeviceClasses device) {
         Random rand = new Random();
         device.setId(rand.nextLong(999999999));
-        return devices.add(device);
+        return device;
     }
 
 }
