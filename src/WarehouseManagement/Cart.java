@@ -3,9 +3,7 @@ package WarehouseManagement;
 import Devices.DeviceClasses;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Cart {
 
@@ -26,54 +24,28 @@ public class Cart {
     }
 
     // Rimuove dal carrello tramite ID
-    public boolean removeDeviceById(Long id) {
-        boolean removed = false;
-        Iterator<DeviceClasses> iterator = devices.iterator();
-
-        while(iterator.hasNext()) {
-            DeviceClasses device = iterator.next();
-
-            if(device.getId().equals(id) && id != null) {
-                iterator.remove();
-                removed = true;
-                break;
-            }
-        }
-
-
-
-        return removed;
-    }
-
-    public boolean removeDeviceById2(Long id) {
+     public boolean removeDeviceById(Long id) {
         DeviceClasses deviceToRemove = devices
                 .stream()
                 .filter(device-> device.getId().equals(id))
-                .collect(Collectors.toList())
-                .removeFirst();
+                .findFirst()
+                .orElse(null);
 
         if(deviceToRemove != null) return devices.remove(deviceToRemove); else return false;
     }
 
     //Ottieni prodotto da ID
     public DeviceClasses getDeviceById(Long id) {
-        for (DeviceClasses device : devices) {
-            if (id != null && device.getId().equals(id)) {
-                return device;
-            }
-        }
-
-        return null;
+        return devices.stream()
+                .filter(device -> id != null && device.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     // Controlla se l'id esiste
     public boolean containsDeviceById(Long id) {
-        for (DeviceClasses device : devices) {
-            if (id != null && device.getId().equals(id)) {
-                return true;
-            }
-        }
-        return false;
+        return devices.stream()
+                .anyMatch(device -> id != null && device.getId().equals(id));
     }
 
     // Controlla se cart e' vuoto
@@ -87,11 +59,15 @@ public class Cart {
 
     // Calcolare prezzo finale
     public double getFinalPrice() {
-        double prezzoFinale = 0;
-        for (DeviceClasses dispositivo : devices) {
-            prezzoFinale += dispositivo.getSale();
-        }
-        return prezzoFinale;
+       return devices.stream()
+               .mapToDouble(DeviceClasses::getSale)
+               .sum();
+
+//        double prezzoFinale = 0;
+//        for (DeviceClasses dispositivo : devices) {
+//            prezzoFinale += dispositivo.getSale();
+//        }
+//        return prezzoFinale;
     }
 
     // Svuota cart

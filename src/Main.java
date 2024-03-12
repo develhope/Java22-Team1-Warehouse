@@ -37,7 +37,6 @@ public class Main {
                 warehouse.fillWarehouse();
                 OperatorMenu operator = new OperatorMenu(warehouse, sc);
                 operator.menu();
-
                 break;
             case "0":
                 break;

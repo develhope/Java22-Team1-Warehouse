@@ -14,7 +14,10 @@ public class Warehouse {
 
     public Warehouse() {
     }
-    public boolean addDevice(DeviceClasses device) {
+    public Boolean addDevice(DeviceClasses device) {
+        if(device == null) {
+            return false;
+        }
        return devices.add(device);
     }
 
@@ -24,33 +27,48 @@ public class Warehouse {
 
     // ottenere il dispositivo tramite id
     public DeviceClasses getDeviceById(Long id) {
-        for (DeviceClasses device : devices) {
-            if (id != null && device.getId().equals(id)) {
-                return device;
-            }
-        }
-        return null;
+        return devices.stream()
+                .filter(device -> id != null && device.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+
+//        for (DeviceClasses device : devices) {
+//            if (id != null && device.getId().equals(id)) {
+//                return device;
+//            }
+//        }
+//        return null;
     }
 
     // rimuovere il dispositivo tramite id
     public boolean removeDeviceById(Long id) {
-        for (DeviceClasses device : devices) {
-            if (id != null && device.getId().equals(id)) {
-                devices.remove(device);
-                return true;
-            }
-        }
-        return false;
+        DeviceClasses deviceToRemove = devices.stream()
+                .filter(device -> device.getId().equals(id))
+                .toList()
+                .removeFirst();
+
+        if(deviceToRemove != null) return devices.remove(deviceToRemove); else return false;
+
+//        for (DeviceClasses device : devices) {
+//            if (id != null && device.getId().equals(id)) {
+//                devices.remove(device);
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     // Controlla se l'id esiste
     public boolean containsDeviceById(Long id) {
-        for (DeviceClasses device : devices) {
-            if (id != null && device.getId().equals(id)) {
-                return true;
-            }
-        }
-        return false;
+        return devices.stream()
+                .anyMatch(device -> id != null && device.getId().equals(id));
+
+//        for (DeviceClasses device : devices) {
+//            if (id != null && device.getId().equals(id)) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     public List<DeviceClasses> getCompatibles(String input, String researchType) {
