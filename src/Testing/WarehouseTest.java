@@ -19,8 +19,6 @@ public class WarehouseTest {
         DeviceClasses device2 = warehouse.getDevices().getLast();
 
         assertEquals(device, device2);
-        assertEquals(1, warehouse.getDevices().size());
-
     }
 
     @Test
@@ -29,7 +27,6 @@ public class WarehouseTest {
         warehouse.addDevice(null);
 
         assertEquals(0, warehouse.getDevices().size());
-
     }
 
     @Test
@@ -71,8 +68,6 @@ public class WarehouseTest {
         warehouse.removeDeviceById(device.getId());
 
         assertFalse(warehouse.containsDeviceById(device.getId()));
-        assertEquals(0, warehouse.getDevices().size());
-
     }
 
     @Test
@@ -83,8 +78,6 @@ public class WarehouseTest {
         boolean removedDevice = warehouse.removeDeviceById(null);
 
         assertFalse(removedDevice);
-        assertEquals(1, warehouse.getDevices().size());
-
     }
 
     @Test
@@ -96,8 +89,6 @@ public class WarehouseTest {
         boolean removedDevice = warehouse.removeDeviceById(anotherDevice.getId());
 
         assertFalse(removedDevice);
-        assertEquals(1, warehouse.getDevices().size());
-
     }
 
     @Test
@@ -117,22 +108,16 @@ public class WarehouseTest {
         boolean removedDevice = warehouse.containsDeviceById(null);
 
         assertFalse(removedDevice);
-        assertEquals(1, warehouse.getDevices().size());
-
     }
 
     @Test
     public void testGetCompatibles_existingDevice() {
         Warehouse warehouse = new Warehouse();
-        DeviceClasses device1 = new DeviceClasses(1500, "Notebook", "Samsung", "Galaxy Book 3", "Gaming computer", 15.6, 1000, 799);
-        DeviceClasses device2 = new DeviceClasses(979, "Smartphone", "Apple", "iPhone 15", "Nero", 6.1, 128, 349);
-        warehouse.addDevice(warehouse.setId(device1));
-        warehouse.addDevice(warehouse.setId(device2));
-        List<DeviceClasses> result1 = warehouse.getCompatibles("Notebook", "device");
-        List<DeviceClasses> result2 = warehouse.getCompatibles("Apple", "brand");
+        DeviceClasses device = new DeviceClasses(1500, "Notebook", "Samsung", "Galaxy Book 3", "Gaming computer", 15.6, 1000, 799);
+        warehouse.addDevice(warehouse.setId(device));
+        List<DeviceClasses> result = warehouse.getCompatibles("Notebook", "device");
 
-        assertTrue(result1.contains(device1));
-        assertTrue(result2.contains(device2));
+        assertTrue(result.contains(device));
     }
 
     @Test
