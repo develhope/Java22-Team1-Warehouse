@@ -111,12 +111,14 @@ public class OperatorMethods {
             for (DeviceClasses device : devices) {
                 System.out.println("Id: " + device.getId() +
                         ", Dispositivo: " + device.getDevice() +
-                        ", Brand: " + device.getBrand() +
+                        ", \nBrand: " + device.getBrand() +
                         ", Modello: " + device.getModel() +
                         ", Descrizione: " + device.getDescription() +
                         ", Display: " + df.format(device.getDisplay()) +
-                        ", Archiviazione: " + df.format(device.getStorage()) +
-                        ", Prezzo di vendità: " + df.format(device.getSale()) + "€" + ", Prezzo di acquisto: " + df.format(device.getPurchase()) + "€");
+                        ", \nArchiviazione: " + df.format(device.getStorage()) +
+                        ", Prezzo di vendità: " + df.format(device.getSale()) + "€" +
+                        ", Prezzo di acquisto: " + df.format(device.getPurchase()) + "€");
+                System.out.println();
             }
         }
     }

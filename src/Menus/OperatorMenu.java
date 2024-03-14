@@ -72,8 +72,8 @@ public class OperatorMenu {
                                 ", Brand: " + device.getBrand() +
                                 ", Modello: " + device.getModel() +
                                 ", Descrizione: " + device.getDescription() +
-                                ", Display: " + df.format(device.getDisplay()) +
-                                ", Archiviazione: " + df.format(device.getStorage()) +
+                                ", Display: " + df.format(device.getDisplay()) + "o" +
+                                ", Archiviazione: " + df.format(device.getStorage()) + "gb" +
                                 ", Prezzo di vendità: " + df.format(device.getSale()) + "€" + ", Prezzo di acquisto: " + df.format(device.getPurchase()) + "€\n" + "è stato aggiunto con successo.");
                     } else {
                         System.out.println("Si è verificato un errore...");
