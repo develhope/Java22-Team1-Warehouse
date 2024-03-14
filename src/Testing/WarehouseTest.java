@@ -259,12 +259,10 @@ public class WarehouseTest {
     public void testGetAverageDevicePrice_notExistingDevice() {
         Warehouse warehouse = new Warehouse();
         DeviceClasses device1 = new DeviceClasses(1500, "Notebook", "Samsung", "Galaxy Book 3", "Gaming computer", 15.6, 1000, 799);
-        DeviceClasses device2 = new DeviceClasses(979, "Notebook", "Apple", "iPhone 15", "Nero", 6.1, 128, 349);
         warehouse.addDevice(warehouse.setId(device1));
-        warehouse.addDevice(warehouse.setId(device2));
         Double result = warehouse.getAverageDevicePrice("Patata");
 
-        assertEquals(0.0, result, 0.0);
+        assertNull(result);
     }
 
 }
