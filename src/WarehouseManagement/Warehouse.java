@@ -142,13 +142,7 @@ public class Warehouse {
         if (device == null) {
             return null;
         }
-        for (DeviceClasses newDevice : devices) {
-            if (newDevice.getDevice().toLowerCase().equals(device.toLowerCase())) {
-                break;
-            } else {
-                return 0.0;
-            }
-        }
+
         double sum = 0;
         int counter = 0;
         String deviceLowerCase = device.trim().toLowerCase();
@@ -159,8 +153,14 @@ public class Warehouse {
                 counter++;
             }
         }
+
+        if (counter == 0) {
+            return null;
+        }
+
         return sum / counter;
     }
+
 
     public boolean isEmpty() {
         return devices.isEmpty();
