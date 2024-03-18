@@ -70,11 +70,11 @@ public class OperatorMenu {
                         System.out.println("Il dispositivo:\n" + "Id: " + device.getId() +
                                 ", Dispositivo: " + device.getDevice() +
                                 ", Brand: " + device.getBrand() +
-                                ", Modello: " + device.getModel() +
+                                "\nModello: " + device.getModel() +
                                 ", Descrizione: " + device.getDescription() +
                                 ", Display: " + df.format(device.getDisplay()) + "o" +
                                 ", Archiviazione: " + df.format(device.getStorage()) + "gb" +
-                                ", Prezzo di vendità: " + df.format(device.getSale()) + "€" + ", Prezzo di acquisto: " + df.format(device.getPurchase()) + "€\n" + "è stato aggiunto con successo.");
+                                "\nPrezzo di vendità: " + df.format(device.getSale()) + "€" + ", Prezzo di acquisto: " + df.format(device.getPurchase()) + "€\n" + "è stato aggiunto con successo.");
                     } else {
                         System.out.println("Si è verificato un errore...");
                     }
