@@ -104,7 +104,7 @@ public class OperatorMethods {
 
 
     public void printDevices(List<DeviceClasses> devices) {
-        if (devices.isEmpty() || devices == null) {
+        if (devices == null || devices.isEmpty() ) {
             System.out.println("Nessun dispositivo compatibile trovato.");
         } else {
             DecimalFormat df = new DecimalFormat("#.##");
@@ -115,7 +115,7 @@ public class OperatorMethods {
                         ", Modello: " + device.getModel() +
                         ", Descrizione: " + device.getDescription() +
                         ", Display: " + df.format(device.getDisplay()) +
-                        ", \nArchiviazione: " + df.format(device.getStorage()) +
+                        ", \nArchiviazione: " + df.format(device.getStorage()) + "gb" +
                         ", Prezzo di vendità: " + df.format(device.getSale()) + "€" +
                         ", Prezzo di acquisto: " + df.format(device.getPurchase()) + "€");
                 System.out.println();

@@ -140,22 +140,22 @@ public class UserMethods {
     }
 
     public void printDevices(List<DeviceClasses> devices) {
-        if (devices.isEmpty() || devices == null) {
-            System.out.println("Nessun dispositivo compatibile trovato.");
-        } else {
-            DecimalFormat df = new DecimalFormat("#.##");
-            for (DeviceClasses device : devices) {
-                double price = iva ? device.getPriceWithIVA() : device.getSale();
-                System.out.println("Id: " + device.getId() +
-                        ", Dispositivo: " + device.getDevice() +
-                        ", Brand: " + device.getBrand() +
-                        " \nModello: " + device.getModel() +
-                        ", Descrizione: " + device.getDescription() +
-                        ", Display: " + df.format(device.getDisplay()) + "o" +
-                        " \nArchiviazione: " + df.format(device.getStorage()) + "gb" +
-                        ", Prezzo di vendita: " + df.format(price) + "€");
-                System.out.println();
+            if (devices == null || devices.isEmpty() ) {
+                System.out.println("Nessun dispositivo compatibile trovato.");
+            } else {
+                DecimalFormat df = new DecimalFormat("#.##");
+                for (DeviceClasses device : devices) {
+                    double price = iva ? device.getPriceWithIVA() : device.getSale();
+                    System.out.println("Id: " + device.getId() +
+                            ", Dispositivo: " + device.getDevice() +
+                            ", Brand: " + device.getBrand() +
+                            " \nModello: " + device.getModel() +
+                            ", Descrizione: " + device.getDescription() +
+                            ", Display: " + df.format(device.getDisplay()) + "o" +
+                            " \nArchiviazione: " + df.format(device.getStorage()) + "gb" +
+                            ", Prezzo di vendita: " + df.format(price) + "€");
+                    System.out.println();
+                }
             }
-        }
     }
 }
